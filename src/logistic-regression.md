@@ -1,0 +1,616 @@
+---
+layout: base.njk
+title: "Chapter 3: Logistic Regression - From Prediction to Classification"
+---
+
+<!-- Header -->
+<div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 3: Logistic Regression</h2>
+    <p class="text-gray-700 leading-relaxed">While linear regression predicts continuous values, many questions in bioinformatics require a categorical "yes" or "no" answer. This is the task of **classification**. This chapter introduces Logistic Regression, a foundational algorithm that forms the bridge from regression to classification.</p>
+</div>
+
+<!-- 1. The Problem: Why not Linear Regression? -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">The Problem: Why Linear Regression Fails for Classification</h3>
+    <p class="text-gray-700 mb-4">If we try to fit a standard line to a binary classification problem (e.g., predicting gene essentiality: 0 or 1), it performs poorly, especially in the presence of outliers. This interactive demo shows why.</p>
+    <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div>
+            <p class="text-sm text-gray-600 mb-4">The blue line shows the best fit from Linear Regression. Use the button to add an outlier and observe how drastically the line (and the 0.5 decision threshold) shifts.</p>
+            <button id="toggle-outlier-btn" class="btn-primary w-full">Toggle Outlier Gene</button>
+            <div id="linear-fail-status" class="mt-3 text-center font-semibold"></div>
+        </div>
+        <div>
+            <div id="linear-fail-plot" style="width:100%; height:250px;"></div>
+        </div>
+    </div>
+    <div class="alert-info mt-4"><strong>Conclusion:</strong> We need a model that isn't a straight line, one that produces a probability between 0 and 1.</div>
+</div>
+
+<!-- 2. The Solution: The Logistic Model -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">The Solution: The Logistic Regression Model</h3>
+    <p class="text-gray-700 mb-4">The core innovation is the <strong>Sigmoid (or Logistic) Function</strong>, which takes any real-valued number and "squashes" it to a value between 0 and 1.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+            <h4 class="font-semibold text-lg text-gray-700 mb-2">The Hypothesis Function</h4>
+            <div class="code-block text-center text-base">hθ(x) = g(θᵀx) = 1 / (1 + e⁻(θᵀx))</div>
+            <p class="text-sm text-gray-600 mt-2">Where <code>z = θᵀx</code> is the familiar linear equation.</p>
+            <div class="highlight mt-4">
+                <strong>Key Concept: The Output is a Probability</strong>
+                <p>The output <code>hθ(x)</code> is interpreted as the estimated probability that a sample belongs to the positive class (y=1). For example, if <code>hθ(x) = 0.8</code>, the model predicts an 80% chance the patient will respond to treatment.</p>
+            </div>
+        </div>
+        <div>
+            <div id="sigmoid-plot" style="width:100%;height:300px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Learning: Cost Function & Decision Boundary -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">How the Model Learns</h3>
+    <p class="text-gray-700 mb-6">The model learns by finding the optimal parameters (θ) that minimize a cost function. For logistic regression, this is the <strong>Log Loss</strong> (or Binary Cross-Entropy) function.</p>
+    <div class="gap-6 mb-6">
+<!-- center both on page -->
+        <div class="text-center">
+            <img src="https://learningds.org/_images/class_loss_9_0.svg" alt="Cost function when true class is 1" class="rounded-lg border border-gray-200 shadow mb-2 ml-auto mr-auto" style="max-width:100%;height:auto;">
+            <p class="text-sm mt-2">Cost for a true label of 0 (orange) or 1 (blue). Based on the true label, we pick the appropriate curve to determine the loss.</p>
+        </div>
+    </div>
+
+    <h4 class="text-xl font-bold text-gray-800 mb-4">Interactive Demo: The Decision Boundary</h4>
+    <p class="text-gray-700 mb-4">The model makes its final prediction based on a <strong>decision boundary</strong>. By default, if the probability is ≥ 0.5, it predicts class 1. This corresponds to the line where <code>θᵀx = 0</code>. Adjust the parameters below to see how they define this boundary.</p>
+    <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-sm font-medium">θ₀ (Intercept)</label>
+                    <input type="range" id="theta0-slider" min="-5" max="5" step="0.1" value="0" class="parameter-slider">
+                    <span id="theta0-value" class="text-sm">0.0</span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">θ₁ (for Expression Level)</label>
+                    <input type="range" id="theta1-slider" min="-5" max="5" step="0.1" value="1" class="parameter-slider">
+                    <span id="theta1-value" class="text-sm">1.0</span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">θ₂ (for PPI Count)</label>
+                    <input type="range" id="theta2-slider" min="-5" max="5" step="0.1" value="1" class="parameter-slider">
+                    <span id="theta2-value" class="text-sm">1.0</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="decision-boundary-plot" style="width:100%;height:300px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 4. Evaluation -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Evaluating Model Performance</h3>
+    <p class="text-gray-700 mb-4">Accuracy alone can be misleading. A full picture requires looking at the <strong>Confusion Matrix</strong> and the <strong>ROC Curve</strong>. This interactive demo connects them.</p>
+    <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <div class="space-y-4">
+                 <div>
+                    <label class="block text-sm font-medium">Classification Threshold</label>
+                    <input type="range" id="roc-threshold" min="0.05" max="0.95" step="0.01" value="0.5" class="parameter-slider">
+                    <span id="roc-threshold-value" class="text-sm">0.50</span>
+                </div>
+<div id="confusion-matrix" class="grid grid-cols-3 gap-1 text-center text-sm"></div>                <div class="grid grid-cols-2 gap-2 text-sm text-center">
+                    <div class="bg-gray-200 p-2 rounded"><strong>Precision:</strong> <span id="precision-val"></span></div>
+                    <div class="bg-gray-200 p-2 rounded"><strong>Recall:</strong> <span id="recall-val"></span></div>
+                    <div class="bg-gray-200 p-2 rounded"><strong>F1-Score:</strong> <span id="f1-val"></span></div>
+                    <div class="bg-gray-200 p-2 rounded"><strong>Accuracy:</strong> <span id="acc-val"></span></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="roc-plot" style="width:100%;height:300px;"></div>
+            <div class="text-center mt-2 font-bold">AUC: <span id="auc-val"></span></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 5. Advanced Topics & Regularization -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Handling Complexity and Overfitting</h3>
+    <p class="text-gray-700 mb-4">Like linear regression, logistic regression can be extended to handle non-linear data with polynomial features. However, this increases the risk of overfitting. We control this with **regularization**.</p>
+
+    <div class="highlight mb-6">
+      <strong>Key Concept: The `C` Hyperparameter</strong>
+      <p>In scikit-learn, regularization strength is controlled by the `C` parameter. Crucially, `C` is the <strong>inverse</strong> of regularization strength. A small `C` value means a <em>stronger</em> penalty and a simpler model, while a large `C` means a <em>weaker</em> penalty and a more complex model.</p>
+    </div>
+
+    <h4 class="text-xl font-bold text-gray-800 mb-4">Interactive Demo: The Effect of Regularization (C)</h4>
+    <p class="text-gray-700 mb-4">This dataset is not perfectly separable. Adjust `C` to see how it affects the complexity of the decision boundary.</p>
+    <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div>
+            <label class="block text-sm font-medium">Regularization Strength (C)</label>
+            <input type="range" id="c-slider" min="-2" max="2" step="0.1" value="0" class="parameter-slider">
+            <div class="text-center mt-2">
+                <span id="c-value-display" class="font-mono text-lg">C = 1.0</span>
+                <p id="c-text-display" class="text-sm font-semibold"></p>
+            </div>
+        </div>
+        <div>
+            <div id="regularization-plot" style="width:100%;height:300px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Navigation -->
+<div class="bg-gradient-to-r from-primary-100 to-secondary-100 rounded-2xl p-8 text-center">
+    <h3 class="text-2xl font-bold gradient-text mb-4">Next Steps</h3>
+    <p class="text-gray-700 max-w-3xl mx-auto">You've mastered the fundamentals of classification. The next step is to learn how to systematically optimize your model's performance.</p>
+    <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <a href="/hyperparameter-tuning/" class="btn-primary">Next: Hyperparameter Tuning →</a>
+        <a href="/linear-regression/" class="btn-secondary">← Previous: Linear Regression</a>
+    </div>
+</div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+// --- UTILITY FUNCTIONS ---
+const sigmoid = z => 1 / (1 + Math.exp(-z));
+const generateData = (n, mean1, mean2) => {
+    const data = { x: [], y: [], labels: [] };
+    for (let i = 0; i < n; i++) {
+        const label = Math.random() < 0.5 ? 0 : 1;
+        const mean = label === 0 ? mean1 : mean2;
+        data.x.push(mean[0] + (Math.random() - 0.5) * 3);
+        data.y.push(mean[1] + (Math.random() - 0.5) * 3);
+        data.labels.push(label);
+    }
+    return data;
+};
+
+// --- 1. LINEAR REGRESSION FAIL DEMO ---
+let linearData, linearLayout;
+let hasOutlier = false;
+const toggleOutlierBtn = document.getElementById('toggle-outlier-btn');
+
+function calculateLinearFit(data) {
+    const n = data.x.length;
+    const sumX = data.x.reduce((a, b) => a + b, 0);
+    const sumY = data.y.reduce((a, b) => a + b, 0);
+    const sumXY = data.x.map((xi, i) => xi * data.y[i]).reduce((a, b) => a + b, 0);
+    const sumX2 = data.x.map(xi => xi * xi).reduce((a, b) => a + b, 0);
+    const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+    const intercept = (sumY - slope * sumX) / n;
+    return { slope, intercept };
+}
+
+function updateLinearFailPlot() {
+    const currentData = { x: [...linearData.x], y: [...linearData.y] };
+    if (hasOutlier) {
+        currentData.x.push(10);
+        currentData.y.push(0);
+    }
+    const fit = calculateLinearFit(currentData);
+    const xRange = [Math.min(...currentData.x), Math.max(...currentData.x)];
+    const yFit = xRange.map(x => fit.intercept + fit.slope * x);
+
+    const decisionBoundaryX = (0.5 - fit.intercept) / fit.slope;
+
+    const traces = [{
+        x: currentData.x,
+        y: currentData.y,
+        mode: 'markers',
+        type: 'scatter',
+        marker: { color: currentData.y.map(yi => yi === 1 ? '#6366f1' : '#f59e0b'), size: 8 }
+    }, {
+        x: xRange,
+        y: yFit,
+        mode: 'lines',
+        line: { color: '#3b82f6', width: 3 },
+        name: 'Linear Fit'
+    }, {
+        x: [decisionBoundaryX, decisionBoundaryX],
+        y: [-0.5, 1.5],
+        mode: 'lines',
+        line: { color: '#ef4444', dash: 'dash' },
+        name: 'Threshold (0.5)'
+    }];
+    
+    Plotly.newPlot('linear-fail-plot', traces, linearLayout);
+    document.getElementById('linear-fail-status').textContent = hasOutlier ? 'With Outlier' : 'Without Outlier';
+    document.getElementById('linear-fail-status').style.color = hasOutlier ? '#ef4444' : '#10b981';
+}
+
+toggleOutlierBtn.addEventListener('click', () => {
+    hasOutlier = !hasOutlier;
+    updateLinearFailPlot();
+});
+
+
+// --- 2. SIGMOID PLOT ---
+function updateSigmoidPlot() {
+    const x = Array.from({length: 101}, (_, i) => (i - 50) / 5);
+    const y = x.map(sigmoid);
+    const trace = { x, y, mode: 'lines', line: { color: '#8b5cf6', width: 3 } };
+    const layout = {
+        title: 'The Sigmoid Function',
+        xaxis: { title: 'Linear Output (z = θᵀx)', zeroline: true },
+        yaxis: { title: 'Probability P(y=1)', range: [-0.1, 1.1] },
+        margin: { t: 30, r: 20, b: 40, l: 50 },
+    };
+    Plotly.newPlot('sigmoid-plot', [trace], layout);
+}
+
+// --- 3. DECISION BOUNDARY DEMO ---
+let boundaryData, boundaryLayout;
+const theta0Slider = document.getElementById('theta0-slider');
+const theta1Slider = document.getElementById('theta1-slider');
+const theta2Slider = document.getElementById('theta2-slider');
+
+function updateDecisionBoundaryPlot() {
+    const theta0 = parseFloat(theta0Slider.value);
+    const theta1 = parseFloat(theta1Slider.value);
+    const theta2 = parseFloat(theta2Slider.value);
+
+    document.getElementById('theta0-value').textContent = theta0.toFixed(1);
+    document.getElementById('theta1-value').textContent = theta1.toFixed(1);
+    document.getElementById('theta2-value').textContent = theta2.toFixed(1);
+
+    const traces = [{
+        x: boundaryData.x,
+        y: boundaryData.y,
+        mode: 'markers',
+        type: 'scatter',
+        marker: { color: boundaryData.labels.map(l => l === 1 ? '#6366f1' : '#f59e0b'), size: 8 },
+        name: 'Data Points'
+    }];
+
+    // Only draw boundary line if theta2 is not too close to zero
+    if (Math.abs(theta2) > 0.1) {
+        const xLine = [-5, 5];
+        // from θ₀ + θ₁x₁ + θ₂x₂ = 0  => x₂ = (-θ₀ - θ₁x₁) / θ₂
+        const yLine = xLine.map(x => (-theta0 - theta1 * x) / theta2);
+        
+        // Only add line if both y values are within reasonable range
+        if (yLine.every(y => Math.abs(y) < 20)) {
+            traces.push({
+                x: xLine,
+                y: yLine,
+                mode: 'lines',
+                line: { color: '#ef4444', width: 3 },
+                name: 'Decision Boundary'
+            });
+        }
+    } else if (Math.abs(theta1) > 0.1) {
+        // Handle case where theta2 ≈ 0: vertical line at x = -theta0/theta1
+        const xBoundary = -theta0 / theta1;
+        if (Math.abs(xBoundary) < 10) {
+            traces.push({
+                x: [xBoundary, xBoundary],
+                y: [-5, 5],
+                mode: 'lines',
+                line: { color: '#ef4444', width: 3 },
+                name: 'Decision Boundary'
+            });
+        }
+    }
+
+    Plotly.newPlot('decision-boundary-plot', traces, boundaryLayout);
+}
+
+[theta0Slider, theta1Slider, theta2Slider].forEach(s => s.addEventListener('input', updateDecisionBoundaryPlot));
+
+
+// --- 4. ROC CURVE & CONFUSION MATRIX DEMO ---
+let rocScores;
+const rocThresholdSlider = document.getElementById('roc-threshold');
+
+function updateRocPlot() {
+    const threshold = parseFloat(rocThresholdSlider.value);
+    document.getElementById('roc-threshold-value').textContent = threshold.toFixed(2);
+
+    let tp = 0, fp = 0, tn = 0, fn = 0;
+    rocScores.scores.forEach(({score, actual}) => {
+        const predicted = score >= threshold ? 1 : 0;
+        if (actual === 1 && predicted === 1) tp++;
+        else if (actual === 0 && predicted === 1) fp++;
+        else if (actual === 0 && predicted === 0) tn++;
+        else if (actual === 1 && predicted === 0) fn++;
+    });
+
+    const totalPos = tp + fn;
+    const totalNeg = tn + fp;
+    
+    const tpr = totalPos > 0 ? tp / totalPos : 0;
+    const fpr = totalNeg > 0 ? fp / totalNeg : 0;
+    const precision = (tp + fp) > 0 ? tp / (tp + fp) : 0;
+    const recall = tpr;
+    const f1 = (precision + recall) > 0 ? 2 * (precision * recall) / (precision + recall) : 0;
+    const accuracy = (tp + tn) / (totalPos + totalNeg);
+    
+    document.getElementById('confusion-matrix').innerHTML = `
+    <div class="bg-slate-100 p-1"></div>
+    <div class="bg-slate-200 p-1 font-bold">Predicted 1</div>
+    <div class="bg-slate-200 p-1 font-bold">Predicted 0</div>
+    <div class="bg-slate-200 p-1 font-bold">Actual 1</div>
+    <div class="bg-green-100 p-2">TP: ${tp}</div>
+    <div class="bg-red-100 p-2">FN: ${fn}</div>
+    <div class="bg-slate-200 p-1 font-bold">Actual 0</div>
+    <div class="bg-yellow-100 p-2">FP: ${fp}</div>
+    <div class="bg-blue-100 p-2">TN: ${tn}</div>
+`;
+    document.getElementById('precision-val').textContent = precision.toFixed(2);
+    document.getElementById('recall-val').textContent = recall.toFixed(2);
+    document.getElementById('f1-val').textContent = f1.toFixed(2);
+    document.getElementById('acc-val').textContent = accuracy.toFixed(2);
+
+    const rocTrace = rocScores.roc;
+    const currentPoint = { x: [fpr], y: [tpr], mode: 'markers', marker: { color: '#ef4444', size: 12, symbol: 'diamond' } };
+    const diagonal = { x: [0, 1], y: [0, 1], mode: 'lines', line: { dash: 'dash', color: 'grey' } };
+    
+    Plotly.newPlot('roc-plot', [rocTrace, diagonal, currentPoint], rocScores.layout);
+    document.getElementById('auc-val').textContent = rocScores.auc.toFixed(3);
+}
+
+rocThresholdSlider.addEventListener('input', updateRocPlot);
+
+
+// --- 5. REGULARIZATION DEMO ---
+let regData, regLayout;
+const cSlider = document.getElementById('c-slider');
+
+function generateComplexData() {
+    // Generate a more realistic dataset with some non-linear separability
+    const data = { x: [], y: [], labels: [] };
+    
+    // Create clusters with some overlap and noise
+    for (let i = 0; i < 60; i++) {
+        // Class 0: bottom-left and top-right clusters
+        if (Math.random() < 0.5) {
+            data.x.push(-2 + Math.random() * 2);
+            data.y.push(-2 + Math.random() * 2);
+        } else {
+            data.x.push(1 + Math.random() * 2);
+            data.y.push(1 + Math.random() * 2);
+        }
+        data.labels.push(0);
+    }
+    
+    for (let i = 0; i < 60; i++) {
+        // Class 1: top-left and bottom-right clusters  
+        if (Math.random() < 0.5) {
+            data.x.push(-2 + Math.random() * 2);
+            data.y.push(1 + Math.random() * 2);
+        } else {
+            data.x.push(1 + Math.random() * 2);
+            data.y.push(-2 + Math.random() * 2);
+        }
+        data.labels.push(1);
+    }
+    
+    // Add some outliers to make regularization effects more visible
+    data.x.push(-3.5, 3.5, -3.5, 3.5);
+    data.y.push(-3.5, 3.5, 3.5, -3.5);
+    data.labels.push(1, 0, 0, 1);
+    
+    return data;
+}
+
+function createPolynomialFeatures(x, y, degree = 2) {
+    // Create polynomial features up to specified degree
+    const features = [];
+    for (let i = 0; i < x.length; i++) {
+        const row = [1]; // bias term
+        for (let d = 1; d <= degree; d++) {
+            for (let px = 0; px <= d; px++) {
+                for (let py = 0; py <= d - px; py++) {
+                    if (px + py === d) {
+                        row.push(Math.pow(x[i], px) * Math.pow(y[i], py));
+                    }
+                }
+            }
+        }
+        features.push(row);
+    }
+    return features;
+}
+
+function simpleLogisticRegression(features, labels, C, maxIter = 100) {
+    // Simplified logistic regression with L2 regularization
+    const n_features = features[0].length;
+    let weights = new Array(n_features).fill(0);
+    const learningRate = 0.01;
+    const lambda = 1 / C; // regularization strength
+    
+    for (let iter = 0; iter < maxIter; iter++) {
+        for (let i = 0; i < features.length; i++) {
+            // Forward pass
+            const z = features[i].reduce((sum, f, j) => sum + f * weights[j], 0);
+            const prediction = sigmoid(z);
+            const error = prediction - labels[i];
+            
+            // Update weights with regularization
+            for (let j = 0; j < weights.length; j++) {
+                const regularization = j === 0 ? 0 : lambda * weights[j]; // don't regularize bias
+                weights[j] -= learningRate * (error * features[i][j] + regularization);
+            }
+        }
+    }
+    
+    return weights;
+}
+
+function updateRegularizationPlot() {
+    const c_log = parseFloat(cSlider.value);
+    const C = Math.pow(10, c_log);
+    document.getElementById('c-value-display').textContent = `C = ${C.toPrecision(2)}`;
+
+    let text, color;
+    if (C < 0.1) {
+        text = 'Strong Regularization: Simple boundary, may underfit';
+        color = '#3b82f6';
+    } else if (C > 10) {
+        text = 'Weak Regularization: Complex boundary, may overfit';
+        color = '#ef4444';
+    } else {
+        text = 'Balanced Regularization: Good generalization';
+        color = '#10b981';
+    }
+    document.getElementById('c-text-display').textContent = text;
+    document.getElementById('c-text-display').style.color = color;
+
+    // Create polynomial features
+    const polyFeatures = createPolynomialFeatures(regData.x, regData.y, 2);
+
+    // Train simplified logistic regression
+    const weights = simpleLogisticRegression(polyFeatures, regData.labels, C);
+
+    // Create decision boundary
+    const resolution = 50;
+    const x_min = -4, x_max = 4, y_min = -4, y_max = 4;
+    const x_grid = [], y_grid = [], z_grid = [];
+
+    // Create proper grid for contour plot
+    for (let i = 0; i < resolution; i++) {
+        const x = x_min + (x_max - x_min) * i / (resolution - 1);
+        x_grid.push(x);
+    }
+    
+    for (let j = 0; j < resolution; j++) {
+        const y = y_min + (y_max - y_min) * j / (resolution - 1);
+        y_grid.push(y);
+    }
+
+    // Calculate z values for each grid point
+    for (let j = 0; j < resolution; j++) {
+        const z_row = [];
+        for (let i = 0; i < resolution; i++) {
+            const features = createPolynomialFeatures([x_grid[i]], [y_grid[j]], 2)[0];
+            const z = features.reduce((sum, f, k) => sum + f * weights[k], 0);
+            const prob = sigmoid(z);
+            z_row.push(prob);
+        }
+        z_grid.push(z_row);
+    }
+
+    const traces = [
+        // Data points
+        {
+            x: regData.x,
+            y: regData.y,
+            mode: 'markers',
+            type: 'scatter',
+            marker: {
+                color: regData.labels.map(l => l === 1 ? '#6366f1' : '#f59e0b'),
+                size: 8,
+                line: { width: 1, color: 'white' }
+            },
+            name: 'Data Points'
+        },
+        // Decision boundary contour
+        {
+            x: x_grid,
+            y: y_grid,
+            z: z_grid,
+            type: 'contour',
+            contours: {
+                start: 0.5,
+                end: 0.5,
+                size: 0,
+                coloring: 'lines',
+                showlines: true,
+                line: { width: 3, color: color }
+            },
+            showscale: false,
+            name: 'Decision Boundary'
+        }
+    ];
+
+    const layout = {
+        ...regLayout,
+        annotations: [{
+            text: `Decision boundary with C=${C.toPrecision(2)}`,
+            x: 0.5,
+            y: 1.1,
+            xref: 'paper',
+            yref: 'paper',
+            showarrow: false,
+            font: { size: 12, color: color }
+        }]
+    };
+
+    Plotly.newPlot('regularization-plot', traces, layout);
+}
+
+
+cSlider.addEventListener('input', updateRegularizationPlot);
+
+// --- INITIALIZATION ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Init Linear Fail Demo
+    linearData = { x: [1, 2, 2.5, 4, 4.5], y: [0, 0, 1, 1, 1] };
+    linearLayout = { title: 'Linear Regression for Classification', xaxis: {title: 'Gene Expression', range: [0, 11]}, yaxis: {title: 'Essential? (0 or 1)', range: [-0.5, 1.5]}, showlegend: false, margin: {t:30, l:40, b:40, r:10} };
+    updateLinearFailPlot();
+
+    // Init Sigmoid Plot
+    updateSigmoidPlot();
+
+    // Init Decision Boundary Demo
+    boundaryData = generateData(100, [-2, -2], [2, 2]);
+    boundaryLayout = { title: 'Decision Boundary', xaxis: {title: 'Expression Level', range:[-5,5]}, yaxis: {title: 'PPI Count', range:[-5,5]}, showlegend: false, margin: {t:30, l:40, b:40, r:10} };
+    updateDecisionBoundaryPlot();
+
+    // Init ROC Demo
+rocScores = (() => {
+    const scores = [];
+    for(let i=0; i<200; i++) {
+        const actual = Math.random() < 0.3 ? 1: 0;
+        const score = actual === 1 ? Math.random()*0.6+0.4 : Math.random()*0.7+0.1;
+        scores.push({score, actual});
+    }
+    
+    // Sort by score descending
+    scores.sort((a,b) => b.score - a.score);
+    
+    const P = scores.filter(s => s.actual === 1).length;
+    const N = scores.length - P;
+    
+    const tpr = [0], fpr = [0];
+    let tp = 0, fp = 0;
+    
+    // Generate ROC curve points for each threshold
+    for(let i = 0; i < scores.length; i++) {
+        if(scores[i].actual === 1) {
+            tp++;
+        } else {
+            fp++;
+        }
+        tpr.push(tp / P);
+        fpr.push(fp / N);
+    }
+    
+    // Calculate AUC using trapezoidal rule
+    let auc = 0;
+    for(let i = 1; i < fpr.length; i++) {
+        auc += (fpr[i] - fpr[i-1]) * (tpr[i] + tpr[i-1]) / 2;
+    }
+    
+    const rocTrace = {x: fpr, y: tpr, mode: 'lines', line: {color: '#6366f1', width: 3}};
+    
+    return {
+        scores, roc: rocTrace, auc,
+        layout: { title: 'ROC Curve', xaxis: {title: 'False Positive Rate'}, yaxis: {title: 'True Positive Rate'}, showlegend: false, margin: {t:30,l:50,b:40,r:10} }
+    };
+})();
+    updateRocPlot();
+
+    // Init Regularization Demo
+    regData = generateComplexData();
+regLayout = { 
+    title: 'Effect of Regularization on Decision Boundary', 
+    xaxis: { title: 'Feature 1', range: [-4, 4] }, 
+    yaxis: { title: 'Feature 2', range: [-4, 4] }, 
+    showlegend: false, 
+    margin: { t: 50, l: 50, b: 40, r: 10 } 
+};
+});
+</script>

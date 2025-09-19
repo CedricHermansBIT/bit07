@@ -1,0 +1,4006 @@
+Machine Learning
+Cedric Hermans
+August 27, 2025
+
+2
+
+CONTENTS
+
+Contents
+
+1 An Introduction to Machine Learning
+
+1
+
+1.1
+
+A New Paradigm: Learning from Data . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1
+
+1.2
+
+Paradigms of Machine Learning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2
+
+1.3
+
+The Machine Learning Project Lifecycle . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3
+
+2 Linear Regression: Modeling Biological Relationships
+
+5
+
+2.1
+
+The Linear Regression Model . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5
+
+2.2
+
+Gradient Descent: Finding the Bottom of the Hill . . . . . . . . . . . . . . . . . . . . . . .
+
+7
+
+2.3
+
+Data Pre-processing: Preparing Data for Modeling . . . . . . . . . . . . . . . . . . . . . . 11
+
+2.4
+
+From Simple to Multivariate Linear Regression . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+2.5
+
+A Practical Example in Python . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+2.6
+
+The Bias-Variance Trade-off . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+2.7
+
+Regularization: Preventing Overfitting . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+3 Logistic Regression: From Prediction to Classification
+
+21
+
+3.1
+
+The Task of Classification . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+3.2
+
+Why Not Use Linear Regression for Classification? . . . . . . . . . . . . . . . . . . . . . . 21
+
+3.3
+
+The Logistic Regression Model . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+
+3.4
+
+Cost Function for Logistic Regression
+
+3.5
+
+Practical Example: Predicting Gene Essentiality . . . . . . . . . . . . . . . . . . . . . . . 23
+
+3.6
+
+Evaluating a Classifier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+
+3.7
+
+Handling Non-linear Data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+
+3.8
+
+Regularization in Logistic Regression . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+
+3.9
+
+Multi-class Classification . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+4 Optimizing Model Performance: Hyperparameter Tuning
+
+29
+
+4.1
+
+What are Hyperparameters? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+4.2
+
+Strategies for Hyperparameter Tuning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+4.3
+
+The Need for Cross-Validation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+4.4
+
+Hyperparameter Tuning in Scikit-Learn . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+
+5 Working with Imbalanced Data
+
+35
+
+5.1
+
+The Problem with Imbalanced Data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+
+5.2
+
+Strategies for Handling Imbalanced Data . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+i
+
+CONTENTS
+6 Naı̈ve Bayes Classifiers
+
+39
+
+6.1
+
+Discriminative vs. Generative Models . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+6.2
+
+Bayes’ Theorem . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+6.3
+
+The ”Naı̈ve” Assumption . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+
+6.4
+
+Practical Challenges and Solutions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+
+6.5
+
+Naı̈ve Bayes in Scikit-Learn . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
+
+7 Decision Trees
+
+47
+
+7.1
+
+Benefits and Drawbacks of Decision Trees . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+
+7.2
+
+How a Decision Tree is Built . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+7.3
+
+Preventing Overfitting: Pruning and Ensembles . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+7.4
+
+Decision Trees in Scikit-Learn . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+
+8 Ensemble Learning: The Power of Many
+
+55
+
+8.1
+
+Bagging: Bootstrap Aggregating . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+
+8.2
+
+Boosting: Learning from mistakes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+
+8.3
+
+Stacking: The Meta-Learner . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+
+9 Unsupervised Learning
+
+59
+
+9.1
+
+Clustering: Finding Groups in Data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 59
+
+9.2
+
+Dimensionality Reduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63
+
+10 Building Robust ML Workflows
+
+67
+
+10.1 The Challenge of Missing Data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 67
+10.2 Streamlining Workflows with Pipelines . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 68
+10.3 Handling Mixed Data Types with ColumnTransformer . . . . . . . . . . . . . . . . . . . . 69
+10.4 FeatureUnion: Creating Composite Feature Spaces . . . . . . . . . . . . . . . . . . . . . . 71
+11 Neural Networks and Deep Learning
+
+75
+
+11.1 The Inspiration: The Biological Neuron . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75
+11.2 Feedforward Neural Networks: Building in Layers . . . . . . . . . . . . . . . . . . . . . . . 75
+11.3 The Engine of Learning: Backpropagation . . . . . . . . . . . . . . . . . . . . . . . . . . . 76
+11.4 Activation Functions: The Neuron’s ”Firing” Mechanism
+
+. . . . . . . . . . . . . . . . . . 77
+
+11.5 Building Neural Networks with TensorFlow and Keras . . . . . . . . . . . . . . . . . . . . 78
+11.6 Beyond Feedforward: A Glimpse into Advanced Architectures (informational) . . . . . . . 80
+11.7 Conclusion
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 85
+
+ii
+
+CHAPTER 1. AN INTRODUCTION TO MACHINE LEARNING
+
+1. An Introduction to Machine Learning
+
+The advent of high-throughput technologies in biology has ushered in an era of unprecedented data generation. Fields like genomics, proteomics, and high-content imaging produce vast and complex datasets
+that hold the keys to understanding biological systems, diagnosing diseases, and developing novel therapeutics. However, the sheer scale and dimensionality of this data make it impossible to analyze using
+traditional methods alone.
+Machine Learning (ML) has emerged as an indispensable tool in the modern biologist’s toolkit. It
+provides a powerful framework for building models that can learn from data, identify subtle patterns,
+make predictions, and ultimately, turn massive datasets into actionable biological insights.
+
+1.1
+
+A New Paradigm: Learning from Data
+
+Traditional programming requires a human to explicitly define a set of rules for the computer to follow.
+This approach is effective for well-defined problems, such as calculating sequence alignment scores or
+parsing a FASTA file. However, for many complex biological questions—such as predicting a protein’s
+function from its sequence or identifying cancerous cells from an image—the underlying rules are either
+unknown or too complex to articulate.
+Machine Learning inverts this paradigm. Instead of providing the rules, we provide the data and the
+desired outcomes. The algorithm’s task is to learn the rules that map the input data to those outcomes.
+This shift from explicit programming to learning from data is illustrated in Figure 1.1.
+
+Figure 1.1: A comparison of the traditional programming and machine learning approaches.
+
+1
+
+CHAPTER 1. AN INTRODUCTION TO MACHINE LEARNING
+
+1.2
+
+Paradigms of Machine Learning
+
+Machine learning algorithms are typically categorized into three main paradigms, distinguished by the
+type of data they use and the learning strategy they employ.
+
+1.2.1
+
+Supervised Learning
+
+In supervised learning, the algorithm learns from a dataset where each data point is accompanied by a
+correct label or target value. The goal is to learn a general mapping function that can accurately predict
+the label for new, unseen data.
+Note
+Supervised learning is analogous to a student learning with a set of practice problems that have a
+corresponding answer key. By studying the problems and their solutions, the student learns the
+general principles needed to solve new problems on the final exam.
+Supervised learning encompasses two primary types of tasks:
+• Classification: The goal is to predict a discrete categorical label.
+– Bioinformatics Example: Predicting whether a DNA sequence contains a promoter region
+(Class 1) or not (Class 0) based on k-mer frequencies.
+– Bioinformatics Example: Classifying a tumor sample as one of several subtypes (e.g.,
+Luminal A, Luminal B, HER2-enriched) based on its gene expression profile.
+• Regression: The goal is to predict a continuous numerical value.
+– Bioinformatics Example: Predicting the binding affinity of a drug candidate to a target
+protein based on its molecular descriptors.
+– Bioinformatics Example: Modeling the expression level of a gene based on the methylation
+status of its promoter.
+
+1.2.2
+
+Unsupervised Learning
+
+In unsupervised learning, the algorithm is given a dataset without any labels. Its task is to find inherent
+structures, patterns, or relationships within the data on its own.
+• Clustering: The algorithm groups similar data points together.
+– Bioinformatics Example: Grouping genes with similar expression patterns across different
+conditions, which may suggest they are co-regulated or part of the same biological pathway.
+• Dimensionality Reduction: The algorithm reduces the number of features in a dataset while
+preserving its important structural information. This is crucial for visualizing high-dimensional
+data.
+– Bioinformatics Example: Using Principal Component Analysis (PCA) or t-SNE to visualize single-cell RNA-sequencing data, allowing researchers to identify distinct cell populations
+in a 2D or 3D plot.
+
+1.2.3
+
+Reinforcement Learning
+
+Reinforcement learning (RL) involves an agent that learns to make a sequence of decisions in an environment to maximize a cumulative reward. While less common in bioinformatics than supervised or
+unsupervised learning, RL is an emerging area with exciting applications in problems like de novo drug
+design and optimizing experimental protocols.
+2
+
+CHAPTER 1. AN INTRODUCTION TO MACHINE LEARNING
+
+1.3
+
+The Machine Learning Project Lifecycle
+
+A successful machine learning project follows a structured, iterative process:
+1. Data Collection and Pre-processing: Gathering and cleaning the raw data. This is often the
+most time-consuming step.
+2. Feature Engineering and Selection: Creating meaningful input variables (features) from the
+data and selecting the most relevant ones.
+3. Model Selection: Choosing an appropriate algorithm for the task (e.g., linear regression, decision
+tree).
+4. Training: Fitting the model to a portion of the data (the training set).
+5. Evaluation: Assessing the model’s performance on a separate, unseen portion of the data (the
+test set).
+6. Tuning and Deployment: Iteratively adjusting model parameters to improve performance and
+finally deploying the model for use.
+
+3
+
+CHAPTER 1. AN INTRODUCTION TO MACHINE LEARNING
+
+4
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+
+2. Linear Regression: Modeling Biological
+Relationships
+ Supervised Learning
+
+•
+
+¢ Regression
+
+Linear regression is a fundamental supervised learning algorithm used for regression tasks. It aims
+to model the linear relationship between one or more independent variables (features) and a continuous dependent variable (the target). Despite its simplicity, it is a powerful and interpretable tool for
+understanding relationships in biological data.
+
+2.1
+
+The Linear Regression Model
+
+2.1.1
+
+The Hypothesis Function
+
+For a single feature x, the linear regression model assumes the relationship with the target y can be
+described by a straight line. This line is our model’s hypothesis, denoted hθ (x):
+hθ (x) = θ0 + θ1 x
+
+(2.1)
+
+Where:
+• hθ (x) is the predicted value.
+• x is the input feature (e.g., concentration of a chemical).
+• θ0 is the y-intercept (the baseline value when x = 0).
+• θ1 is the slope, representing the change in the target for a one-unit change in x.
+The values θ0 and θ1 are the model’s parameters or weights. The ”learning” process consists of finding
+the optimal values for these parameters that make the line best fit the data.
+These parameters are shown in Figure 2.1 as θ0 and θ1 . The line represents the model’s prediction
+for any given value of x.
+
+Figure 2.1: Illustration of a linear regression model with the hypothesis function hθ (x) = θ0 + θ1 x.
+
+5
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+
+2.1.2
+
+Finding the Optimal Model Parameters
+
+To determine the ”best fit” line, our model needs a way to quantify its own performance. We need a
+numerical score that tells us how ”wrong” our current line is. This score is calculated by a cost function.
+The goal of the learning process is to find the line that minimizes this cost.
+The Cost Function as a ”Disappointment Score”
+Think of the cost function as a ”disappointment score” for your model. A high score means the
+model’s predictions are far from the actual data, and we are very disappointed. A low score means
+the model is doing a great job. Our goal is to find the model parameters (θ values) that give us
+the lowest possible disappointment.
+Let’s build the most common cost function, the Mean Squared Error (MSE), step-by-step.
+
+Step 1: Measuring the Error for a Single Data Point
+For any single data point, the error is simply the vertical distance between the actual value (y (i) ) and
+the value predicted by our line (hθ (x(i) )). This distance is called the residual.
+Errori = Predictioni − Actuali = hθ (x(i) ) − y (i)
+
+Figure 2.2: The residual (error) for a single data point is the vertical distance between the actual value
+(lower dot) and the model’s prediction on the regression line.
+
+Step 2: Making the Errors Positive
+Some errors will be positive (prediction is too high) and others will be negative (prediction is too low).
+If we just added them up, they could cancel each other out, giving us a misleadingly low total error.
+To solve this, we square each error. This has two excellent properties:
+• It ensures every error term is positive.
+• It penalizes larger errors much more heavily than smaller ones. A prediction that is off by 10 units
+contributes 100 to the total error, while a prediction off by 2 units only contributes 4. This forces
+the model to pay close attention to outliers and significant mistakes.
+
+Squared Errori = (hθ (x(i) ) − y (i) )2
+6
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+Alternative: Absolute Error
+Instead of squaring the error, we could also use the absolute value, which would give us the Mean
+Absolute Error (MAE). This value has a more direct interpretation as the average distance
+between the predicted and actual values. However, it does not penalize larger errors as strongly
+as the squared error does. The choice between MSE and MAE depends on the specific problem
+and the importance of outliers.
+Absolute Errori = |hθ (x(i) ) − y (i) |
+
+Step 3: Averaging the Errors for the Entire Dataset
+Now that we have a squared error for every data point, we can sum them up and take the average to get
+a single performance score for the entire dataset. This is the ”Mean” part of Mean Squared Error. We
+average by summing the squared errors and dividing by the number of data points, m.
+
+Putting It All Together: The MSE Cost Function
+Combining these steps gives us the final formula for the MSE cost function, J(θ):
+
+m
+
+J(θ) =
+
+1 X
+(hθ (x(i) ) − y (i) )2
+m i=1
+
+(2.2)
+
+A Note on the Formula: Where did the ‘1/2m‘ come from?
+1
+You will very often see the cost function for linear regression written with a 2m
+at the front
+1
+instead of m :
+m
+1 X
+J(θ) =
+(hθ (x(i) ) − y (i) )2
+(2.3)
+2m i=1
+
+The extra ‘2‘ in the denominator is a mathematical convenience. When we use calculus to find
+the minimum of this function (the process inside Gradient Descent), the ‘2‘ from the exponent of
+the squared term cancels out neatly with the ‘2‘ in the denominator. This simplifies the math but
+does not change the location of the minimum. Both formulas lead to the same optimal θ values.
+Now that we have a way to score our model, we can use an optimization algorithm like Gradient
+Descent to find the θ parameters that result in the minimum possible cost.
+
+2.2
+
+Gradient Descent: Finding the Bottom of the Hill
+
+We have established our cost function, J(θ), which measures how poorly our model fits the data. The
+next logical question is: how do we actually find the values for θ0 and θ1 that result in the minimum
+possible cost?
+We could try random values, but that would be incredibly inefficient. Instead, we use a clever and
+powerful optimization algorithm called Gradient Descent.
+7
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+
+2.2.1
+
+The Intuition: A Hike in the Fog
+
+Analogy: The Hiker in the Fog
+Imagine you are a hiker standing on a vast, hilly landscape, and a thick fog has rolled in. Your
+goal is to get to the lowest point in the valley, but you can only see the ground directly at your
+feet. What is your strategy?
+A good strategy would be to:
+1. Feel the slope of the ground where you are standing to find the direction of the steepest
+descent.
+2. Take a small, deliberate step in that downhill direction.
+3. Repeat the process: check the new slope, take another step, and so on.
+By repeating this simple rule, you will eventually find your way to the bottom of the valley.
+Gradient Descent works in precisely the same way.
+In this analogy:
+• The Hiker is our Gradient Descent algorithm.
+• The Hilly Landscape is our cost function, J(θ). The hills represent high costs, and the valleys
+represent low costs.
+• Your Position on the landscape is defined by the current values of your parameters, θ0 and θ1 .
+• The Direction of Steepest Descent is determined by the gradient of the cost function.
+• The Size of Your Step is controlled by the learning rate, α.
+
+2.2.2
+
+The Core Components of Gradient Descent
+
+The Gradient: The Compass for Our Hike
+In calculus, the gradient of a function at a particular point tells us the direction of the steepest ascent
+(i.e., which way is ”uphill”). It is a vector of partial derivatives. For our cost function J(θ0 , θ1 ), the
+gradient has two components: the partial derivative with respect to θ0 and the partial derivative with
+respect to θ1 .
+ ∂
+
+∂θ0 J(θ0 , θ1 )
+∇J(θ) = ∂
+∂θ1 J(θ0 , θ1 )
+Since the gradient points uphill, we simply move in the opposite direction (the negative gradient) to go
+downhill.
+
+The Learning Rate (α): The Size of Our Steps
+The learning rate, denoted by the Greek letter alpha (α), is a small positive number that controls how
+large of a step we take in the downhill direction. It is a critical hyperparameter that you must set.
+8
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+The Goldilocks Problem of the Learning Rate
+Choosing the right learning rate is crucial:
+• If α is too small, you will take tiny, shuffling steps. The algorithm will eventually reach
+the minimum, but it will be painfully slow.
+• If α is too large, you will take giant leaps. You might overshoot the minimum entirely and
+end up on the other side of the valley, further away than where you started. This can cause
+the algorithm to diverge and fail.
+• If α is just right, you will descend efficiently and converge to the minimum in a reasonable
+amount of time.
+
+Figure 2.3: The effect of the learning rate (α) on convergence. A small α converges slowly, a large α
+may diverge, and a well-chosen α converges efficiently.
+
+The Update Rule: Putting It All Together
+Gradient Descent works by repeatedly updating each parameter θj simultaneously using the following
+rule:
+θj := θj − α
+
+∂
+J(θ0 , θ1 )
+∂θj
+
+(2.4)
+
+In plain English, this says: ”The new value for a parameter is its old value minus a small step in the
+direction of the negative gradient.”
+
+2.2.3
+
+Applying Gradient Descent to Linear Regression (informational)
+
+Now, let’s derive the specific update rules for our linear regression cost function (2.3). We need to
+calculate the partial derivatives of J(θ) with respect to θ0 and θ1 .
+9
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+Derivative with respect to θ0 :
+m
+∂
+∂ 1 X
+J(θ) =
+(hθ (x(i) ) − y (i) )2
+∂θ0
+∂θ0 2m i=1
+m
+
+=
+
+1 X
+(hθ (x(i) ) − y (i) )
+m i=1
+
+Derivative with respect to θ1 :
+m
+∂
+∂ 1 X
+J(θ) =
+(hθ (x(i) ) − y (i) )2
+∂θ1
+∂θ1 2m i=1
+m
+
+1 X
+(hθ (x(i) ) − y (i) ) · x(i)
+=
+m i=1
+This gives us our final, specific update rules for the algorithm:
+Gradient Descent Update Rules for Linear Regression
+Repeat until convergence {
+m
+
+θ0 := θ0 − α
+
+1 X
+(hθ (x(i) ) − y (i) )
+m i=1
+
+(2.5)
+
+m
+
+1 X
+θ1 := θ1 − α
+(hθ (x(i) ) − y (i) ) · x(i)
+m i=1
+
+(2.6)
+
+}
+
+2.2.4
+
+Visualizing the Process
+
+It is helpful to visualize the cost function as a 3D surface, where the x and y axes are θ0 and θ1 , and the
+z-axis is the cost J(θ). Gradient descent is the process of walking down this surface to find the lowest
+point.
+An even more common way to visualize this is with a contour plot, which shows the 3D surface as
+a 2D map. Each ellipse represents a line of equal cost. The algorithm starts at some point and takes
+steps that are perpendicular to the contour lines, moving towards the center (the minimum).
+
+Figure 2.4: A 3D surface of the cost function J(θ). Gradient descent iteratively takes steps from an
+initial point downhill, where the cost is minimal. Here two starting points are shown, indicating that
+the starting point is important.
+
+10
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+
+2.3
+
+Data Pre-processing: Preparing Data for Modeling
+
+Real-world biological data is rarely in a ”plug-and-play” format. It is often messy, contains outliers, and
+includes non-numerical features. Before feeding data into a machine learning model, we must perform
+several critical pre-processing steps. The quality of these steps often has a greater impact on model
+performance than the choice of algorithm itself.
+
+2.3.1
+
+Handling Outliers
+
+Outliers are data points that differ significantly from other observations. They can arise from experimental errors, measurement variability, or genuinely rare biological events. Linear regression models,
+particularly those using the Mean Squared Error cost function, are highly sensitive to outliers because
+squaring the errors gives these points a disproportionately large influence on the model’s parameters.
+One common method for identifying and removing outliers is based on the Z-score.
+The Z-score
+The Z-score of a data point measures how many standard deviations it is away from the mean of
+the feature.
+x−µ
+(2.7)
+Z=
+σ
+Where x is the data point, µ is the mean of the feature, and σ is the standard deviation. A
+common rule of thumb is to consider any data point with a Z-score greater than 3 or less than
+-3 as an outlier. In machine learning, also bigger values such as 5 or 10 are sometimes used,
+depending on the context and the specific dataset.
+Here is a practical example of how to remove outliers from a pandas DataFrame:
+import numpy as np
+from scipy.stats import zscore
+# Assume 'df' is your DataFrame
+# Calculate Z-scores for all numeric columns
+z_scores = df.select_dtypes(include=np.number).apply(zscore)
+# Keep only the rows where all Z-scores are within a threshold (e.g., 3)
+df_no_outliers = df[(np.abs(z_scores) < 3).all(axis=1)]
+print(f"Original number of samples: {len(df)}")
+print(f"Number of samples after removing outliers: {len(df_no_outliers)}")
+To Remove or Not to Remove?
+Removing outliers is not always the right choice. An outlier could be a critical piece of data
+representing a rare but important biological phenomenon (e.g., a hypermutated tumor or an
+extreme drug responder). The decision to remove outliers should be made carefully, considering
+the context of the data and the goals of the analysis. Sometimes, using a more robust model or
+scaling method is preferable to outright removal.
+
+2.3.2
+
+Feature Scaling and Normalization
+
+Linear regression models, especially when optimized with Gradient Descent, are sensitive to the scale
+of the input features. Feature scaling transforms features to be on a similar scale, which helps the
+optimization algorithm converge more quickly and effectively.
+11
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+Standard Scaling (Z-score Normalization)
+This is the most common scaling technique. It rescales features to have a mean of 0 and a standard
+deviation of 1. It is suitable for features that are approximately normally distributed.
+x′ =
+
+x−µ
+σ
+
+(2.8)
+
+Min-Max Scaling
+This technique rescales features to a fixed range, typically [0, 1]. It is sensitive to outliers, as the minimum
+and maximum values determine the scaling.
+x′ =
+
+x − min(x)
+max(x) − min(x)
+
+(2.9)
+
+Robust Scaling
+When a dataset contains significant outliers, both Standard and Min-Max scaling can be skewed. Robust
+Scaling is a technique that is much less sensitive to outliers. It scales data according to its interquartile
+range (IQR). It does this by removing the median and scaling the data according to the range between
+the 1st quartile (25th percentile) and 3rd quartile (75th percentile).
+
+x′ =
+
+x − Q2 (x)
+Q3 (x) − Q1 (x)
+
+(2.10)
+
+Where Q1 , Q2 (the median), and Q3 are the first, second, and third quartiles, respectively. This method
+is the recommended choice when you suspect your data has outliers that you do not want to remove.
+An example of how to apply Robust Scaling using the ‘sklearn‘ library is shown below, note that
+Standard and Min-Max scaling can be done in a similar way using ‘StandardScaler‘ and ‘MinMaxScaler‘
+respectively.
+from sklearn.preprocessing import RobustScaler
+# Assume X_train and X_test are already defined
+scaler = RobustScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+Preventing Data Leakage
+It is critical to calculate scaling parameters (like the mean and standard deviation) on the training set only. You must then use these same parameters to transform both the training set and
+the test set. Fitting the scaler on the full dataset before splitting would cause information from
+the test set to ”leak” into the training process, leading to an overly optimistic evaluation of your
+model’s performance.
+
+2.3.3
+
+Handling Categorical Features
+
+Machine learning models require all input features to be numerical. Categorical features, such as ’treatment group’ with values like ’Drug A’, ’Drug B’, and ’Placebo’, must be converted into a numerical
+format.
+12
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+One-Hot Encoding with ‘get dummies‘
+The standard and most robust method for handling nominal categorical data (where there is no inherent
+order) is One-Hot Encoding. This technique creates a new binary (0 or 1) column for each category.
+The ‘pandas‘ library provides a very convenient function for this called ‘get dummies‘.
+import pandas as pd
+# Sample DataFrame with a categorical feature
+data = {'gene_id': ['gene1', 'gene2', 'gene3'],
+'pathway': ['Metabolism', 'Signaling', 'Metabolism']}
+df = pd.DataFrame(data)
+# Apply one-hot encoding
+df_encoded = pd.get_dummies(df, columns=['pathway'], prefix='pathway')
+# The result will have new columns: 'pathway_Metabolism' and 'pathway_Signaling'
+print(df_encoded)
+# Example output:
+#
+gene_id pathway_Metabolism pathway_Signaling
+# 0
+gene1
+1
+0
+# 1
+gene2
+0
+1
+# 2
+gene3
+1
+0
+Label Encoding: Use with Caution
+Another technique is Label Encoding, which converts each category into an integer (e.g., ’Metabolism’
+- 0, ’Signaling’ - 1).
+from sklearn.preprocessing import LabelEncoder
+encoder = LabelEncoder()
+df['pathway_encoded'] = encoder.fit_transform(df['pathway'])
+# The result will have a new column: 'pathway_encoded'
+print(df)
+# Example output:
+#
+gene_id
+pathway pathway_encoded
+# 0
+gene1
+Metabolism
+0
+# 1
+gene2
+Signaling
+1
+# 2
+gene3
+Metabolism
+0
+The Danger of Label Encoding for Nominal Data
+You must be very careful when using Label Encoding. By assigning numerical values like 0, 1, and
+2, you are implicitly telling the model that there is an ordinal relationship between the categories
+(e.g., that ’Signaling’ (1) is ”greater than” ’Metabolism’ (0)). For linear models, this can be
+highly misleading and lead to poor performance. Label Encoding is only appropriate for ordinal
+data, where a natural order exists (e.g., ’low’, ’medium’, ’high’). For all other cases, One-Hot
+Encoding is the safer and more appropriate choice.
+
+2.3.4
+
+Creating Polynomial Features for Non-Linearity
+
+What if the relationship between a feature and the target is not a straight line? A simple linear model
+cannot capture this curve. We can give it the ability to do so by creating polynomial features. By
+adding squared (x2 ), cubic (x3 ), or even higher-order terms of our original features to the dataset, our
+model can fit non-linear relationships.
+hθ (x) = θ0 + θ1 x1 + θ2 x21
+13
+
+(2.11)
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+This hypothesis, while still linear in its parameters (θj ), can now model a parabolic relationship between
+x1 and the target.
+
+Figure 2.5: A simple linear model (left) fails to capture the curved trend in the data (underfitting). By
+adding (a) polynomial feature(s) (in this case up to x3 ), the same linear regression algorithm can now
+fit a non-linear curve (right).
+
+2.4
+
+From Simple to Multivariate Linear Regression
+
+The real power of regression lies in its ability to model a target using multiple input features. While
+a single feature might explain some of the variation in a biological outcome, a combination of factors
+almost always provides a more complete picture. For instance, a patient’s response to a drug might
+depend on their age, weight, and the expression levels of several key genes.
+This is where Multivariate Linear Regression comes in. Instead of a single feature x, we now
+have n features (x1 , x2 , . . . , xn ). The hypothesis function is expanded accordingly:
+hθ (x) = θ0 + θ1 x1 + θ2 x2 + · · · + θn xn
+
+(2.12)
+
+In this expanded model:
+• Each feature xj has its own corresponding weight, θj .
+• Each weight θj represents the average change in the target variable for a one-unit increase in the
+feature xj , assuming all other features are held constant.
+• The learning process (minimizing the cost function with Gradient Descent) remains conceptually
+the same, but now the algorithm must find the optimal values for all n + 1 parameters (θ0 through
+θn ).
+This ability to integrate multiple sources of information makes multivariate regression an essential
+tool for building predictive models in complex fields like bioinformatics.
+
+2.5
+
+A Practical Example in Python
+
+Let’s build a linear regression model to predict the expression level of a gene based on the abundance of
+a specific transcription factor.
+
+2.5.1
+
+Data Preparation
+
+We start with a hypothetical dataset in a CSV file, which we load using ‘pandas‘.
+14
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+import pandas as pd
+import numpy as np
+# Create some sample bioinformatics data
+data = {
+'tf_abundance': np.random.rand(100) * 10,
+'gene_expression': 2.5 + 3 * (np.random.rand(100) * 10) + np.random.randn(100)
+,→
+* 2
+}
+df = pd.DataFrame(data)
+# Features (X) and target (y)
+X = df[['tf_abundance']] # We use double brackets to keep X as a DataFrame instead
+,→
+of a Series, since scikit-learn expects a 2D array (=dataframe) for features
+y = df['gene_expression']
+
+2.5.2
+
+Splitting Data into Training and Test Sets
+
+To evaluate our model’s performance on unseen data, we split our dataset into a training set and a test
+set.
+from sklearn.model_selection import train_test_split
+# test_size=0.2 means 20% of the data is reserved for testing
+# random_state ensures the split is the same every time we run the code
+X_train, X_test, y_train, y_test = train_test_split(
+X, y, test_size=0.2, random_state=42
+)
+
+2.5.3
+
+Training the Linear Regression Model
+
+Using ‘scikit-learn‘, training the model is straightforward.
+from sklearn.linear_model import LinearRegression
+# 1. Create an instance of the model
+model = LinearRegression()
+# 2. Train the model using the training data
+model.fit(X_train, y_train)
+# We can inspect the learned parameters
+print(f"Model Intercept (theta_0): {model.intercept_:.2f}")
+print(f"Model Coefficient (theta_1): {model.coef_[0]:.2f}")
+
+2.5.4
+
+Evaluating the Model
+
+We now use the test set, which the model has never seen, to evaluate its performance.
+from sklearn.metrics import mean_squared_error, r2_score
+# Note: mean_absolute_error is also available if you prefer to use the Mean
+,→
+Absolute Error (MAE) instead of MSE.
+# 1. Make predictions on the test set
+y_pred = model.predict(X_test)
+# 2. Calculate evaluation metrics
+15
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+print(f"Mean Squared Error (MSE) on test set: {mse:.2f}")
+print(f"R-squared (R2) on test set: {r2:.2f}")
+An R2 value close to 1.0 would indicate that our model explains a large proportion of the variability in
+gene expression based on transcription factor abundance.
+
+2.6
+
+The Bias-Variance Trade-off
+
+A central challenge in machine learning is navigating the trade-off between bias and variance.
+• Underfitting (High Bias): Occurs when a model is too simple to capture the underlying structure of the data. For example, trying to fit a linear model to a clearly non-linear biological process.
+The model will have high error on both the training and test sets.
+• Overfitting (High Variance): Occurs when a model is overly complex and learns the noise in
+the training data, rather than the true signal. It will perform exceptionally well on the training
+data but poorly on the test data. This is a common risk in bioinformatics, where the number of
+features (e.g., genes) can be much larger than the number of samples (e.g., patients).
+
+Figure 2.6: Illustration of the bias-variance trade-off. The underfit model is too simple, the overfit model
+is too complex, and the well-fit model captures the general trend.
+
+2.7
+
+Regularization: Preventing Overfitting
+
+One of the most significant challenges in bioinformatics is the ”curse of dimensionality,” where the number
+of features (p) can be much larger than the number of samples (n). For example, a gene expression study
+might measure 20,000 genes (p = 20, 000) for only 100 patients (n = 100). In such scenarios, a standard
+linear regression model is highly prone to overfitting. It will find spurious correlations in the training
+data and fail to generalize to new samples.
+Regularization is a powerful technique to combat overfitting by constraining the complexity of the
+model. It works by adding a penalty term to the cost function, which discourages the model’s parameters
+(θj ) from becoming too large. The modified cost function can be expressed as:
+Jregularized (θ) = JMSE (θ) + Penalty(θ)
+
+(2.13)
+
+The goal is no longer just to minimize the error, but to find a balance between minimizing the error and
+keeping the model parameters small.
+16
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+
+2.7.1
+
+A Geometric Interpretation of Regularization
+
+The effect of regularization can be visualized by considering the interplay between the original cost
+function and the penalty term, as shown in Figure 2.7.
+
+Figure 2.7: Geometric interpretation of Lasso (L1, left) and Ridge (L2, right) regularization. The red
+ellipses are the contour lines of the original cost function, with the unconstrained minimum at β̂. The
+blue shaded areas represent the constraint regions imposed by the penalty term.
+Note
+In Figure 2.7, the model parameters are denoted by β1 and β2 , which are used interchangeably
+with θ1 and θ2 in statistical literature.
+Let’s break down the components of this figure:
+• The Red Ellipses: These are the contour lines of the original Mean Squared Error (MSE) cost
+function. The center of the ellipses, labeled β̂, represents the optimal solution for a standard,
+unregularized linear regression—the point of minimum error.
+• The Blue Shaded Areas: This is the constraint region defined by the penalty. The model’s
+parameters are forced to lie within or on the boundary of this shape. The size of this region is
+controlled by the regularization strength parameter, ‘alpha‘. A larger ‘alpha‘ corresponds to a
+smaller blue region and thus a stronger penalty.
+• The Optimal Regularized Solution: The algorithm must find the parameter values that have
+the lowest possible error (i.e., are on the innermost possible red ellipse) while still being inside the
+blue region. This optimal solution is found at the point of tangency where the ellipses first touch
+the constraint region.
+Ridge Regression (L2 Regularization)
+Ridge regression adds a penalty proportional to the sum of the squared values of the parameters. This
+is the L2 norm.
+p
+X
+PenaltyL2 = α
+θj2
+(2.14)
+j=1
+
+17
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+The L2 penalty constrains the parameters to lie within a circular region (or a hypersphere in higher
+dimensions), as seen on the right side of Figure 2.7. Because the constraint region is circular and has no
+sharp corners, the point of tangency will typically occur where neither β1 nor β2 is exactly zero.
+Ridge Regression (L2)
+Ridge regression shrinks model parameters towards zero, reducing their magnitude and thus the
+model’s complexity. However, it rarely sets any parameter to be exactly zero. It is most useful
+when you believe that many features contribute to the outcome, and you want to prevent any
+single feature from having an overwhelmingly large influence.
+
+Lasso Regression (L1 Regularization)
+Lasso (Least Absolute Shrinkage and Selection Operator) regression adds a penalty proportional to the
+sum of the absolute values of the parameters. This is the L1 norm.
+PenaltyL1 = α
+
+p
+X
+
+|θj |
+
+(2.15)
+
+j=1
+
+The L1 penalty constrains the parameters to lie within a diamond-shaped region (or a rhomboid in higher
+dimensions), as seen on the left side of Figure 2.7. The crucial difference is that this shape has sharp
+corners that lie on the axes.
+Due to these corners, it is highly probable that the ellipses will first touch the constraint region at
+one of these corners. When this happens, the value of the parameter on the other axis is exactly zero
+(e.g., if the solution is at the top corner, β1 = 0).
+Lasso Regression (L1)
+Lasso regression not only shrinks parameters but can also force some of them to be exactly zero.
+This makes it an incredibly powerful tool for automatic feature selection. In bioinformatics,
+this is invaluable for identifying a small, interpretable subset of relevant features (e.g., a handful
+of pathogenic mutations from thousands of candidates) from a high-dimensional dataset.
+
+2.7.2
+
+Implementation in Python
+
+In ‘scikit-learn‘, both Ridge and Lasso are implemented as simple drop-in replacements for ‘LinearRegression‘. The strength of the regularization is controlled by the ‘alpha‘ parameter.
+from sklearn.linear_model import Ridge, Lasso
+# Ridge Regression
+# A higher alpha value means a stronger penalty.
+ridge_model = Ridge(alpha=1.0)
+ridge_model.fit(X_train, y_train)
+print(f"Ridge R-squared: {ridge_model.score(X_test, y_test):.2f}")
+# Lasso Regression
+# Also here, a higher alpha value means a stronger penalty.
+lasso_model = Lasso(alpha=1.0)
+lasso_model.fit(X_train, y_train)
+print(f"Lasso R-squared: {lasso_model.score(X_test, y_test):.2f}")
+# Inspect the coefficients to see Lasso's feature selection
+print(f"Number of features used by Lasso: {np.sum(lasso_model.coef_ != 0)}")
+18
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+
+2.7.3
+
+Lasso vs. Ridge: Which to Choose?
+
+• Use Ridge Regression when you expect most features to be predictive and you want to balance
+their influence.
+• Use Lasso Regression when you suspect that many features are irrelevant or redundant. It
+provides a more sparse and interpretable model by performing feature selection.
+• There is also Elastic Net, a hybrid model that combines both L1 and L2 penalties, offering a
+balance between the two approaches.
+In practice, the choice often depends on the specific biological problem, and it is common to test both
+models and tune the ‘alpha‘ parameter to find the best-performing solution.
+
+19
+
+CHAPTER 2. LINEAR REGRESSION: MODELING BIOLOGICAL RELATIONSHIPS
+
+20
+
+CHAPTER 3. LOGISTIC REGRESSION: FROM PREDICTION TO CLASSIFICATION
+
+3. Logistic Regression: From Prediction to
+Classification
+While linear regression is a powerful tool for predicting continuous values, many critical questions in
+bioinformatics require a categorical answer. Is a tumor malignant or benign? Does a particular mutation
+lead to disease? Is a protein localized to the nucleus or the cytoplasm? These are all classification
+problems, where the goal is to assign a discrete class label to an observation.
+This chapter introduces Logistic Regression, a foundational and widely used algorithm for binary
+classification. Despite its name, it is a classification method, not a regression method, and it forms the
+basis for understanding more complex classification algorithms.
+
+3.1
+
+The Task of Classification
+
+Classification is a supervised learning task where the model learns from a labeled dataset to predict a
+categorical label for new, unseen data. Classifiers can be categorized based on the number of classes they
+handle.
+• Binary Classification: The simplest case, where there are only two possible outcomes (e.g., 0 or
+1, positive or negative). This is the focus of this chapter.
+– Bioinformatics Example: Predicting whether a patient will respond to a particular drug
+treatment (responder vs. non-responder).
+• Multi-class Classification: There are more than two mutually exclusive classes.
+– Bioinformatics Example: Classifying a DNA sequence read to one of several possible
+species of origin in a metagenomics sample.
+• Multi-label Classification: A single sample can be assigned multiple labels simultaneously.
+– Bioinformatics Example: Assigning multiple Gene Ontology (GO) terms to a single protein, as it can be involved in several biological processes at once.
+
+3.2
+
+Why Not Use Linear Regression for Classification?
+
+A common first thought is to adapt linear regression for a binary classification task. For a target with
+labels 0 and 1, one could train a linear model and apply a threshold: if the model’s output is > 0.5,
+predict class 1; otherwise, predict class 0.
+However, this approach has two major flaws:
+1. Unbounded Output: A linear regression model’s output is not constrained between 0 and 1. It
+can produce predictions like 1.5 or -0.3, which are difficult to interpret as probabilities.
+2. Sensitivity to Outliers: An outlier can drastically shift the best-fit line, moving the decision
+boundary and leading to incorrect classifications for other data points.
+We need a model whose output is naturally constrained between 0 and 1, allowing us to interpret it as
+a probability. This is precisely what Logistic Regression provides.
+21
+
+CHAPTER 3. LOGISTIC REGRESSION: FROM PREDICTION TO CLASSIFICATION
+
+3.3
+
+The Logistic Regression Model
+
+The core innovation of logistic regression is the use of the sigmoid function (also called the logistic
+function) to transform the output of a linear equation into a probability.
+
+3.3.1
+
+The Sigmoid Function
+
+The sigmoid function, denoted as g(z), is defined as:
+g(z) =
+
+1
+1 + e−z
+
+(3.1)
+
+This function takes any real-valued number z and ”squashes” it into a value between 0 and 1, as shown
+in Figure 3.1.
+
+Figure 3.1: The sigmoid function. It maps any real-valued input z to an output between 0 and 1. The
+function crosses the 0.5 mark exactly at z = 0.
+
+3.3.2
+
+The Hypothesis Function
+
+The hypothesis for logistic regression is formed by feeding the linear model’s output directly into the
+sigmoid function. Thus logistic regression is basically a linear regression model followed by a non-linear
+transformation, the sigmoid function:
+hθ (x) = g(θT x) =
+
+1
+1 + e−θT x
+
+(3.2)
+
+Where θT x = θ0 + θ1 x1 + · · · + θn xn . The output hθ (x) is interpreted as the estimated probability that
+the sample belongs to the positive class (y=1).
+Key Concept
+The output of a logistic regression model is a probability. For a given sample x:
+• hθ (x) = P (y = 1|x; θ) — The probability of class 1 given the features x, parameterized by
+θ.
+• 1 − hθ (x) = P (y = 0|x; θ) — The probability of class 0.
+For example, if hθ (x) = 0.8, we interpret this as an 80% chance that the sample belongs to class
+1 (e.g., the patient will respond to treatment) and a 20% (1 - 0.8) chance that it belongs to class
+0 (e.g., the patient will not respond).
+
+22
+
+CHAPTER 3. LOGISTIC REGRESSION: FROM PREDICTION TO CLASSIFICATION
+
+3.3.3
+
+The Decision Boundary
+
+To make a final classification, we apply a threshold to the probability, typically 0.5.
+• Predict y = 1 if hθ (x) ≥ 0.5
+• Predict y = 0 if hθ (x) < 0.5
+Looking at the sigmoid function, we see that g(z) ≥ 0.5 whenever z ≥ 0. Therefore, the decision rule
+simplifies to:
+• Predict y = 1 if θT x ≥ 0
+• Predict y = 0 if θT x < 0
+The equation θT x = 0 defines the decision boundary, which is a line (or a plane/hyperplane in higher
+dimensions) that separates the two classes.
+
+3.4
+
+Cost Function for Logistic Regression
+
+The Mean Squared Error cost function used in linear regression is not suitable for logistic regression
+because it results in a non-convex function with many local minima, making optimization difficult.
+Instead, we use a cost function called Log Loss or Binary Cross-Entropy.
+The cost for a single training example is defined as:
+(
+− log(hθ (x))
+if y = 1
+Cost(hθ (x), y) =
+− log(1 − hθ (x)) if y = 0
+
+(3.3)
+
+This cost function has the desirable property of heavily penalizing a model that is confidently wrong.
+For instance, if the true label is y = 1 but the model predicts a probability near 0, the cost approaches
+infinity. This piecewise function can be written more compactly as a single equation:
+m
+
+J(θ) = −
+
+1 X (i)
+[y log(hθ (x(i) )) + (1 − y (i) ) log(1 − hθ (x(i) ))]
+m i=1
+
+(3.4)
+
+As with linear regression, we use Gradient Descent to find the θ parameters that minimize this cost
+function.
+
+3.5
+
+Practical Example: Predicting Gene Essentiality
+
+Let’s build a model to predict if a gene is essential (class 1) or non-essential (class 0) based on two
+features: its expression level and the number of protein-protein interactions (PPIs) it has.
+
+3.5.1
+
+Data and Preprocessing
+
+The preprocessing steps are similar to those for linear regression: load the data, handle missing values,
+and split into features and targets.
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+# Assume 'gene_data.csv' has columns: 'expression', 'ppi_count', 'is_essential'
+df = pd.read_csv('gene_data.csv')
+X = df[['expression', 'ppi_count']]
+23
+
+CHAPTER 3. LOGISTIC REGRESSION: FROM PREDICTION TO CLASSIFICATION
+y = df['is_essential']
+# Split the data
+X_train, X_test, y_train, y_test = train_test_split(
+X, y, test_size=0.3, random_state=42, stratify=y
+)
+# It's good practice to scale features for logistic regression as it speeds up
+# convergence (=training) and helps with numerical stability.
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+Note
+The ‘stratify=y‘ argument in ‘train test split‘ is important for classification. It ensures that the
+proportion of classes in the training and test sets is the same as in the original dataset, which is
+crucial for imbalanced datasets.
+
+3.5.2
+
+Training and Prediction
+
+from sklearn.linear_model import LogisticRegression
+# Create and train the model
+# The 'C' parameter is the inverse of regularization strength
+# A handy mind trick is to think of it as "C" for "Complexity" control.
+# A smaller C means less complexity (stronger regularization),
+# while a larger C means more complexity (weaker regularization).
+model = LogisticRegression(C=1.0, random_state=42)
+model.fit(X_train_scaled, y_train)
+# Make predictions on the test set
+# .predict() gives the class label (the predicted class)
+y_pred = model.predict(X_test_scaled)
+# .predict_proba() gives the probabilities for each class
+y_pred_proba = model.predict_proba(X_test_scaled)
+print("First 5 predictions (class):", y_pred[:5])
+print("First 5 probabilities [P(0), P(1)]:\\n", y_pred_proba[:5])
+
+3.6
+
+Evaluating a Classifier
+
+For classification, accuracy is not always the best metric, especially with imbalanced classes. A more
+complete picture is provided by the confusion matrix and the metrics derived from it.
+
+3.6.1
+
+The Confusion Matrix
+
+A confusion matrix is a table that summarizes the performance of a classification model. For a binary
+problem, it looks like this:
+24
+
+CHAPTER 3. LOGISTIC REGRESSION: FROM PREDICTION TO CLASSIFICATION
+
+Actual: Negative
+Actual: Positive
+
+Predicted: Negative
+True Negative (TN)
+False Negative (FN)
+
+Predicted: Positive
+False Positive (FP)
+True Positive (TP)
+
+Table 3.1: A 2x2 Confusion Matrix.
+Bioinformatics Context for Confusion Matrix Terms
+Consider a model that predicts whether a patient has a disease.
+• True Positive (TP): Model correctly predicts a sick patient has the disease.
+• True Negative (TN): Model correctly predicts a healthy patient does not have the disease.
+• False Positive (FP): Model incorrectly predicts a healthy patient has the disease (a false
+alarm).
+• False Negative (FN): Model incorrectly predicts a sick patient does not have the disease
+(a dangerous miss).
+
+3.6.2
+
+Key Evaluation Metrics
+
+From the confusion matrix, we can calculate several important metrics:
+P +T N
+• Accuracy: The proportion of correct predictions. T P +TTN
++F P +F N .
+P
+• Precision: Of all the positive predictions, how many were actually correct? T PT+F
+P . High
+precision is important when the cost of a false positive is high (e.g., a spam filter).
+
+• Recall (Sensitivity): Of all the actual positive samples, how many did the model correctly
+P
+identify? T PT+F
+N . High recall is crucial when the cost of a false negative is high (e.g., cancer
+screening).
+• F1-Score: The harmonic mean of precision and recall. It provides a single score that balances
+both metrics. 2 × Precision×Recall
+Precision+Recall .
+
+3.6.3
+
+Receiver Operating Characteristic (ROC) Curve
+
+The ROC curve is a graphical plot that illustrates the diagnostic ability of a binary classifier as its
+discrimination threshold is varied (by default the treshold is 0.5). It plots the True Positive Rate
+(TPR), which is another name for Recall, against the False Positive Rate (FPR).
+FPR =
+
+FP
+FP + TN
+
+(3.5)
+
+A model with perfect discrimination would have a ROC curve that goes straight up to the top-left corner
+(TPR=1, FPR=0). A model that performs no better than random chance will have a ROC curve along
+the diagonal line. The Area Under the Curve (AUC) provides a single number summary of the
+model’s performance across all thresholds. An AUC of 1.0 represents a perfect model, while an AUC of
+0.5 represents a random model.
+from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
+# Display confusion matrix and classification report
+print("Confusion Matrix:\\n", confusion_matrix(y_test, y_pred))
+print("\\nClassification Report:\\n", classification_report(y_test, y_pred))
+# Calculate AUC
+auc = roc_auc_score(y_test, y_pred_proba[:, 1])
+print(f"\\nArea Under ROC Curve (AUC): {auc:.2f}")
+25
+
+CHAPTER 3. LOGISTIC REGRESSION: FROM PREDICTION TO CLASSIFICATION
+
+3.7
+
+Handling Non-linear Data
+
+Just like linear regression, logistic regression produces a linear decision boundary. If the classes are not
+linearly separable, this model will perform poorly. To address this, we can use feature expansion to
+create polynomial features (e.g., x21 , x22 , x1 x2 ). This allows the model to learn a non-linear decision
+boundary (e.g., a circle or an ellipse) in the original feature space.
+from sklearn.preprocessing import PolynomialFeatures
+# Create second-degree polynomial features
+poly = PolynomialFeatures(degree=2, include_bias=False)
+X_train_poly = poly.fit_transform(X_train_scaled)
+X_test_poly = poly.transform(X_test_scaled)
+# Train a new model on the expanded features
+poly_model = LogisticRegression()
+poly_model.fit(X_train_poly, y_train)
+print(f"Score with polynomial features: {poly_model.score(X_test_poly,
+,→
+y_test):.2f}")
+Warning
+Adding many polynomial features increases model complexity and significantly raises the risk
+of overfitting. Regularization becomes even more critical when using this technique. The ‘C‘
+parameter in ‘LogisticRegression‘ is used to control this.
+An Alternative: The Kernel Trick
+Another advanced method for handling non-linear data is the ”kernel trick,” which is central to
+algorithms like Support Vector Machines (SVMs). Instead of explicitly creating new features,
+a kernel function computes the relationships between data points in a higher-dimensional space
+where they might be linearly separable. This can be more computationally efficient than creating
+a large number of polynomial features.
+
+3.8
+
+Regularization in Logistic Regression
+
+As with linear regression, regularization is used to prevent overfitting by penalizing large model coefficients. The ‘C‘ hyperparameter in ‘scikit-learn‘’s ‘LogisticRegression‘ controls the strength of this
+penalty.
+The Hyperparameter C
+The ‘C‘ parameter is the inverse of the regularization strength. This is a crucial point and
+a common source of confusion. It is the reciprocal of the ‘alpha‘ parameter seen in models like
+‘Ridge‘ and ‘Lasso‘.
+• Small ‘C‘ value: Corresponds to strong regularization. The model is forced to be simpler,
+which can lead to underfitting if ‘C‘ is too small.
+• Large ‘C‘ value: Corresponds to weak regularization. The model has more freedom to fit
+the training data, which can lead to overfitting if ‘C‘ is too large.
+Finding the optimal value for ‘C‘ is a key part of the model tuning process, often done using
+techniques like cross-validation.
+
+# Example of training a model with stronger regularization
+26
+
+CHAPTER 3. LOGISTIC REGRESSION: FROM PREDICTION TO CLASSIFICATION
+# A smaller C value increases the penalty on large coefficients
+strong_reg_model = LogisticRegression(C=0.1, random_state=42)
+strong_reg_model.fit(X_train_scaled, y_train)
+print(f"Model score with C=1.0 (default): {model.score(X_test_scaled,
+,→
+y_test):.3f}")
+print(f"Model score with C=0.1 (stronger reg):
+,→
+{strong_reg_model.score(X_test_scaled, y_test):.3f}")
+
+3.9
+
+Multi-class Classification
+
+While logistic regression is inherently a binary classifier, it can be extended to handle multi-class problems
+where there are more than two classes. This is typically achieved using one of two main strategies.
+
+3.9.1
+
+One-vs-Rest (OvR)
+
+The One-vs-Rest (OvR) strategy, also known as One-vs-All, involves training a separate binary classifier
+for each class. For a problem with N classes, we would train N classifiers:
+• Classifier 1: Class 1 vs. (Class 2, 3, ..., N)
+• Classifier 2: Class 2 vs. (Class 1, 3, ..., N)
+• ...
+• Classifier N: Class N vs. (Class 1, 2, ..., N-1)
+To classify a new sample, it is fed to all N classifiers. The classifier that outputs the highest confidence
+score (probability) determines the final predicted class.
+Note
+The OvR strategy is computationally efficient as it only requires training N classifiers. However,
+it can lead to problems with imbalanced datasets, as for each classifier, the ”rest” category is
+often much larger than the single positive class.
+
+3.9.2
+
+One-vs-One (OvO)
+
+The One-vs-One (OvO) strategy involves training a binary classifier for every pair of classes. For a
+problem with N classes, this results in N (N2−1) classifiers.
+• Example (3 classes: A, B, C):
+– Classifier 1: Class A vs. Class B
+– Classifier 2: Class A vs. Class C
+– Classifier 3: Class B vs. Class C
+To classify a new sample, it is run through all classifiers. Each classifier ”votes” for one of the two classes
+it was trained on. The class that receives the most votes is the final prediction.
+Note
+The OvO strategy is more computationally expensive due to the large number of classifiers required. However, each classifier is trained on a smaller, more balanced subset of the data, which
+can lead to better performance, especially when the number of classes is not too large.
+27
+
+CHAPTER 3. LOGISTIC REGRESSION: FROM PREDICTION TO CLASSIFICATION
+
+3.9.3
+
+Implementation in Python
+
+‘scikit-learn‘’s ‘LogisticRegression‘ can handle multi-class problems out of the box. By default, it uses
+the OvR strategy when the solver is ‘liblinear‘, or it can use a ”multinomial” approach which generalizes
+logistic regression directly.
+# Let's assume y_multi contains multiple class labels (e.g., 0, 1, 2)
+# 'ovr' explicitly sets the One-vs-Rest strategy
+ovr_model = LogisticRegression(multi_class='ovr', C=1.0, solver='liblinear')
+ovr_model.fit(X_train_scaled, y_train_multi)
+To use the OvO strategy with a model that does not natively support it (or if you want to explicitly
+use it), ‘scikit-learn‘ provides a helpful wrapper class.
+from sklearn.multiclass import OneVsOneClassifier
+# 1. Create a base logistic regression model instance
+base_model = LogisticRegression(C=1.0, solver='liblinear')
+# 2. Wrap the base model in the OneVsOneClassifier
+ovo_model = OneVsOneClassifier(base_model)
+# 3. Fit the OvO model. This will train N(N-1)/2 classifiers under the hood.
+ovo_model.fit(X_train_scaled, y_train_multi)
+# 4. Make predictions
+y_pred_ovo = ovo_model.predict(X_test_scaled)
+This modular approach allows you to apply multi-class strategies to any binary classifier in the
+‘scikit-learn‘ library.
+
+28
+
+CHAPTER 4. OPTIMIZING MODEL PERFORMANCE: HYPERPARAMETER TUNING
+
+4. Optimizing Model Performance: Hyperparameter Tuning
+In the previous chapters, we introduced machine learning models as algorithms that learn parameters (or
+weights, θ) from data. However, there is another class of parameters that are not learned from the data
+but are set by the practitioner before the training process begins. These are called hyperparameters.
+Hyperparameters are the configuration settings of a learning algorithm. They can be thought of as
+the ”dials” that control the model’s behavior and complexity. The choice of hyperparameters can have
+a profound impact on a model’s performance, often marking the difference between a high-performing,
+generalizable model and a useless one.
+
+4.1
+
+What are Hyperparameters?
+
+While parameters like the coefficients (θ1 , θ2 , . . . ) in linear regression are determined automatically during
+the ‘.fit()‘ process, hyperparameters are arguments you pass to the model’s constructor.
+Common examples of hyperparameters include:
+• The regularization strength alpha in Ridge or Lasso regression.
+• The choice of penalty ('l1' or 'l2') in regularized models.
+• The number of neighbors (n_neighbors) in a K-Nearest Neighbors model.
+• The maximum depth (max_depth) of a decision tree.
+• The learning rate in neural networks.
+Finding the optimal set of hyperparameters for a given problem and dataset is a critical step in the
+machine learning workflow known as hyperparameter tuning or hyperparameter optimization.
+
+4.2
+
+Strategies for Hyperparameter Tuning
+
+Manually tweaking hyperparameters is tedious and unlikely to find the best combination. Fortunately,
+several automated strategies exist to search the hyperparameter space efficiently.
+
+4.2.1
+
+Grid Search
+
+Grid Search is an exhaustive search technique. The practitioner defines a ”grid” of discrete hyperparameter values to explore, and the algorithm trains and evaluates a model for every possible combination
+of these values.
+29
+
+CHAPTER 4. OPTIMIZING MODEL PERFORMANCE: HYPERPARAMETER TUNING
+Bioinformatics Example: Grid Search
+Imagine you are optimizing a Logistic Regression Classifier to classify protein subcellular localization. You decide to tune two hyperparameters:
+• The regularization parameter C with possible values: [0.1, 1, 10].
+• The kernel type solver with possible values: ['liblinear', 'lbfgs'].
+Grid Search will systematically train and evaluate six different models:
+(C=0.1,
+solver=’liblinear’), (C=1, solver=’liblinear’), (C=10, solver=’liblinear’), (C=0.1, solver=’lbfgs’),
+(C=1, solver=’lbfgs’), and (C=10, solver=’lbfgs’). It then reports the combination that yielded
+the best performance.
+While thorough, Grid Search suffers from the ”curse of dimensionality.” As the number of hyperparameters and their possible values increases, the number of models to train explodes, making it computationally very expensive.
+
+4.2.2
+
+Random Search
+
+Random Search offers a more efficient alternative. Instead of trying all combinations, it samples a
+fixed number of combinations from the specified hyperparameter space (either from a list of values or a
+statistical distribution).
+Surprisingly, research has shown that Random Search is often more effective than Grid Search. This
+is because not all hyperparameters are equally important. Random Search spends its computational
+budget exploring a wider range of values for each hyperparameter, increasing the probability of finding
+a good value for the most important ones.
+
+4.2.3
+
+Bayesian Optimization
+
+More advanced techniques like Bayesian Optimization take a ”smarter” approach. Instead of searching
+randomly or exhaustively, they build a probabilistic model of the relationship between hyperparameter
+values and the model’s performance. This model is then used to intelligently select the next set of
+hyperparameters to try, focusing on regions of the search space that are most likely to yield improvements.
+
+4.2.4
+
+Advanced Optimization Strategies
+
+While Grid Search, Random Search, and Bayesian Optimization are the most common methods, other
+advanced strategies exist that are powerful in specific contexts. These are mentioned here for completeness but will not be discussed in detail.
+Sidenote: Gradient-Based and Evolutionary Optimization
+• Gradient-Based Optimization: For certain models (primarily neural networks), it is
+possible to compute the gradient of the validation performance with respect to the hyperparameters themselves. This allows the use of gradient descent-like algorithms to directly
+”learn” the best hyperparameters. This approach can be very efficient but is only applicable
+to models with differentiable hyperparameters.
+• Evolutionary Optimization: These methods are inspired by the principles of biological evolution. An initial ”population” of hyperparameter sets is created. The ”fittest”
+sets (those that yield the best model performance) are selected, and their values are ”mutated” and ”recombined” to create a new generation of hyperparameter sets. This process is
+repeated over many generations, gradually evolving towards an optimal solution. These algorithms are very flexible and can handle complex search spaces but can be computationally
+intensive.
+30
+
+CHAPTER 4. OPTIMIZING MODEL PERFORMANCE: HYPERPARAMETER TUNING
+
+4.3
+
+The Need for Cross-Validation
+
+A critical problem arises when performing hyperparameter tuning: if we use our test set to evaluate the
+performance of each hyperparameter combination, we will inadvertently ”leak” information from the test
+set into our model selection process. The hyperparameters we choose will be optimized for that specific
+test set, and our final performance estimate will be overly optimistic.
+The solution is Cross-Validation (CV).
+K-Fold Cross-Validation
+K-Fold Cross-Validation is a robust procedure for model evaluation and hyperparameter tuning that avoids data leakage from the test set. The process is as follows:
+1. The test set is set aside and remains untouched until the very end.
+2. The training set is split into K smaller, equal-sized subsets, called ”folds”.
+3. The following process is repeated K times (once for each fold):
+• A model is trained using K − 1 of the folds as training data.
+• The resulting model is validated on the remaining fold (the ”hold-out” or ”validation”
+fold).
+4. The performance measure reported by K-fold cross-validation is the average of the values
+computed in each of the K iterations.
+This approach ensures that every data point in the original training set gets to be in a validation
+set exactly once. A common choice for K is 5 or 10.
+
+Figure 4.1: Illustration of 5-fold cross-validation. The training data is split into 5 folds. In each iteration,
+a different fold is used for validation (blue fold), and the remaining four (green folds) are used for training.
+Notice that the Test data is completely excluded except for a final evaluation.
+When combined with hyperparameter search, cross-validation provides a reliable way to estimate the
+performance of each hyperparameter combination on unseen data.
+31
+
+CHAPTER 4. OPTIMIZING MODEL PERFORMANCE: HYPERPARAMETER TUNING
+
+4.4
+
+Hyperparameter Tuning in Scikit-Learn
+
+4.4.1
+
+GridSearchCV
+
+The GridSearchCV class in ‘scikit-learn‘ automates the process of performing a grid search with crossvalidation.
+Let’s apply it to a regularized logistic regression model for a classification task, such as predicting
+whether a patient will respond to a particular drug based on genomic markers.
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+# Generate sample classification data
+X, y = make_classification(n_samples=1000, n_features=20, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,
+,→
+random_state=42)
+# 1. Define the model
+model = LogisticRegression(solver='liblinear')
+# 2. Define the hyperparameter grid
+# Here we test L1 and L2 penalties with a range of C values
+param_grid = {
+'penalty': ['l1', 'l2'],
+'C': [0.01, 0.1, 1, 10, 100]
+}
+# 3. Set up GridSearchCV
+# cv=5 specifies 5-fold cross-validation
+# n_jobs=-1 uses all available CPU cores
+grid_search = GridSearchCV(
+estimator=model,
+# The model to be tuned
+param_grid=param_grid, # The hyperparameter grid to search
+cv=5,
+# Number of folds for cross-validation
+scoring='accuracy',
+# Metric to optimize
+n_jobs=-1
+# Use all available CPU cores for parallel processing
+)
+# 4. Fit the grid search to the training data
+grid_search.fit(X_train, y_train)
+# 5. Inspect the results
+print(f"Best parameters found: {grid_search.best_params_}")
+print(f"Best cross-validation accuracy: {grid_search.best_score_:.3f}")
+After fitting, the grid_search object contains the best hyperparameters found and is itself a trained
+model using those parameters. We can then use it to evaluate performance on the final, untouched test
+set.
+
+# Evaluate the best model on the test set
+test_accuracy = grid_search.score(X_test, y_test)
+print(f"Test set accuracy: {test_accuracy:.3f}")
+32
+
+CHAPTER 4. OPTIMIZING MODEL PERFORMANCE: HYPERPARAMETER TUNING
+
+4.4.2
+
+RandomizedSearchCV
+
+For larger search spaces, RandomizedSearchCV is more efficient. Instead of a grid of discrete values, you
+can specify a statistical distribution for continuous hyperparameters like C.
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import uniform
+# 1. Define the model
+model = LogisticRegression(solver='liblinear')
+# 2. Define the hyperparameter distributions
+# 'C' will be sampled from a uniform distribution between 0.01 and 100
+param_dist = {
+'penalty': ['l1', 'l2'],
+'C': uniform(loc=0.01, scale=99.99)
+}
+# 3. Set up RandomizedSearchCV
+# n_iter=50 specifies that 50 random combinations will be tried
+random_search = RandomizedSearchCV(
+estimator=model,
+param_distributions=param_dist,
+n_iter=50,
+cv=5,
+scoring='accuracy',
+n_jobs=-1,
+random_state=42
+)
+# 4. Fit the random search to the training data
+random_search.fit(X_train, y_train)
+# 5. Inspect the results
+print(f"Best parameters found: {random_search.best_params_}")
+print(f"Best cross-validation accuracy: {random_search.best_score_:.3f}")
+Choosing a Search Strategy
+• Grid Search: Best for small, discrete search spaces. Guarantees finding the best combination within the grid but can be very slow.
+• Random Search: More efficient for larger search spaces and often finds a better model in
+less time.
+• Bayesian Optimization: An intelligent search method that is often the most efficient
+(will find the best parameters), especially for computationally expensive models (like deep
+neural networks). Note however that due to the added statistical calculations, this will also
+be slow. Libraries like scikit-optimize provide implementations such as BayesSearchCV.
+
+33
+
+CHAPTER 4. OPTIMIZING MODEL PERFORMANCE: HYPERPARAMETER TUNING
+
+34
+
+CHAPTER 5. WORKING WITH IMBALANCED DATA
+
+5. Working with Imbalanced Data
+In many real-world classification problems, the distribution of classes is not equal. Imbalanced data
+refers to datasets where one class (the majority class) is represented by a large number of samples, while
+another class (the minority class) is represented by very few. This scenario is extremely common in
+bioinformatics and presents a significant challenge for training effective machine learning models.
+Imbalance in Bioinformatics
+Class imbalance is the norm, not the exception, in biological datasets:
+• Disease Prediction: In a general population, the number of healthy individuals (majority
+class) vastly outnumbers those with a rare disease (minority class).
+• Genomic Variant Calling: When searching for disease-causing mutations, nonpathogenic variants (majority class) are far more common than pathogenic ones (minority
+class).
+• Drug Discovery: In high-throughput screening, inactive compounds (majority class) massively outnumber active, promising compounds (minority class).
+
+5.1
+
+The Problem with Imbalanced Data
+
+Most standard machine learning algorithms are designed with the assumption of balanced class distributions. When trained on imbalanced data, they can develop a significant bias towards the majority
+class.
+
+5.1.1
+
+The Accuracy Paradox
+
+The core problem is that the default evaluation metric, accuracy, becomes deeply misleading. Accuracy
+measures the proportion of total correct predictions. A naive model that simply predicts the majority
+class for every single sample can achieve a very high accuracy score, despite being completely useless for
+identifying the minority class.
+Consider a dataset for cancer prediction with 990 healthy patients (negative class) and 10 cancer
+patients (positive class). A model that always predicts ”healthy” will achieve an accuracy of:
+Accuracy =
+
+Correct Predictions
+990
+=
+= 99%
+Total Predictions
+1000
+
+(5.1)
+
+This 99% accuracy is deceptive; the model has zero ability to perform its primary task of identifying
+cancer patients. This is known as the accuracy paradox.
+Relying on Accuracy is Dangerous
+When dealing with imbalanced data, accuracy is not a reliable metric. A high accuracy can mask
+a model’s complete failure to predict the minority class, which is often the class of interest. It is
+crucial to use more informative evaluation metrics.
+35
+
+CHAPTER 5. WORKING WITH IMBALANCED DATA
+
+5.2
+
+Strategies for Handling Imbalanced Data
+
+Several strategies can be employed to mitigate the effects of class imbalance. These can be broadly
+categorized into data-level, algorithm-level, and evaluation-level approaches.
+
+5.2.1
+
+Data-Level Solutions: Resampling Techniques
+
+Resampling techniques modify the training dataset to create a more balanced class distribution.
+
+Undersampling
+Undersampling involves reducing the number of samples in the majority class. The simplest method
+is to randomly remove samples from the majority class until it is of a similar size to the minority class.
+• Advantage: Can significantly reduce training time and computational cost.
+• Disadvantage: By discarding data, we risk removing potentially important information that could
+help the model learn the decision boundary.
+
+Oversampling
+Oversampling involves increasing the number of samples in the minority class. The simplest method
+is to randomly duplicate existing samples from the minority class.
+• Advantage: No information is lost from the original dataset.
+• Disadvantage: Simple duplication can lead to overfitting, as the model may learn to recognize
+the specific duplicated samples rather than general patterns of the minority class.
+
+Synthetic Data Augmentation: SMOTE
+A more advanced oversampling technique is the Synthetic Minority Over-sampling Technique
+(SMOTE). Instead of duplicating samples, SMOTE creates new, synthetic samples for the minority
+class. It works by:
+1. Selecting a minority class sample at random.
+2. Finding its k nearest neighbors from the minority class.
+3. Creating a new synthetic sample along the line segment connecting the chosen sample and one of
+its neighbors.
+This approach creates a more diverse set of minority samples and helps the model generalize better.
+
+ADASYN
+Adaptive Synthetic Sampling (ADASYN) is an extension of SMOTE that focuses on generating
+synthetic samples in regions of the feature space where the minority class is underrepresented. It adaptively determines the number of synthetic samples to generate based on the density of the minority class
+samples in the feature space. This means that in areas where the minority class is sparse, more synthetic
+samples are generated, while in denser areas, fewer samples are created. This helps to create a more
+balanced representation of the minority class across the feature space.
+36
+
+CHAPTER 5. WORKING WITH IMBALANCED DATA
+
+Figure 5.1: Conceptual illustration of SMOTE and ADASYN. ADASYN generates synthetic samples in
+regions where the minority class is underrepresented, adapting to the local density of minority samples.
+SMOTE generates synthetic samples uniformly across the feature space.
+
+Using Resampling Libraries
+The imbalanced-learn library for Python provides easy-to-use implementations of these techniques, designed to work seamlessly with ‘scikit-learn‘. For example, to apply SMOTE:
+$ pip install imbalanced-learn
+from imblearn.over_sampling import SMOTE
+smote = SMOTE(random_state=42)
+X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
+
+5.2.2
+
+Algorithm-Level Solutions: Class Weighting
+
+Many machine learning algorithms in ‘scikit-learn‘ have a class_weight parameter. This parameter
+modifies the loss function to penalize misclassifications of the minority class more heavily than misclassifications of the majority class.
+For example, if the majority class is 10 times larger than the minority class, you can set the weights
+to give 10 times more importance to errors on minority class samples.
+from sklearn.linear_model import LogisticRegression
+# Set class_weight to 'balanced' to automatically adjust weights
+# inversely proportional to class frequencies.
+model = LogisticRegression(class_weight='balanced')
+This is often a simple and effective first step, as it does not require modifying the data itself. You
+can specify the weights in several ways:
+• Keyword: class_weight="balanced" automatically calculates weights.
+• Dictionary: class_weight={0: 1, 1: 10} assigns a weight of 1 to class 0 and 10 to class 1.
+
+5.2.3
+
+Evaluation-Level Solutions: Choosing the Right Scorer
+
+As established, accuracy is a poor metric for imbalanced problems. Instead, we should use metrics that
+provide a better picture of a model’s performance on each class. These are derived from the confusion
+matrix.
+37
+
+CHAPTER 5. WORKING WITH IMBALANCED DATA
+Precision, Recall, and F1-Score
+• Recall (Sensitivity): Measures the model’s ability to find all the actual positive samples. It
+answers the question: ”Of all the patients who actually have the disease, how many did we correctly
+identify?”
+True Positives
+Recall =
+(5.2)
+True Positives + False Negatives
+• Precision: Measures the accuracy of the positive predictions. It answers the question: ”Of all the
+patients we predicted have the disease, how many actually do?”
+Precision =
+
+True Positives
+True Positives + False Positives
+
+(5.3)
+
+• F1-Score: The harmonic mean of Precision and Recall. It provides a single score that balances
+both concerns. It is often a better metric than accuracy for imbalanced problems.
+F1-Score = 2 ×
+
+Precision × Recall
+Precision + Recall
+
+(5.4)
+
+Balanced Accuracy
+This metric is the average of the recall obtained on each class. It avoids the inflation caused by a large
+majority class.
+Recallpositive + Recallnegative
+(5.5)
+Balanced Accuracy =
+2
+Changing the Scorer in Hyperparameter Tuning
+When performing hyperparameter tuning with GridSearchCV or RandomizedSearchCV, it is crucial to
+change the default scoring metric from 'accuracy'.
+from sklearn.model_selection import GridSearchCV
+# ... (model and param_grid setup) ...
+# Use F1-score or balanced accuracy as the optimization target
+grid_search = GridSearchCV(
+estimator=model,
+param_grid=param_grid,
+cv=5,
+scoring='f1_weighted' # Or 'balanced_accuracy', 'roc_auc', etc.
+)
+grid_search.fit(X_train, y_train)
+By optimizing for a more appropriate metric, you guide the hyperparameter search to find models
+that perform well on the minority class, which is typically the goal in an imbalanced setting.
+
+38
+
+CHAPTER 6. NAÏVE BAYES CLASSIFIERS
+
+6. Naı̈ve Bayes Classifiers
+The classification algorithms discussed so far, such as Logistic Regression, belong to a category of models
+known as discriminative classifiers. These models learn a direct mapping from features to a class
+label by finding a decision boundary that separates the classes. In this chapter, we introduce a different
+family of models: generative classifiers, exemplified by the Naı̈ve Bayes algorithm.
+
+6.1
+
+Discriminative vs. Generative Models
+
+In machine learning, classifiers can be broadly categorized into two types: discriminative and generative
+models. Understanding the distinction between these two approaches is crucial for selecting the right
+model for a given task.
+
+6.1.1
+
+Discriminative Models
+
+A discriminative model learns the conditional probability P (y|X), which represents the probability of a
+class y given a set of features X. Its primary focus is to find the decision boundary between classes.
+• What it learns: A function that separates the data points.
+• Analogy: A discriminative model is like a customs officer who only learns the rules to distinguish
+between ”allowed” and ”forbidden” items, without needing to understand what makes an item
+belong to either category.
+• Examples: Logistic Regression, Support Vector Machines (SVMs), Decision Trees.
+
+6.1.2
+
+Generative Models
+
+A generative model takes a different approach. It learns the joint probability distribution P (X, y), which
+can be decomposed into the class prior P (y) and the class-conditional probability of the features P (X|y).
+In essence, it learns what the data for each class looks like.
+• What it learns: The underlying distribution of the data for each class.
+• Analogy: A generative model is like a biologist who studies the characteristics of two different
+species (e.g., lions and tigers) so thoroughly that they can not only distinguish between them but
+could also, in theory, generate a new, plausible example of a lion or a tiger.
+• Examples: Naı̈ve Bayes, Hidden Markov Models (HMMs), Variational Autoencoders (VAEs).
+
+6.2
+
+Bayes’ Theorem
+
+Generative classifiers use Bayes’ Theorem to turn the probabilities they learn (P (X|y) and P (y)) into
+the probability we need for classification (P (y|X)).
+39
+
+CHAPTER 6. NAÏVE BAYES CLASSIFIERS
+
+Figure 6.1: Discriminative models (left) focus on finding the boundary that separates classes. Generative
+models (right) learn the distribution of each class, effectively modeling what each class ”looks like.”
+Bayes’ Theorem is a cornerstone of probability theory and is stated as:
+P (y|X) =
+
+P (X|y)P (y)
+P (X)
+
+(6.1)
+
+The terms have specific names:
+• P (y|X) is the Posterior: The probability of class y after observing the features X. This is what
+we want to calculate.
+• P (X|y) is the Likelihood: The probability of observing features X if the sample belongs to class
+y. The generative model learns this from the data.
+• P (y) is the Prior: The overall probability of class y, irrespective of any features. This is simply
+the frequency of the class in the training data.
+• P (X) is the Marginal or Evidence: The overall probability of observing features X.
+Bioinformatics calculation example: Is this sequence a promoter?
+Let’s use Bayes’ Theorem to solve a common bioinformatics problem. Suppose we are analyzing
+a short DNA sequence and want to determine the probability that it is a promoter region. We
+have the following information from prior studies:
+• Prior Probability: From analyzing the entire genome, we know that the probability of
+any randomly chosen sequence being a promoter is very low. Let’s say P (Promoter) = 0.01.
+This is our prior belief before we see any specific features.
+• Likelihood Information: We discover that our sequence contains a ”TATA box” motif.
+Through analysis of known promoters and non-promoters, we have determined the following
+likelihoods:
+– The probability of finding a TATA box, given that the sequence is a promoter, is high:
+P (TATA box|Promoter) = 0.8.
+
+40
+
+CHAPTER 6. NAÏVE BAYES CLASSIFIERS
+
+– The probability of finding a TATA box by random chance in a non-promoter sequence
+is low: P (TATA box|Not Promoter) = 0.1.
+Note: In this example the feature (X) is the presence of a TATA box, and the class (y) is whether
+the sequence is a promoter or not.
+Question: Given that our sequence has a TATA box, what is the new, updated probability that
+it is a promoter? This is the posterior probability, P (Promoter|TATA box).
+Solution:
+We apply Bayes’ Theorem:
+P (Promoter|TATA box) =
+
+P (TATA box|Promoter)P (Promoter)
+P (TATA box)
+
+We know the two terms in the numerator, but we need to calculate the denominator,
+P (TATA box). This is the marginal probability—the overall probability of finding a TATA
+box in any sequence, whether it’s a promoter or not. We can calculate it using the law of total
+probability:
+P (TATA box) = P (TATA box|Promoter)P (Promoter)
++ P (TATA box|Not Promoter)P (Not Promoter)
+Since P (Not Promoter) = 1 − P (Promoter) = 1 − 0.01 = 0.99, we have:
+P (TATA box) = (0.8 × 0.01) + (0.1 × 0.99)
+= 0.008 + 0.099
+= 0.107
+So, there’s a 10.7% chance of finding a TATA box in any random sequence from this genome.
+Now we can calculate our final posterior probability:
+P (Promoter|TATA box) =
+
+0.008
+0.8 × 0.01
+=
+≈ 0.075
+0.107
+0.107
+
+Conclusion: After finding a TATA box, our belief that the sequence is a promoter has increased
+from our initial prior of 1% to a posterior of 7.5%. The evidence has made us more confident, but
+the probability is still quite low because promoter regions are inherently rare. This demonstrates
+how Bayes’ theorem allows us to formally update our beliefs in the light of new evidence.
+For classification, we want to find the class y that has the highest posterior probability for a given
+set of features X. Since P (X) is the same for all classes, we can ignore it and compare the numerators:
+P (y|X) ∝ P (X|y)P (y)
+
+(6.2)
+
+Is this sequence a promoter? - Using numerators
+Let’s apply this to our previous example. We want to classify a sequence as a promoter or not
+based on the presence of a TATA box.
+Given:
+• P (Promoter) = 0.01
+• P (TATA box|Promoter) = 0.8
+• P (TATA box|Not Promoter) = 0.1
+Calculate:
+P (Promoter|TATA box) ∝ P (TATA box|Promoter)P (Promoter)
+∝ 0.8 × 0.01 = 0.008
+
+41
+
+CHAPTER 6. NAÏVE BAYES CLASSIFIERS
+
+For the non-promoter class:
+P (Not Promoter|TATA box) ∝ P (TATA box|Not Promoter)P (Not Promoter)
+∝ 0.1 × 0.99 = 0.099
+Conclusion: The posterior probability for the promoter class is 0.008, while for the non-promoter
+class it is 0.099. Since 0.099 is greater than 0.008, we classify the sequence as ”Not Promoter”.
+This shows how we can use Bayes’ theorem to make classification decisions based on evidence
+without needing to compute the full posterior probability. Note: In practice, we would compare
+these values for all classes
+
+6.3
+
+The ”Naı̈ve” Assumption
+
+Calculating the likelihood P (X|y) directly can be computationally intractable, as it requires modeling
+the probability of every possible combination of feature values. The Naı̈ve Bayes classifier simplifies this
+problem by making a strong—or ”naı̈ve”—assumption:
+The Naı̈ve Bayes Assumption
+The Naı̈ve Bayes classifier assumes that all features are conditionally independent given the
+class.
+This means that, for a given class, the value of one feature provides no information about the value
+of another feature. For a set of features X = (x1 , x2 , . . . , xn ), this assumption allows us to break down
+the likelihood into a product of individual probabilities:
+
+P (X|y) = P (x1 |y) × P (x2 |y) × · · · × P (xn |y) =
+
+n
+Y
+
+P (xi |y)
+
+(6.3)
+
+i=1
+
+This simplifies the classification rule significantly:
+
+P (y|X) ∝ P (y)
+
+n
+Y
+
+P (xi |y)
+
+(6.4)
+
+i=1
+
+To make a prediction, we calculate this value for each possible class and choose the class with the highest
+score.
+Bioinformatics context: The Naı̈ve assumption
+In bioinformatics, this assumption is almost always false. For example, the expression levels of
+two genes in the same pathway are not independent. However, despite this flawed assumption,
+Naı̈ve Bayes often performs surprisingly well in practice and serves as an excellent baseline model
+due to its speed and simplicity.
+
+Naı̈ve Bayes in Action: Classifying a Genomic Sequence
+Let’s walk through a simple classification task. Suppose we have a small dataset of 10 genomic
+sequences, and we want to build a classifier to determine if a new sequence is a gene or not, based
+on two simple binary features: the presence of a start codon and the presence of a poly-A signal.
+Our Training Data:
+
+42
+
+CHAPTER 6. NAÏVE BAYES CLASSIFIERS
+
+Sequence ID
+Seq1
+Seq2
+Seq3
+Seq4
+Seq5
+Seq6
+Seq7
+Seq8
+Seq9
+Seq10
+
+Has Start Codon
+True
+True
+True
+False
+True
+False
+False
+False
+False
+False
+
+Has PolyA Signal
+True
+True
+False
+False
+False
+True
+False
+False
+False
+True
+
+Class
+Gene
+Gene
+Gene
+Gene
+Gene
+Not Gene
+Not Gene
+Not Gene
+Not Gene
+Not Gene
+
+Our Goal: Classify a new sequence ‘X = (Has Start Codon=True, Has PolyA Signal=True)‘.
+Step 1: Calculate the Prior Probabilities
+This is simply the frequency of each class in our data.
+of Gene sequences
+5
+= 10
+= 0.5
+• P (Gene) = Number
+Total sequences
+of Not Gene sequences
+5
+• P (Not Gene) = NumberTotal
+= 10
+= 0.5
+sequences
+
+Step 2: Calculate the Likelihoods for Each Feature
+We calculate the probability of each feature value given a class.
+• P (Start=True|Gene) = 4/5 = 0.8
+• P (Start=False|Gene) = 1/5 = 0.2
+• P (PolyA=True|Gene) = 2/5 = 0.4
+• P (PolyA=False|Gene) = 3/5 = 0.6
+• P (Start=True|Not Gene) = 0/5 = 0.0
+
+←− Uh oh! A zero!
+
+• P (Start=False|Not Gene) = 5/5 = 1.0
+• P (PolyA=True|Not Gene) = 2/5 = 0.4
+• P (PolyA=False|Not Gene) = 3/5 = 0.6
+Step 3: Apply the Naı̈ve Bayes Rule
+We calculate the proportional posterior score for each class.
+P (Gene|X) ∝ P (Gene) × P (Start=True|Gene) × P (PolyA=True|Gene)
+∝ 0.5 × 0.8 × 0.4 = 0.16
+P (Not Gene|X) ∝ P (Not Gene) × P (Start=True|Not Gene) × P (PolyA=True|Not Gene)
+∝ 0.5 × 0.0 × 0.4 = 0.0
+Conclusion (and Problem): According to our model, the probability of the new sequence being
+”Not Gene” is zero. This seems extreme and incorrect. Just because we’ve never seen a ”Not
+Gene” sequence with a start codon in our small training set, should we conclude it’s impossible?
+This is the zero-frequency problem, and it makes our model very brittle.
+
+6.4
+
+Practical Challenges and Solutions
+
+Two common challenges arise when implementing Naı̈ve Bayes classifiers in practice: the zero-frequency
+problem and numerical underflow. Let’s explore these issues and their solutions.
+43
+
+CHAPTER 6. NAÏVE BAYES CLASSIFIERS
+
+6.4.1
+
+The Zero-Frequency Problem and Laplacian Smoothing
+
+A significant practical issue arises if a particular feature value never appears with a particular class in
+the training data. For example, if we are classifying DNA sequences and the feature ”contains ’ATTG’”
+never occurs in any ”promoter” class examples, then P (”contains ’ATTG’” — ”promoter”) will be zero.
+Because the final score is a product of probabilities, this single zero will cause the entire posterior
+probability for that class to become zero, regardless of how strongly the other features support it.
+The solution is Laplacian smoothing (or add-one smoothing). We add a small number, α (typically
+1), to the count of every feature occurrence. This ensures that no probability is ever exactly zero. In
+‘scikit-learn‘, this is controlled by the alpha hyperparameter.
+Revisiting the Problem with Laplacian Smoothing
+Let’s solve the zero-frequency problem from our previous example using Laplacian smoothing
+with α = 1.
+Recall our Goal: Classify ‘X = (Has Start Codon=True, Has PolyA Signal=True)‘. The prior
+probabilities P (Gene) and P (Not Gene) remain 0.5.
+Step 1: Re-calculate the Likelihoods with Smoothing
+The formula for a smoothed probability is: total count+α
+in class+α×k , where k is the number of possible
+values for the feature (in this case, k = 2 for True/False).
+For Class = Gene (Total count = 5):
+5+1
+= 75 ≈ 0.714
+• P (Start=True|Gene) = 4+(1×2)
+2+1
+• P (PolyA=True|Gene) = 5+(1×2)
+= 37 ≈ 0.429
+
+For Class = Not Gene (Total count = 5):
+0+1
+• P (Start=True|Not Gene) = 5+(1×2)
+= 17 ≈ 0.143
+
+←− No longer zero!
+
+2+1
+• P (PolyA=True|Not Gene) = 5+(1×2)
+= 37 ≈ 0.429
+
+Step 2: Re-apply the Naı̈ve Bayes Rule with Smoothed Probabilities
+P (Gene|X) ∝ P (Gene) × P (Start=True|Gene) × P (PolyA=True|Gene)
+∝ 0.5 × 0.714 × 0.429 ≈ 0.153
+P (Not Gene|X) ∝ P (Not Gene) × P (Start=True|Not Gene) × P (PolyA=True|Not Gene)
+∝ 0.5 × 0.143 × 0.429 ≈ 0.031
+Conclusion: Since 0.153 > 0.031, our model now classifies the sequence as a Gene. By using
+Laplacian smoothing, we avoided the zero-frequency problem and arrived at a more robust and
+sensible prediction. The model acknowledges that seeing a start codon in a ”Not Gene” sequence
+is rare, but not impossible.
+
+6.4.2
+
+Numerical Underflow and Log Probabilities
+
+Multiplying many small probabilities together can lead to numerical underflow, where the result is too
+small for the computer to represent and gets rounded to zero. To avoid this, computations are performed
+in log space. The rule log(a × b) = log(a) + log(b) allows us to convert the product of probabilities into
+a sum of log-probabilities:
+log(P (y|X)) ∝ log(P (y)) +
+
+n
+X
+
+log(P (xi |y))
+
+(6.5)
+
+i=1
+
+Summing numbers is numerically much more stable than multiplying them. ‘scikit-learn‘’s Naı̈ve Bayes
+implementations handle this internally, and you can access these log-probabilities via the ‘.predict log proba()‘
+method.
+44
+
+CHAPTER 6. NAÏVE BAYES CLASSIFIERS
+
+6.5
+
+Naı̈ve Bayes in Scikit-Learn
+
+‘scikit-learn‘ provides several Naı̈ve Bayes implementations suited for different types of data.
+• GaussianNB: Assumes that features with continuous values follow a Gaussian (normal) distribution.
+• MultinomialNB: Designed for features that represent counts or frequencies, making it highly
+suitable for text classification or k-mer counts in bioinformatics.
+• BernoulliNB: Used for binary/boolean features (e.g., presence or absence of a specific gene mutation).
+Let’s use MultinomialNB to classify DNA sequences as belonging to one of two species based on their
+dinucleotide frequencies.
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import classification_report
+# --- Create Sample Bioinformatics Data --# Imagine we have calculated dinucleotide frequencies for 1000 sequences
+np.random.seed(42)
+features = ['AA', 'AC', 'AG', 'AT', 'CA', 'CC', 'CG', 'CT']
+X = pd.DataFrame(np.random.randint(0, 100, size=(1000, 8)), columns=features)
+# Add a feature for GC content, which is common in bioinformatics
+X['GC_content'] = np.random.randint(30, 70, size=(1000,))
+# Create a target variable where one class has higher GC content
+y = (X['GC_content'] > 50).astype(int)
+X = X.drop(columns=['GC_content']) # Assume GC_content was just for generating y
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,
+,→
+random_state=42)
+# --- Train and Evaluate Naive Bayes Model --# 1. Create a Multinomial Naive Bayes model
+# alpha=1.0 enables Laplacian smoothing, which is a good default
+model = MultinomialNB(alpha=1.0)
+# 2. Train the model
+model.fit(X_train, y_train)
+# 3. Make predictions on the test set
+y_pred = model.predict(X_test)
+# 4. Evaluate the model's performance
+print("Classification Report:")
+print(classification_report(y_test, y_pred))
+# 5. Inspecting probabilities
+# Get probabilities for the first test sample
+sample_probs = model.predict_proba(X_test.iloc[[0]])
+sample_log_probs = model.predict_log_proba(X_test.iloc[[0]])
+print(f"\nProbabilities for the first sample: {sample_probs}")
+print(f"Log-probabilities for the first sample: {sample_log_probs}")
+45
+
+CHAPTER 6. NAÏVE BAYES CLASSIFIERS
+Alpha Parameter in Scikit-learn
+Setting alpha=0 is not allowed as it would disable smoothing and risk the zero-frequency problem.
+If a very small value is provided, ‘scikit-learn‘ may issue a warning about potential numerical errors
+and use a small default value instead. An ‘alpha‘ of 1 is the standard for add-one smoothing.
+
+46
+
+CHAPTER 7. DECISION TREES
+
+7. Decision Trees
+Decision Trees are among the most intuitive and interpretable models in machine learning. They belong
+to the family of supervised learning algorithms and can be used for both classification and regression
+tasks. A decision tree makes predictions by learning a hierarchy of simple if/then/else questions based
+on the features in the data.
+The structure of a decision tree resembles an upside-down tree:
+• Root Node: The top-most node, which represents the entire dataset.
+• Internal Nodes: Nodes that represent a question or a test on a specific feature.
+• Branches: The links connecting nodes, representing the outcome of a test (e.g., ”True” or ”False”).
+• Leaf Nodes (Terminal Nodes): The final nodes that do not split further. They represent the
+final class prediction or regression value.
+
+Figure 7.1: The basic structure of a decision tree, showing the root node, internal nodes, branches, and
+leaf nodes.
+
+7.1
+
+Benefits and Drawbacks of Decision Trees
+
+Decision trees are popular for several reasons, but they also have a significant weakness.
+
+7.1.1
+
+Benefits
+
+• High Interpretability: The tree structure is easy to visualize and understand. The path from
+the root to a leaf can be translated into a clear logical expression, making it a ”white-box” model.
+• Handles Mixed Data Types: Trees can naturally handle both numerical and categorical features
+without extensive pre-processing.
+• Non-linear Relationships: They can capture complex, non-linear relationships between features
+and the target.
+47
+
+CHAPTER 7. DECISION TREES
+
+7.1.2
+
+Drawback
+
+• Prone to Overfitting: If a tree is allowed to grow to its maximum depth, it can create a complex
+set of rules that perfectly memorizes the training data, including its noise. Such a model will fail
+to generalize to new, unseen data.
+
+7.2
+
+How a Decision Tree is Built
+
+The core of the decision tree algorithm is to find the best feature and the best split point for that feature
+to divide the data at each node. The ”best” split is the one that makes the resulting child nodes as
+”pure” as possible—meaning they contain samples predominantly from a single class.
+To measure this purity, algorithms use metrics like Entropy and Gini Impurity.
+
+7.2.1
+
+Entropy and Information Gain
+
+Entropy is a concept from information theory that measures the level of impurity, disorder, or uncertainty in a set of data.
+• A dataset with only one class has an entropy of 0 (perfectly pure).
+• A dataset with a 50/50 mix of two classes has an entropy of 1 (maximum impurity).
+The formula for entropy in a set with N classes is:
+
+H=−
+
+N
+X
+
+pi log2 (pi )
+
+(7.1)
+
+i=1
+
+where pi is the proportion of samples belonging to class i.
+The algorithm calculates the Information Gain for every possible split. Information Gain measures
+how much the entropy decreases after a split.
+Information Gain = Entropyparent − Weighted Average Entropychildren
+
+(7.2)
+
+The weighted average entropy of the children is calculated based on the number of samples in each
+child node:
+Nright
+Nleft
+Hleft +
+Hright
+(7.3)
+Weighted Average Entropy =
+Ntotal
+Ntotal
+where Nleft and Nright are the number of samples in the left and right child nodes, respectively, and
+Ntotal is the total number of samples in the parent node. Hleft and Hright are the entropies of the left
+and right child nodes.
+The algorithm selects the split with the highest information gain to be the rule for the current
+node. This process is repeated recursively for each child node until a stopping criterion is met.
+Finding the Best Split with Information Gain
+Let’s determine the best initial split for a decision tree using a small dataset of 10 patient samples.
+Our goal is to predict disease status based on two binary features: the expression level of Gene A
+(either High or Low) and the methylation status of Gene B (either Methylated or Unmethylated).
+Training Data:
+
+48
+
+CHAPTER 7. DECISION TREES
+
+Patient
+P1
+P2
+P3
+P4
+P5
+P6
+P7
+P8
+P9
+P10
+
+Gene A Expression
+High
+Low
+High
+Low
+Low
+High
+Low
+High
+Low
+High
+
+Gene B Methylation
+Methylated
+Unmethylated
+Methylated
+Unmethylated
+Methylated
+Unmethylated
+Methylated
+Methylated
+Unmethylated
+Methylated
+
+Status
+Diseased
+Healthy
+Diseased
+Healthy
+Diseased
+Healthy
+Healthy
+Healthy
+Diseased
+Diseased
+
+Step 1: Calculate the Entropy of the Parent Node
+First, we calculate the entropy of the entire dataset before any splits. The dataset contains 5
+”Diseased” samples and 5 ”Healthy” samples.
+5
+• pDiseased = 10
+= 0.5
+5
+= 0.5
+• pHealthy = 10
+
+This represents maximum uncertainty, so the entropy is at its maximum value.
+Hparent = −(0.5 log2 (0.5) + 0.5 log2 (0.5)) = 1.0
+Step 2: Evaluate a Split on ”Gene A Expression”
+We divide the data into two groups based on Gene A’s expression level and calculate the entropy
+for each.
+• Node ‘Gene A = High‘: This group has 5 samples total (3 Diseased, 2 Healthy).
+– pD = 3/5 = 0.6, pH = 2/5 = 0.4
+HHigh = −(0.6 log2 (0.6) + 0.4 log2 (0.4)) ≈ 0.971
+• Node ‘Gene A = Low‘: This group has 5 samples total (2 Diseased, 3 Healthy).
+– pD = 2/5 = 0.4, pH = 3/5 = 0.6
+HLow = −(0.4 log2 (0.4) + 0.6 log2 (0.6)) ≈ 0.971
+Now, we calculate the weighted average entropy of these children nodes.
+
+ 
+
+5
+5
+Hchildren =
+× HHigh +
+× HLow
+10
+10
+= (0.5 × 0.971) + (0.5 × 0.971) = 0.971
+The Information Gain for this split is the reduction in entropy:
+IGGene A = Hparent − Hchildren = 1.0 − 0.971 = 0.029
+Step 3: Evaluate a Split on ”Gene B Methylation”
+Next, we evaluate the alternative split based on Gene B’s methylation status.
+• Node ‘Gene B = Methylated‘: This group has 6 samples total (4 Diseased, 2 Healthy).
+– pD = 4/6 ≈ 0.67, pH = 2/6 ≈ 0.33
+HMethylated = −((4/6) log2 (4/6) + (2/6) log2 (2/6)) ≈ 0.918
+• Node ‘Gene B = Unmethylated‘: This group has 4 samples total (1 Diseased, 3
+Healthy).
+– pD = 1/4 = 0.25, pH = 3/4 = 0.75
+
+49
+
+CHAPTER 7. DECISION TREES
+
+HUnmethylated = −(1/4 log2 (1/4) + 3/4 log2 (3/4)) ≈ 0.811
+The weighted average entropy for this split is:
+
+ 
+
+6
+4
+Hchildren =
+× HMethylated +
+× HUnmethylated
+10
+10
+= (0.6 × 0.918) + (0.4 × 0.811) ≈ 0.551 + 0.324 = 0.875
+And the Information Gain for this split is:
+IGGene B = Hparent − Hchildren = 1.0 − 0.875 = 0.125
+Step 4: Conclusion
+By comparing the two possible splits, we find that:
+• Information Gain (Gene A) = 0.029
+• Information Gain (Gene B) = 0.125
+Since IGGene B > IGGene A , the split on Gene B Methylation provides a greater reduction in
+uncertainty. Therefore, the decision tree algorithm will select Gene B Methylation as the best
+feature for the root node split.
+
+7.2.2
+
+Gini Impurity
+
+Gini Impurity is an alternative metric to entropy. It measures the probability of incorrectly classifying
+a randomly chosen element from the dataset if it were randomly labeled according to the class distribution
+in the set.
+N
+X
+G=1−
+p2i
+(7.4)
+i=1
+
+Like entropy, a Gini impurity of 0 indicates perfect purity. The goal is to find the split that results in
+the lowest weighted average Gini impurity in the child nodes.
+Calculating the Best Split with Gini Impurity
+Let’s re-evaluate the same 10-patient dataset using Gini Impurity to find the best initial split.
+Our goal is to find the split that results in the lowest weighted average Gini Impurity.
+Step 1: Calculate the Gini Impurity of the Parent Node
+The parent node contains 5 ”Diseased” and 5 ”Healthy” samples, so the proportions are pD = 0.5
+and pH = 0.5.
+
+Gparent = 1 − p2Diseased + p2Healthy
+= 1 − (0.52 + 0.52 )
+= 1 − (0.25 + 0.25) = 0.5
+This is the maximum possible Gini Impurity for a two-class problem.
+Step 2: Calculate Weighted Gini for a Split on ”Gene A Expression”
+We use the same groups as in the Information Gain exercise.
+• Node ‘Gene A = High‘: 5 samples total (3 Diseased, 2 Healthy).
+– pD = 3/5 = 0.6, pH = 2/5 = 0.4
+GHigh = 1 − (0.62 + 0.42 ) = 1 − (0.36 + 0.16) = 0.480
+• Node ‘Gene A = Low‘: 5 samples total (2 Diseased, 3 Healthy).
+– pD = 2/5 = 0.4, pH = 3/5 = 0.6
+
+50
+
+CHAPTER 7. DECISION TREES
+
+GLow = 1 − (0.42 + 0.62 ) = 1 − (0.16 + 0.36) = 0.480
+The weighted average Gini Impurity for this split is:
+
+ 
+
+5
+5
+Weighted GiniGene A =
+× GHigh +
+× GLow
+10
+10
+= (0.5 × 0.480) + (0.5 × 0.480) = 0.480
+Step 3: Calculate Weighted Gini for a Split on ”Gene B Methylation”
+Now we evaluate the alternative split on Gene B.
+• Node ‘Gene B = Methylated‘: 6 samples total (4 Diseased, 2 Healthy).
+– pD = 4/6 ≈ 0.67, pH = 2/6 ≈ 0.33
+
+GMethylated = 1 − (4/6)2 + (2/6)2 = 1 − (0.444 + 0.111) ≈ 0.444
+• Node ‘Gene B = Unmethylated‘: 4 samples total (1 Diseased, 3 Healthy).
+– pD = 1/4 = 0.25, pH = 3/4 = 0.75
+GUnmethylated = 1 − ((1/4)2 + (3/4)2 ) = 1 − (0.0625 + 0.5625) = 0.375
+The weighted average Gini Impurity for this split is:
+
+ 
+
+6
+4
+Weighted GiniGene B =
+× GMethylated +
+× GUnmethylated
+10
+10
+= (0.6 × 0.444) + (0.4 × 0.375)
+≈ 0.266 + 0.150 = 0.416
+Step 4: Conclusion
+To select the best split, we compare the resulting weighted Gini Impurity scores, choosing the
+split that yields the lowest value.
+• Weighted Gini (Gene A) = 0.480
+• Weighted Gini (Gene B) = 0.416
+Since 0.416 < 0.480, the split on Gene B Methylation results in nodes with lower overall
+impurity. Therefore, the algorithm will select Gene B Methylation as the best feature for the
+root node split. This confirms the decision we reached using Information Gain.
+Note
+In practice, both Gini impurity and entropy often produce very similar trees. Gini impurity is
+slightly faster to compute, so it is the default criterion in ‘scikit-learn‘.
+
+7.3
+
+Preventing Overfitting: Pruning and Ensembles
+
+Because a fully grown decision tree will likely overfit, we need techniques to control its complexity.
+
+7.3.1
+
+Pruning
+
+Pruning involves limiting the size of the decision tree. There are two main strategies:
+• Pre-pruning: Setting stopping conditions during the tree construction process. This is achieved
+by tuning hyperparameters in ‘scikit-learn‘:
+– max_depth: Limits the maximum depth (number of levels) of the tree.
+51
+
+CHAPTER 7. DECISION TREES
+– min_samples_split: Sets the minimum number of samples required in a node to consider it
+for splitting.
+– min_samples_leaf: Sets the minimum number of samples that must be present in a leaf node.
+• Post-pruning: Allowing the tree to grow fully and then removing branches that provide little
+explanatory power. This is controlled by the ccp_alpha (Cost Complexity Pruning) parameter.
+Properly tuning these hyperparameters via cross-validation is essential for building a robust decision tree
+model.
+
+7.3.2
+
+Random Forests: An Introduction to Ensembles
+
+A single decision tree can be highly sensitive to the specific data it was trained on—small changes in
+the training set can lead to a completely different tree. A more powerful and robust approach is to use
+a Random Forest.
+Random Forest
+A Random Forest is an ensemble of many decision trees. It works by:
+1. Building a large number of individual decision trees (a ”forest”).
+2. Training each tree on a different random subset of the training data (a technique called
+bagging).
+3. Further randomizing the trees by only considering a random subset of features at each split.
+To make a prediction, the Random Forest aggregates the votes from all the individual trees
+(majority vote for classification, average for regression). This process reduces the risk of overfitting
+and generally leads to much better performance than a single, finely tuned decision tree.
+Random Forests are one of the most popular and effective general-purpose machine learning algorithms, and they serve as a perfect introduction to the broader topic of ensemble learning.
+
+7.4
+
+Decision Trees in Scikit-Learn
+
+Let’s build a decision tree classifier to predict whether a gene is essential or non-essential based on
+features like its expression level, number of protein-protein interactions (PPI), and sequence length.
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import classification_report
+# --- Sample Bioinformatics Data --# In a real scenario, this would be loaded from a file.
+data = {
+'expression_level': [10.5, 2.1, 8.7, 5.5, 1.2, 9.8, 3.4, 6.7],
+'ppi_count': [50, 5, 45, 25, 3, 60, 10, 30],
+'sequence_length': [1200, 800, 1100, 1500, 950, 1300, 750, 1400],
+'is_essential': [1, 0, 1, 1, 0, 1, 0, 1] # 1=essential, 0=non-essential
+}
+df = pd.DataFrame(data)
+X = df[['expression_level', 'ppi_count', 'sequence_length']]
+y = df['is_essential']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25,
+,→
+random_state=42)
+52
+
+CHAPTER 7. DECISION TREES
+
+# --- Train and Evaluate a Decision Tree --# 1. Create a Decision Tree model with pre-pruning
+# Limiting the depth is a simple way to prevent overfitting
+model = DecisionTreeClassifier(max_depth=3, random_state=42)
+# 2. Train the model
+model.fit(X_train, y_train)
+# 3. Make predictions
+y_pred = model.predict(X_test)
+# 4. Evaluate the model
+print(classification_report(y_test, y_pred))
+To improve upon this, one would typically use a RandomForestClassifier and tune its hyperparameters (like n_estimators—the number of trees in the forest) using cross-validation.
+
+53
+
+CHAPTER 7. DECISION TREES
+
+54
+
+CHAPTER 8. ENSEMBLE LEARNING: THE POWER OF MANY
+
+8. Ensemble Learning: The Power of Many
+In the previous chapter, we saw how a single decision tree can be a powerful and interpretable model,
+but also that it is prone to overfitting. The Random Forest algorithm hinted at a powerful solution:
+instead of relying on a single model, why not combine the predictions of several models? This is the core
+idea behind Ensemble Learning.
+Ensemble Learning
+Ensemble learning is a machine learning technique that combines multiple individual models
+(often called ”base estimators” or ”weak learners”) to produce one optimal predictive model (the
+”ensemble”). The central idea is that a diverse group of models, when combined, can achieve
+better performance and robustness than any single model on its own.
+The principle is often summarized as ”the wisdom of the crowd.” A single expert might make a
+mistake, but the collective judgment of a diverse group of experts is likely to be more accurate. For an
+ensemble to be effective, the base models should be as accurate as possible and as diverse as possible.
+Note
+As a sidenote, a mixture of experts is also sometimes used in Large Language Models (LLMs) to
+combine the outputs of different specialized models, each trained on different aspects of the data.
+This is similar to ensemble learning but often involves more complex architectures. Based on the
+type of input, the model can dynamically select which experts to use, allowing for more efficient
+and specialized processing. You might encounter terms like ”Mixture of Experts” (MoE) in the
+context of LLMs, which is a specific application of ensemble learning principles.
+There are three main families of ensemble methods: Bagging, Boosting, and Stacking.
+
+8.1
+
+Bagging: Bootstrap Aggregating
+
+Bagging, which stands for Bootstrap Aggregating, is one of the simplest yet most effective ensemble
+techniques. It focuses on reducing the variance of a model, making it less sensitive to the specific training
+data and thus less prone to overfitting.
+The bagging process works as follows:
+1. Bootstrap Sampling: From the original training dataset of size N , create M new training
+datasets (or ”bags”), each also of size N . Each bag is created by sampling with replacement from
+the original dataset. This means some samples may appear multiple times in a bag, while others
+may not appear at all.
+2. Independent Training: Train a base model (e.g., a decision tree) independently on each of the
+M bags.
+3. Aggregation: To make a prediction for a new sample, aggregate the predictions from all M
+models.
+• For classification, this is typically done by majority voting (the most predicted class wins).
+• For regression, this is done by averaging the predictions.
+55
+
+CHAPTER 8. ENSEMBLE LEARNING: THE POWER OF MANY
+Random Forest is a Form of Bagging
+The Random Forest algorithm is a specific implementation of bagging where the base estimator is
+a decision tree. It adds an extra layer of randomness by also selecting a random subset of features
+at each split, which further increases the diversity of the trees and improves performance. The
+RandomForestClassifier in ‘scikit-learn‘ uses bagging by default (bootstrap=True).
+
+Bagging in Scikit-Learn
+You can apply bagging to any type of base estimator using the BaggingClassifier or BaggingRegressor.
+Let’s apply bagging to a set of logistic regression models.
+from sklearn.ensemble import BaggingClassifier
+from sklearn.linear_model import LogisticRegression
+# Assume X_train, X_test, y_train, y_test are already defined
+# Define the base model we want to ensemble
+base_model = LogisticRegression(solver='liblinear')
+# Create the Bagging ensemble
+# n_estimators=50 means we will train 50 logistic regression models
+bagging_model = BaggingClassifier(
+base_estimator=base_model,
+n_estimators=50,
+random_state=42,
+n_jobs=-1
+)
+# Train the ensemble
+bagging_model.fit(X_train, y_train)
+# Evaluate its performance
+print(f"Bagging model score: {bagging_model.score(X_test, y_test):.3f}")
+
+8.2
+
+Boosting: Learning from mistakes
+
+Boosting is another powerful ensemble technique that works quite differently from bagging. Instead
+of training models in parallel, boosting trains them sequentially. Each new model in the sequence is
+trained to correct the errors made by the previous models.
+The general process is as follows:
+1. Train a simple base model on the training data.
+2. Identify the samples that the current model misclassified.
+3. Increase the weight of these misclassified samples, so that the next model in the sequence will pay
+more attention to them.
+4. Train the next base model on this newly weighted data.
+5. Repeat steps 2-4 for a specified number of models.
+The final prediction is a weighted sum of the predictions from all the models, where better-performing
+models are given a higher weight.
+56
+
+CHAPTER 8. ENSEMBLE LEARNING: THE POWER OF MANY
+Boosting and Overfitting
+Because boosting focuses so intently on correcting errors, it can be more prone to overfitting
+than bagging if the number of models is too high or if the base models are too complex. Careful
+hyperparameter tuning is crucial.
+The most well-known boosting algorithms are AdaBoost and Gradient Boosting.
+• AdaBoost (Adaptive Boosting): The original boosting algorithm that adjusts the weights of
+misclassified samples.
+• Gradient Boosting Machines (GBM): A more generalized and powerful version where each
+new model is trained to predict the residual errors of the previous model. Algorithms like XGBoost,
+LightGBM, and CatBoost are state-of-the-art implementations of this idea.
+Boosting in Scikit-Learn
+Let’s implement AdaBoost with Decision Tree stumps (trees with a depth of 1) as the base learners.
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
+# The base estimator is often a simple one, like a shallow decision tree
+# If None, it defaults to a DecisionTreeClassifier(max_depth=1)
+base_estimator = DecisionTreeClassifier(max_depth=1)
+# Create the AdaBoost ensemble
+adaboost_model = AdaBoostClassifier(
+base_estimator=base_estimator,
+n_estimators=100,
+learning_rate=0.5, # Controls the contribution of each model
+random_state=42
+)
+# Train the ensemble
+adaboost_model.fit(X_train, y_train)
+# Evaluate its performance
+print(f"AdaBoost model score: {adaboost_model.score(X_test, y_test):.3f}")
+
+8.3
+
+Stacking: The Meta-Learner
+
+Stacking (or Stacked Generalization) takes a different approach to combining models. It uses the
+predictions of several base models as input features for a final meta-learner (or generalizer) model.
+The process involves two levels:
+1. Level 0 (Base Models): Train a diverse set of different base models on the full training data
+(e.g., a Logistic Regression, a Naı̈ve Bayes, and a Decision Tree).
+2. Level 1 (Meta-Learner):
+• Use the trained Level 0 models to make predictions on the training data itself (using crossvalidation to prevent data leakage).
+• These ”out-of-fold” predictions become the new features for the meta-learner.
+• Train the meta-learner (often a simple model like Logistic Regression) on these new features.
+57
+
+CHAPTER 8. ENSEMBLE LEARNING: THE POWER OF MANY
+To make a prediction on a new sample, it is first passed through all the Level 0 models. Their outputs
+are then fed into the Level 1 meta-learner, which makes the final prediction.
+Stacking for Diverse Models
+Stacking is particularly powerful when the base models are fundamentally different and make
+different kinds of errors. The meta-learner’s job is to learn how to best combine the strengths
+and weaknesses of each base model.
+
+Stacking in Scikit-Learn
+The StackingClassifier makes it easy to build a stacking ensemble.
+from sklearn.ensemble import StackingClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
+# 1. Define the Level 0 base models
+estimators = [
+('logreg', LogisticRegression(solver='liblinear')),
+('nb', GaussianNB()),
+('tree', DecisionTreeClassifier(max_depth=5, random_state=42))
+]
+# 2. Define the Level 1 meta-learner
+# The meta-learner is trained on the outputs of the base models
+final_estimator = LogisticRegression()
+# 3. Create the Stacking ensemble
+stacking_model = StackingClassifier(
+estimators=estimators,
+final_estimator=final_estimator,
+cv=5 # Use 5-fold CV to generate predictions for the meta-learner
+)
+# Train the entire stack
+stacking_model.fit(X_train, y_train)
+# Evaluate its performance
+print(f"Stacking model score: {stacking_model.score(X_test, y_test):.3f}")
+
+58
+
+CHAPTER 9. UNSUPERVISED LEARNING
+
+9. Unsupervised Learning
+In the previous chapters, we explored supervised learning, where models are trained on labeled data to
+perform classification or regression. However, in many real-world biological scenarios, obtaining highquality labeled data is a significant bottleneck. It can be prohibitively expensive, time-consuming, or
+sometimes impossible. In contrast, we are often inundated with vast quantities of unlabeled data from
+high-throughput experiments.
+Unsupervised learning provides a powerful suite of tools to extract meaningful insights from this
+unlabeled data. Instead of predicting a known target, these methods aim to discover the inherent
+structure, patterns, and relationships within the data itself. This chapter will focus on two cornerstone
+tasks of unsupervised learning: clustering and dimensionality reduction.
+
+9.1
+
+Clustering: Finding Groups in Data
+
+Clustering is the task of partitioning a dataset into groups, or ”clusters,” such that data points within
+the same cluster are more similar to each other than to those in other clusters. It is a fundamental tool
+for exploratory data analysis in bioinformatics.
+
+9.1.1
+
+Applications in Bioinformatics
+
+• Gene Co-expression Analysis: Identifying groups of genes that exhibit similar expression patterns across different conditions, suggesting they may be functionally related or co-regulated.
+• Patient Stratification: Grouping patients based on their molecular profiles (e.g., genomic, transcriptomic) to identify novel disease subtypes, which can inform personalized treatment strategies.
+• Cell Type Identification: Analyzing single-cell RNA-sequencing data to automatically group
+cells into distinct types and states based on their transcriptomic signatures.
+• Sequence Analysis: Grouping homologous protein sequences into families to study evolutionary
+relationships and predict function.
+There are several families of clustering algorithms, but we will focus on two of the most widely used:
+partitioning methods (K-Means) and hierarchical methods.
+
+9.1.2
+
+K-Means Clustering
+
+K-Means is a popular and efficient partitioning algorithm. It aims to partition n observations into a
+pre-defined number of clusters, k, where each observation belongs to the cluster with the nearest mean
+(the cluster ”centroid”).
+The K-Means Algorithm
+The algorithm operates through an iterative process to find the optimal cluster assignments:
+1. Initialization: Randomly select k data points from the dataset to serve as the initial centroids
+(cluster centers).
+59
+
+CHAPTER 9. UNSUPERVISED LEARNING
+2. Assignment Step: For each data point, calculate its distance to every centroid. The most
+common distance metric is the Euclidean distance. Assign the data point to the cluster of its
+closest centroid.
+p
+(9.1)
+D(p, q) = (p1 − q1 )2 + (p2 − q2 )2 + · · · + (pn − qn )2
+3. Update Step: After all points have been assigned, recalculate the position of each of the k
+centroids by taking the mean of all data points assigned to that cluster.
+Steps 2 and 3 are repeated until the cluster assignments no longer change, meaning the algorithm has
+converged.
+
+Figure 9.1: The iterative process of K-Means clustering. (a) Dataset (b) Initial random centroids are
+placed. (c) Data points are assigned to the nearest centroid. (d) Centroids are moved to the mean of
+their assigned points. (e and f) c and d repeats until convergence.
+
+The Crucial Question: How to Choose k?
+The main challenge of K-Means is that you must specify the number of clusters, k, in advance. Choosing
+an appropriate value for k is critical. Two common methods are used to guide this choice:
+• The Elbow Method: This method involves running the K-Means algorithm for a range of k
+values (e.g., 1 to 10) and calculating the Sum of Squared Errors (SSE) for each run. The SSE,
+also called inertia, is the sum of the squared distances of each point to its closest centroid.
+SSE =
+
+k X
+X
+
+dist(x, ci )2
+
+(9.2)
+
+i=1 x∈Ci
+
+When we plot SSE as a function of k, the plot typically shows a sharp decrease at first, which then
+flattens out. The ”elbow” of this curve—the point of diminishing returns—is often considered the
+optimal value for k.
+• The Silhouette Score: This metric evaluates how well-defined the clusters are. For each data
+point, it calculates a score based on two values:
+– a: The average distance to other points in its own cluster (a measure of cohesion).
+– b: The average distance to points in the nearest neighboring cluster (a measure of separation).
+60
+
+CHAPTER 9. UNSUPERVISED LEARNING
+The silhouette score for a single point is given by:
+s=
+
+b−a
+max(a, b)
+
+(9.3)
+
+The score ranges from -1 to 1, where a high value indicates that the point is well-matched to its
+own cluster and poorly-matched to neighboring clusters. The optimal k is the one that maximizes
+the average silhouette score across all data points.
+Practical Implementation in Python
+Let’s apply K-Means to a synthetic dataset representing two gene expression modules.
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+from sklearn.cluster import KMeans
+# Generate synthetic gene expression data with 3 distinct modules
+X, y_true = make_blobs(n_samples=300, centers=3, cluster_std=0.80,
+,→
+random_state=42)
+# --- Find the optimal k using the Elbow Method --sse = []
+k_range = range(1, 11)
+for k in k_range:
+kmeans = KMeans(n_clusters=k, random_state=42, n_init='auto')
+kmeans.fit(X)
+sse.append(kmeans.inertia_) # inertia_ is the SSE
+# Plotting the elbow curve
+plt.figure(figsize=(8, 5))
+plt.plot(k_range, sse, 'bx-')
+plt.xlabel('Number of clusters (k)')
+plt.ylabel('Sum of Squared Errors (SSE)')
+plt.title('Elbow Method for Optimal k')
+plt.show() # The elbow is clearly at k=3
+# --- Apply K-Means with the optimal k --kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')
+y_kmeans = kmeans.fit_predict(X)
+# --- Visualize the results --plt.figure(figsize=(8, 6))
+plt.scatter(X[:, 0], X[:, 1], c=y_kmeans, s=50, cmap='viridis')
+centers = kmeans.cluster_centers_
+plt.scatter(centers[:, 0], centers[:, 1], c='red', s=200, alpha=0.75, marker='*')
+plt.title('K-Means Clustering Results')
+plt.xlabel('Gene Expression Feature 1')
+plt.ylabel('Gene Expression Feature 2')
+plt.show()
+
+Limitations of K-Means
+• Sensitivity to Initialization: The final clusters can depend on the initial random placement of
+centroids. To mitigate this, ‘scikit-learn‘ runs the algorithm multiple times with different random
+initializations (‘n init‘) and chooses the best result.
+61
+
+CHAPTER 9. UNSUPERVISED LEARNING
+• Assumption of Spherical Clusters: K-Means implicitly assumes that clusters are convex and
+isotropic (spherical), which is not always the case for biological data.
+• Sensitivity to Outliers: Outliers can significantly skew the position of centroids.
+
+9.1.3
+
+Hierarchical Clustering
+
+Hierarchical clustering is a family of algorithms that build a hierarchy of nested clusters. Unlike KMeans, it does not require the number of clusters to be specified beforehand. The result is typically
+visualized as a tree-like diagram called a dendrogram.
+
+Figure 9.2: A dendrogram representing a hierarchy of clusters. The y-axis represents the distance or
+dissimilarity between clusters. By ”cutting” the tree at a certain height, a specific number of clusters
+can be obtained. In this example four clusters are obtained.
+There are two main strategies:
+• Agglomerative (Bottom-Up): Starts with each data point in its own cluster and iteratively
+merges the two closest clusters until only one cluster (containing all data) remains. This is the
+most common approach.
+• Divisive (Top-Down): Starts with all data points in a single cluster and recursively splits the
+cluster into smaller ones.
+Linkage Criteria
+A key component of agglomerative clustering is the linkage criterion, which defines how the distance
+between two clusters is measured.
+• Single Linkage: The distance is the minimum distance between any two points in the two clusters.
+• Complete Linkage: The distance is the maximum distance between any two points in the two
+clusters.
+• Average Linkage: The distance is the average distance between all pairs of points in the two
+clusters.
+• Ward’s Linkage: Merges the two clusters that result in the minimum increase in the total withincluster variance. In essence, this boils down to calculating a ”centroid” point for each cluster and
+measuring the distance between these centroids. That is why it is also known as centroid linkage.
+Warning
+Hierarchical clustering is computationally intensive, typically with a complexity of at least O(n2 ),
+where n is the number of samples. This makes it unsuitable for very large datasets where methods
+like K-Means are preferred.
+62
+
+CHAPTER 9. UNSUPERVISED LEARNING
+Hierarchical Clustering in Python
+Let’s visualize the hierarchy of our synthetic gene expression data using a dendrogram.
+from scipy.cluster.hierarchy import dendrogram, linkage
+# Perform hierarchical clustering using Ward's linkage
+linked = linkage(X, 'ward')
+# Plot the dendrogram
+plt.figure(figsize=(12, 7))
+dendrogram(linked,
+orientation='top',
+distance_sort='descending',
+show_leaf_counts=True)
+plt.title('Hierarchical Clustering Dendrogram')
+plt.xlabel('Sample Index')
+plt.ylabel('Distance (Ward)')
+plt.show()
+This dendrogram clearly shows the three-cluster structure we expect and allows us to see the nested
+relationships between samples and groups.
+
+9.2
+
+Dimensionality Reduction
+
+Modern bioinformatics datasets are often high-dimensional, meaning they have a large number of features. For example, an RNA-seq experiment can measure the expression of over 20,000 genes for each
+sample. This high dimensionality presents several challenges, collectively known as the ”curse of dimensionality.”
+• Data becomes sparse, making it difficult to find meaningful patterns.
+• Many machine learning algorithms perform poorly with too many features.
+• It is impossible to visualize data beyond three dimensions.
+Dimensionality reduction is the process of transforming data from a high-dimensional space into a
+lower-dimensional space while retaining as much meaningful information as possible.
+
+9.2.1
+
+Principal Component Analysis (PCA)
+
+Principal Component Analysis (PCA) is the most widely used linear dimensionality reduction technique.
+It transforms the original features into a new set of uncorrelated features called principal components
+(PCs). These PCs are ordered such that the first PC (PC1) captures the largest possible variance in the
+data, the second PC (PC2) captures the second-largest variance while being orthogonal (uncorrelated)
+to PC1, and so on.
+By keeping only the first few principal components, we can often represent a large fraction of the
+total information in the original data using a much smaller number of features.
+PCA in Python
+Let’s apply PCA to a fictional dataset to see if we can separate two classes in a 2D plot.
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+# It's crucial to scale the data before applying PCA
+63
+
+CHAPTER 9. UNSUPERVISED LEARNING
+
+Figure 9.3: Illustration of PCA. The algorithm finds a new coordinate system where the first axis (PC1)
+aligns with the direction of maximum variance in the data. The second axis (PC2) is perpendicular to
+the first and captures the next largest variance.
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X) # Using the cancer dataset from before
+# Apply PCA, keeping the top 2 components
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+# The result is a new array with 2 features instead of the original 30
+print(f"Original shape: {X_scaled.shape}")
+print(f"Reduced shape: {X_pca.shape}")
+# Explained variance ratio
+print(f"Variance explained by PC1: {pca.explained_variance_ratio_[0]:.2f}")
+print(f"Variance explained by PC2: {pca.explained_variance_ratio_[1]:.2f}")
+print(f"Total variance explained by first 2 PCs:
+,→
+{np.sum(pca.explained_variance_ratio_):.2f}")
+# Visualize the PCA results
+plt.figure(figsize=(10, 7))
+plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y, cmap='plasma', edgecolor='k', s=50)
+plt.title('PCA of Breast Cancer Dataset')
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.colorbar(label='Target Class (0, 1)')
+plt.show()
+
+9.2.2
+
+Non-Linear Methods: t-SNE and UMAP
+
+While PCA is excellent for capturing linear relationships, many biological datasets have complex, nonlinear structures. For these cases, manifold learning algorithms like t-SNE (t-distributed Stochastic
+64
+
+CHAPTER 9. UNSUPERVISED LEARNING
+Neighbor Embedding) and UMAP (Uniform Manifold Approximation and Projection) are
+indispensable.
+These methods are particularly dominant in the field of single-cell RNA-sequencing, where they
+are used to create stunning 2D visualizations of thousands of cells, revealing complex cell trajectories,
+subtypes, and relationships that would be invisible to PCA. While computationally more expensive
+than PCA, their ability to preserve local neighborhood structures makes them the state-of-the-art for
+visualizing complex biological manifolds.
+
+Figure 9.4: Comparison of PCA, t-SNE, and UMAP on a cell dataset. PCA captures global structure
+but may miss local clusters, while t-SNE and UMAP excel at revealing local relationships and clusters.
+t-SNE tends to create dense clusters, while UMAP preserves more of the global structure.
+
+65
+
+CHAPTER 9. UNSUPERVISED LEARNING
+
+66
+
+CHAPTER 10. BUILDING ROBUST ML WORKFLOWS
+
+10. Building Robust ML Workflows
+As we build more complex machine learning models, the number of pre-processing steps—scaling, encoding, feature engineering, and handling missing data—can become unwieldy. Performing these steps
+manually on the training and test sets separately is not only tedious but also a major source of errors,
+particularly a critical error known as data leakage, where information from the test set inadvertently
+influences the training process.
+To address these challenges, the ‘scikit-learn‘ library provides a powerful suite of tools for creating
+robust, reproducible, and streamlined machine learning workflows. This chapter will cover strategies
+for handling missing data and introduce the essential components for building automated pipelines:
+‘Pipeline‘, ‘ColumnTransformer‘, and ‘FeatureUnion‘.
+
+10.1
+
+The Challenge of Missing Data
+
+Biological datasets are notoriously messy and often contain missing values. A sensor might fail during a
+high-throughput experiment, a patient might miss a follow-up appointment, or a specific measurement
+might not be applicable to all samples.
+
+10.1.1
+
+Naive Approaches and Their Pitfalls
+
+The simplest strategy is to remove any rows or columns that contain missing data. While this ensures
+that the remaining data is complete, it comes with a significant drawback: the loss of valuable information. Removing an entire patient’s record (a row) because one measurement is missing, or discarding
+a potentially important gene (a column) because it has a few missing values, can severely weaken the
+dataset and lead to biased or less powerful models.
+
+10.1.2
+
+Imputation: A Principled Approach to Missing Data
+
+Imputation is the process of filling in missing values with substituted ones. The goal is to infer a
+reasonable replacement for the missing data based on the information available in the rest of the dataset.
+Simple Imputation Strategies
+These strategies use simple statistical measures to fill in missing values within a column.
+• Mean Imputation: Replaces missing values with the mean of the non-missing values in that
+column. Suitable for normally distributed numerical data.
+• Median Imputation: Replaces missing values with the median. More robust to outliers than the
+mean.
+• Most Frequent Imputation: Replaces missing values with the most frequent value (the mode).
+This is the standard approach for categorical features.
+• Constant Imputation: Replaces missing values with a fixed constant (e.g., 0, -1, or a string like
+”Missing”). This can be useful if the fact that a value is missing is itself informative.
+67
+
+CHAPTER 10. BUILDING ROBUST ML WORKFLOWS
+In ‘scikit-learn‘, these are implemented with the ‘SimpleImputer‘.
+from sklearn.impute import SimpleImputer
+import numpy as np
+# Example data with a missing value
+X = np.array([[1.0], [2.0], [np.nan], [4.0]])
+# Create an imputer that replaces NaN with the mean
+imputer = SimpleImouter(strategy='mean')
+# Fit the imputer to the data to learn the mean, then transform it
+X_imputed = imputer.fit_transform(X)
+# X_imputed will be [[1.], [2.], [2.33], [4.]]
+Advanced Imputation: KNNImputer
+Simple imputation treats each feature independently. However, we can often make more accurate imputations by considering the relationships between features. The ‘KNNImputer‘ is a more sophisticated
+method that fills in missing values using the k-Nearest Neighbors approach.
+For a sample with a missing value, it finds the k most similar samples (neighbors) in the training
+set based on the features that are not missing. The missing value is then imputed as the average (or
+weighted average) of the values from those neighbors. This approach can capture complex relationships
+in the data and often leads to more accurate imputations than simple strategies.
+Note
+Genotype imputation in population genetics is a powerful real-world example of this principle.
+By using a dense reference panel of haplotypes (the ”neighbors”), we can accurately infer missing
+genotypes in a study sample, dramatically increasing the power of genome-wide association studies
+(GWAS). Note however, that this is still synthetic information, and mistakes can happen.
+
+10.2
+
+Streamlining Workflows with Pipelines
+
+A typical machine learning workflow involves a sequence of steps: impute missing values, scale numerical
+features, encode categorical features, and finally, train a model. A ‘scikit-learn‘ Pipeline chains these
+steps together into a single object.
+
+10.2.1
+
+The Problem with Manual Processing
+
+Consider a standard manual workflow:
+# Manual workflow (error-prone)
+from sklearn.preprocessing import StandardScaler
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+# 1. Impute
+imputer = SimpleImputer()
+X_train_imp = imputer.fit_transform(X_train)
+X_test_imp = imputer.transform(X_test) # DANGER: must only transform test set
+# 2. Scale
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train_imp)
+68
+
+CHAPTER 10. BUILDING ROBUST ML WORKFLOWS
+X_test_scaled = scaler.transform(X_test_imp) # DANGER: must only transform
+# 3. Train model
+model = LogisticRegression()
+model.fit(X_train_scaled, y_train)
+This is verbose and, more importantly, it’s easy to make a mistake, such as accidentally calling ‘.fit transform()‘
+on the test data, which leads to data leakage.
+
+10.2.2
+
+The Pipeline Solution
+
+A ‘Pipeline‘ encapsulates this sequence. It takes a list of steps, where each step is a tuple containing a
+name and a ‘scikit-learn‘ object (a ”transformer” or a final ”estimator”).
+from sklearn.pipeline import Pipeline
+# Create the pipeline
+pipe = Pipeline([
+('imputer', SimpleImputer(strategy='mean')),
+('scaler', StandardScaler()),
+('model', LogisticRegression())
+])
+# Now, we can treat the entire workflow as a single object
+# The pipeline handles fitting and transforming correctly at each step
+pipe.fit(X_train, y_train)
+# Make predictions and evaluate
+accuracy = pipe.score(X_test, y_test)
+print(f"Pipeline accuracy: {accuracy:.4f}")
+Using a ‘Pipeline‘ makes the code cleaner, less error-prone, and ensures that the training and test data
+are handled correctly at every stage.
+
+10.3
+
+Handling Mixed Data Types with ColumnTransformer
+
+A ‘Pipeline‘ is excellent when every step applies to all columns in the dataset. But what if our dataset
+contains both numerical and categorical features? Numerical data needs to be scaled, while categorical
+data needs to be one-hot encoded. We need a way to apply different transformations to different columns.
+This is the exact purpose of the ‘ColumnTransformer‘. It allows you to create separate pre-processing
+pipelines for different subsets of columns and then intelligently combines the results before passing them
+to the final model.
+
+10.3.1
+
+A Practical Bioinformatics Example
+
+Imagine a dataset for predicting patient outcomes, containing numerical features (e.g., ‘gene expression level‘,
+‘age‘) and categorical features (e.g., ‘tumor stage‘, ‘treatment group‘).
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+# Define which columns are numerical and which are categorical
+numerical_features = ['gene_expression_level', 'age']
+categorical_features = ['tumor_stage', 'treatment_group']
+
+69
+
+CHAPTER 10. BUILDING ROBUST ML WORKFLOWS
+# Create a pipeline for numerical pre-processing
+# Impute with the median (robust to outliers) and then scale
+numerical_pipeline = Pipeline([
+('imputer', SimpleImputer(strategy='median')),
+('scaler', StandardScaler())
+])
+# Create a pipeline for categorical pre-processing
+# Impute with the most frequent value and then one-hot encode
+categorical_pipeline = Pipeline([
+('imputer', SimpleImputer(strategy='most_frequent')),
+('encoder', OneHotEncoder(handle_unknown='ignore'))
+])
+# Create the ColumnTransformer to apply pipelines to the correct columns
+preprocessor = ColumnTransformer([
+('num', numerical_pipeline, numerical_features),
+('cat', categorical_pipeline, categorical_features)
+])
+
+10.3.2
+
+Integrating ColumnTransformer into a Final Pipeline
+
+The ‘ColumnTransformer‘ is itself a transformer, which means it can be the first step in a final, allencompassing ‘Pipeline‘ that includes the prediction model.
+
+from sklearn.ensemble import RandomForestClassifier
+# Create the final pipeline
+# Step 1: Apply the preprocessor (ColumnTransformer)
+# Step 2: Train a RandomForestClassifier on the processed data
+final_pipe = Pipeline([
+('preprocessor', preprocessor),
+('classifier', RandomForestClassifier(random_state=42))
+])
+# Now we can train and evaluate the entire complex workflow with two lines of
+,→
+code
+final_pipe.fit(X_train, y_train)
+accuracy = final_pipe.score(X_test, y_test)
+print(f"Full pipeline accuracy: {accuracy:.4f}")
+
+This approach represents the gold standard for building machine learning models with ‘scikit-learn‘. It
+is modular, reproducible, and robust against common errors like data leakage.
+Note
+The ‘ColumnTransformer‘ is extremely flexible. You can add more pipelines for additional data
+types (e.g., text data with ‘TfidfVectorizer‘), or even create custom transformers for specialized
+pre-processing tasks. The key is that each pipeline is responsible for a specific subset of columns,
+and the ‘ColumnTransformer‘ orchestrates the entire process seamlessly. You can also use the
+‘ColumnTransformer‘ separately outside of a ‘Pipeline‘ by using the ‘.fit transform()‘ and ‘.transform()‘ methods directly.
+
+70
+
+CHAPTER 10. BUILDING ROBUST ML WORKFLOWS
+
+Figure 10.1: Diagram illustrating how a ‘ColumnTransformer‘ is integrated into a final ‘Pipeline‘. The
+data is split, processed in parallel by specialized sub-pipelines, and then recombined before being fed
+into the final estimator (model).
+
+10.4
+
+FeatureUnion: Creating Composite Feature Spaces
+
+While a ‘ColumnTransformer‘ is ideal for applying different steps to different columns, a ‘FeatureUnion‘
+is designed to apply different transformers to the same columns in parallel and then concatenate their
+outputs. This is a powerful technique for feature engineering, where you want to create a richer, more
+diverse set of features for your model to learn from.
+Note
+The key difference is the input data:
+• ColumnTransformer: Takes one set of columns, splits it, processes each part differently,
+and combines the results.
+• FeatureUnion: Takes one set of columns and feeds the entire set to multiple transformers
+in parallel, then stacks their outputs side-by-side.
+
+10.4.1
+
+A Practical Bioinformatics Example: Enhancing Gene Expression
+Analysis
+
+Imagine you have a high-dimensional gene expression dataset (e.g., from a microarray or RNA-seq
+experiment) and you want to predict a patient’s response to a certain drug. Your hypothesis is that
+the model could benefit from seeing both the global patterns in the data (as captured by dimensionality
+reduction) and the specific information from a few, well-known biomarker genes.
+A ‘FeatureUnion‘ allows you to build a feature set that includes both.
+1. Pipeline 1 (Global Patterns): A pipeline that takes all gene expression data, scales it, and then
+applies PCA to extract the top 10 principal components that represent the main axes of variation.
+71
+
+CHAPTER 10. BUILDING ROBUST ML WORKFLOWS
+2. Pipeline 2 (Specific Biomarkers): A pipeline that simply selects the expression values of 5
+specific genes known to be involved in the drug’s mechanism of action.
+The ‘FeatureUnion‘ will execute these two pipelines in parallel on the same input data and then concatenate the 10 principal components with the 5 raw biomarker expression values, creating a new 15dimensional feature space.
+
+10.4.2
+
+Implementing FeatureUnion in pythoncode
+
+To select specific columns within a pipeline, we need to create a simple custom transformer. This is a
+common pattern when working with ‘FeatureUnion‘.
+import pandas as pd
+import numpy as np
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.pipeline import Pipeline, FeatureUnion
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+# Custom transformer to select specific columns from a DataFrame
+class ColumnSelector(BaseEstimator, TransformerMixin):
+def __init__(self, columns):
+self.columns = columns
+def fit(self, X, y=None):
+return self
+def transform(self, X):
+return X[self.columns]
+# --- Generate Sample Data --# 100 samples, 1000 genes. We'll pretend the first 5 are known biomarkers.
+X_data = pd.DataFrame(np.random.rand(100, 1000),
+columns=[f'gene_{i}' for i in range(1000)])
+y_data = np.random.randint(0, 2, 100)
+all_genes = list(X_data.columns)
+biomarker_genes = ['gene_0', 'gene_1', 'gene_2', 'gene_3', 'gene_4']
+# --- Define the Pipelines for the FeatureUnion --# Pipeline 1: Extracts global patterns using PCA
+pca_pipeline = Pipeline([
+('scale', StandardScaler()),
+('pca', PCA(n_components=10))
+])
+# Pipeline 2: Selects specific biomarker genes
+biomarker_pipeline = Pipeline([
+('selector', ColumnSelector(columns=biomarker_genes))
+])
+# --- Create the FeatureUnion --# This applies both pipelines to the data in parallel
+# and concatenates their results.
+combined_features = FeatureUnion([
+('pca_features', pca_pipeline),
+('biomarker_features', biomarker_pipeline)
+])
+72
+
+CHAPTER 10. BUILDING ROBUST ML WORKFLOWS
+
+# --- Integrate into a Final Workflow --# The FeatureUnion is just another transformer step
+final_pipe = Pipeline([
+('features', combined_features),
+('classifier', RandomForestClassifier(random_state=42))
+])
+# --- Train and Evaluate --X_train, X_test, y_train, y_test = train_test_split(X_data, y_data,
+,→
+random_state=42)
+final_pipe.fit(X_train, y_train)
+# Check the accuracy
+accuracy = final_pipe.score(X_test, y_test)
+print(f"Pipeline with FeatureUnion accuracy: {accuracy:.4f}")
+# You can also inspect the transformer to see how it works
+# This will output a (75, 15) array: 75 samples, 10 PCA features + 5 biomarker
+,→
+features
+X_transformed = final_pipe.named_steps['features'].transform(X_train)
+print(f"Shape of the transformed feature matrix: {X_transformed.shape}")
+In this example, the ‘FeatureUnion‘ creates a more powerful and informative set of features than either
+PCA or the biomarkers alone. It allows the final classifier to make decisions based on both the broad,
+systemic patterns in the transcriptome and the specific, high-value information from known biological
+players. This kind of sophisticated feature engineering is essential for building high-performance models
+in bioinformatics.
+
+73
+
+CHAPTER 10. BUILDING ROBUST ML WORKFLOWS
+
+74
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+
+11. Neural Networks and Deep Learning
+Previous chapters have explored powerful machine learning models like linear regression and decision
+trees. While effective, these models can be limited in their ability to capture the extraordinarily complex,
+non-linear patterns inherent in biological data. To tackle challenges like predicting protein structure from
+a sequence (e.g., AlphaFold) or classifying cell types from high-resolution microscopy images, we need a
+more powerful class of models: Artificial Neural Networks (ANNs).
+ANNs, the core of deep learning, are inspired by the structure and function of the human brain.
+They have revolutionized fields from computer vision to natural language processing and are increasingly
+central to modern bioinformatics.
+
+11.1
+
+The Inspiration: The Biological Neuron
+
+An ANN is composed of interconnected nodes, or ”neurons,” that are conceptually modeled after biological neurons. A biological neuron receives signals through its dendrites, processes them in the cell body,
+and, if a certain activation threshold is met, fires a signal down its axon to other neurons.
+Similarly, an artificial neuron receives multiple inputs, computes a weighted sum of these inputs, and
+then passes this sum through an activation function to produce an output. The ”knowledge” of the
+network is stored in the strengths of the connections between neurons, known as synaptic weights.
+The network learns by iteratively adjusting these weights to minimize prediction error.
+
+11.1.1
+
+The Perceptron: The Simplest Neural Network
+
+The foundational building block of a neural network is the perceptron, first conceived in the 1950s. It
+is a single neuron that takes multiple binary inputs, computes a weighted sum, and outputs a 1 if the
+sum exceeds a certain threshold, and a 0 otherwise.
+A single perceptron can be thought of as a simple linear classifier. It can solve linearly separable
+problems, but famously fails on non-linear problems like the simple XOR logic gate. To overcome this
+limitation, we must connect perceptrons into more complex architectures.
+
+11.2
+
+Feedforward Neural Networks: Building in Layers
+
+The most common type of neural network is the feedforward neural network (or Multi-Layer Perceptron, MLP). In this architecture, neurons are organized into layers:
+• Input Layer: Receives the raw feature data. The number of neurons in this layer is equal to the
+number of features in the dataset (e.g., for a 28x28 pixel image, there are 784 input neurons).
+• Hidden Layers: One or more layers of neurons that sit between the input and output layers.
+These layers are responsible for learning progressively more complex features and representations
+of the data. A network with two or more hidden layers is considered a ”deep” neural network.
+• Output Layer: Produces the final prediction. The number of neurons depends on the task:
+– Regression: Typically a single neuron with a linear activation function to output a continuous value.
+75
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+– Binary Classification: A single neuron with a sigmoid activation function to output a
+probability between 0 and 1.
+– Multi-class Classification: One neuron for each class, with a softmax activation function
+to output a probability distribution across all classes. (The sum of all probabilities equals 1.)
+Information flows in one direction (forward) from the input layer, through the hidden layers, to the
+output layer.
+
+Figure 11.1: Architecture of a deep feedforward neural network with an input layer, two hidden layers,
+and an output layer. Each neuron in a layer is typically connected to every neuron in the subsequent
+layer.
+
+11.3
+
+The Engine of Learning: Backpropagation
+
+How does a neural network learn the correct weights? The process is driven by an algorithm called
+backpropagation, which is essentially an application of the gradient descent optimization we’ve seen
+before.
+1. Forward Pass: A batch of training data is fed into the input layer. The network performs its
+calculations layer by layer, propagating the signals forward until it produces a prediction at the
+output layer.
+2. Calculate Loss: The network’s prediction is compared to the true label using a loss function
+(e.g., Mean Squared Error for regression, Cross-Entropy for classification). The loss quantifies how
+”wrong” the prediction was.
+3. Backward Pass (Backpropagation): The algorithm calculates the gradient of the loss function
+with respect to the weights of each connection in the network. This is done by applying the chain
+rule of calculus, starting from the output layer and moving backward through the network, hence
+”backpropagation.” This gradient tells us how much each weight contributed to the overall error.
+4. Update Weights: The weights are adjusted in the opposite direction of their gradient, scaled
+by a learning rate. This is the gradient descent step that nudges the network towards making a
+better prediction next time.
+This cycle of forward pass, loss calculation, backward pass, and weight update is repeated for many
+epochs (passes over the entire training dataset) until the network’s performance on a validation set
+stops improving.
+76
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+
+Figure 11.2: A typical learning curve for a neural network, plotting the training and validation loss over
+epochs. The goal is to stop training in the ”sweet spot” before the validation loss begins to increase,
+which indicates overfitting. Stop training is often automated and a version of the model at that point in
+time is saved by ‘Early stopping‘. Such a saved model is called a checkpoint.
+
+11.4
+
+Activation Functions: The Neuron’s ”Firing” Mechanism
+
+Activation functions introduce non-linearity into the network, which is crucial for learning complex
+patterns. Without them, even a deep network would behave like a simple linear model.
+• Sigmoid and Tanh: Historically important, these ”S”-shaped functions squash values into a fixed
+range (0 to 1 for sigmoid, -1 to 1 for tanh). They are now rarely used in hidden layers due to the
+”vanishing gradient” problem, which can stall learning in deep networks.
+• ReLU (Rectified Linear Unit): The most popular choice for hidden layers. The function is
+incredibly simple: f (x) = max(0, x). It outputs the input if it is positive, and 0 otherwise. It is
+computationally efficient and helps mitigate the vanishing gradient problem. A potential issue is
+the ”dying ReLU” problem, where neurons can become stuck in a state where they always output
+0.
+• Leaky ReLU: A variant of ReLU that allows a small, non-zero gradient when the unit is not
+active (f (x) = 0.01x for x < 0), preventing the ”dying ReLU” problem. Note that even different
+variants of ReLu exist, such as Parametric ReLU (PReLU) and Exponential Linear Unit (ELU).
+• Linear: Used in the output layer for regression tasks, where the output can take any real value.
+(-infinity to +infinity)
+• Maxout: A more recent innovation, Maxout generalizes ReLU by outputting the maximum of a
+set of linear functions. It can learn a wider variety of activation shapes and has been shown to
+work well in practice, though it is less commonly used than ReLU.
+• Softmax: Used exclusively in the output layer for multi-class classification. It takes a vector of raw
+scores (logits) and converts them into a probability distribution, where the sum of the probabilities
+is 1.
+77
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+
+Figure 11.3: Common activation functions used in neural networks: Sigmoid, Tanh, ReLU, Leaky ReLU,
+Maxout, ELU. Each has its own characteristics and use cases.
+Activation Function Best Practices
+For most modern feedforward networks:
+• Hidden Layers: Start with ReLU. If you encounter issues with dying neurons, switch to
+Leaky ReLU, ELU or Maxout.
+• Output Layer (Regression): Use a Linear activation (i.e., no activation function).
+• Output Layer (Binary Classification): Use a Sigmoid activation.
+• Output Layer (Multi-class Classification): Use a Softmax activation.
+Note that Tanh and Sigmoid are generally avoided in hidden layers due to vanishing gradient
+issues, but may still be useful in specific scenarios or architectures.
+
+11.5
+
+Building Neural Networks with TensorFlow and Keras
+
+TensorFlow is a leading open-source platform for machine learning. Keras is a high-level API that
+is now fully integrated into TensorFlow, making it incredibly easy to build, train, and evaluate deep
+learning models.
+
+11.5.1
+
+A Practical Example: Classifying DNA Sequences
+
+Let’s build a simple neural network to classify DNA sequences as either promoter or non-promoter. We
+will represent our sequences as one-hot encoded vectors.
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten
+from sklearn.model_selection import train_test_split
+import numpy as np
+# --- 1. Prepare Data (Dummy Data for Illustration) --# Assume we have 1000 DNA sequences of length 50
+78
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+# We would one-hot encode them into a (1000, 50, 4) array
+# For simplicity, we'll use random data here.
+X_data = np.random.rand(1000, 50 * 4) # Flattened for a simple MLP
+y_data = np.random.randint(0, 2, 1000)
+X_train, X_test, y_train, y_test = train_test_split(X_data, y_data, test_size=0.2,
+,→
+random_state=42)
+# --- 2. Build the Model using the Keras Sequential API --# Sequential API allows us to stack layers linearly.
+model = Sequential([
+# Input layer is implicitly defined by input_shape in the first layer
+# Flatten() could be used here if the input was (50, 4)
+# First hidden layer: 64 neurons, ReLU activation
+# input_shape is only needed for the first layer
+Dense(units=64, activation='relu', input_shape=(X_train.shape[1],)),
+# Second hidden layer
+Dense(units=32, activation='relu'),
+# Output layer: 1 neuron with sigmoid for binary classification
+Dense(units=1, activation='sigmoid')
+])
+# --- 3. Compile the Model --# This step configures the model for training.
+# Optimizer: Adam is a robust, modern choice for gradient descent.
+# Loss function: For binary classification, we use binary cross-entropy.
+# Metrics: We want to monitor accuracy during training.
+model.compile(optimizer='adam',
+loss='binary_crossentropy',
+metrics=['accuracy'])
+# Display the model architecture
+model.summary()
+# --- 4. Train the Model --# epochs: Number of times to iterate over the entire training dataset.
+# batch_size: Number of samples to process before updating the weights.
+# validation_split: Fraction of training data to use for validation.
+history = model.fit(X_train, y_train,
+epochs=10,
+batch_size=32,
+validation_split=0.1)
+# --- 5. Evaluate the Model --loss, accuracy = model.evaluate(X_test, y_test)
+print(f"\nTest Accuracy: {accuracy:.4f}")
+
+11.5.2
+
+Key Components Explained
+
+• Sequential API: This is the simplest way to build a model in Keras. Layers are added one after
+another in a linear stack.
+• Dense Layer: A fully connected layer where each neuron receives input from all neurons in the
+previous layer. The ‘units‘ parameter specifies the number of neurons in the layer.
+79
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+• Activation Functions: We used ReLU for hidden layers and Sigmoid for the output layer, as
+discussed earlier.
+• Compile Method: This step sets up the model with an optimizer, loss function, and evaluation
+metrics.
+• Optimizer: an optimizer like Adam adjusts the weights based on the computed gradients during
+backpropagation in an efficient manner.
+• Loss Function: Binary cross-entropy is appropriate for binary classification tasks, measuring the
+difference between predicted probabilities and actual class labels. Other common loss functions
+include Mean Squared Error (MSE) for regression and Categorical Cross-Entropy for multi-class
+classification.
+• Metrics: Accuracy is a common metric for classification tasks, indicating the proportion of correct
+predictions. Other metrics include Precision, Recall, and F1-Score, which can be particularly useful
+in imbalanced datasets.
+• Fit Method: This method trains the model on the training data for a specified number of epochs
+and batch size. The ‘validation split‘ parameter reserves a portion of the training data for validation
+during training.
+• Epochs and Batch Size: An epoch is one complete pass through the entire training dataset. The
+batch size determines how many samples are processed before the model’s weights are updated.
+Smaller batch sizes can lead to noisier updates but may help the model generalize better.
+
+11.5.3
+
+Regularization in Neural Networks
+
+Deep neural networks, with their vast number of parameters, are highly susceptible to overfitting. In
+addition to L1 and L2 regularization (which can be applied to layers in Keras), a very effective and
+widely used technique is Dropout.
+During training, Dropout randomly sets the outputs of a fraction of neurons in a layer to zero for each
+forward pass. This forces the network to learn redundant representations and prevents it from becoming
+too reliant on any single neuron.
+Note
+Dropout is like forcing a team of experts to work on a problem, but at each step, some experts are
+randomly sent on a coffee break. The remaining experts must learn to solve the problem without
+relying on any single member, leading to a more robust and collaborative solution.
+
+11.6
+
+Beyond Feedforward: A Glimpse into Advanced Architectures (informational)
+
+While feedforward networks are powerful general-purpose tools, specialized architectures have been developed to excel at specific types of data and tasks. Understanding these architectures is crucial for
+tackling the unique challenges presented by biological data, which is often spatial, sequential, or requires
+complex, unsupervised representation learning.
+
+11.6.1
+
+Convolutional Neural Networks (CNNs) for Spatial Data
+
+Convolutional Neural Networks (CNNs) are the undisputed state-of-the-art for tasks involving gridlike data, most notably 2D images. Their design is inspired by the human visual cortex, where individual
+neurons respond to stimuli only in a restricted region of the visual field known as the receptive field.
+80
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+Core Mechanisms
+Instead of connecting every input neuron to every neuron in the next layer, CNNs use a clever architecture
+that dramatically reduces the number of parameters and makes them highly effective at learning spatial
+hierarchies.
+• Convolutional Layers: These layers use a set of learnable filters (or kernels), which are small
+matrices of weights. Think of it as just applying a filter on a picture. Each filter slides across the
+input data, performing a convolution operation. The filter is designed to activate when it detects
+a specific local feature, such as an edge, a corner, or a particular texture. In bioinformatics, a 1D
+CNN filter can act as a learned sequence motif detector. This property of using the same filter
+across the entire input is called parameter sharing, making CNNs incredibly efficient.
+• Pooling Layers: Typically placed after convolutional layers, pooling layers perform downsampling
+to reduce the spatial dimensions of the feature maps. The most common type, Max Pooling,
+takes the maximum value from a small patch of the feature map. This makes the learned features
+more robust to small shifts and distortions in the input—a property known as translational
+invariance. Think of this as scaling down an image while preserving the most important features.
+• Fully-Connected Layers: After several rounds of convolution and pooling have extracted a rich
+set of high-level features, the final feature maps are ”flattened” into a 1D vector and fed into a
+standard feedforward network for the final classification or regression.
+Bioinformatics Applications
+• Genomics: Using 1D CNNs to scan DNA/RNA sequences to find regulatory motifs, predict
+transcription factor binding sites, or identify splice sites.
+• Medical Imaging: Using 2D CNNs for tasks like classifying tumors in histology slides, segmenting
+organs in MRI scans, or detecting pathologies in X-rays.
+• Structural Biology: Using 3D CNNs to analyze volumetric data from cryo-electron microscopy
+or to predict protein-ligand binding sites from 3D protein structures.
+Example in Keras
+Building a simple CNN for image classification in Keras is highly modular.
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+cnn_model = Sequential([
+# Input shape: 28x28 grayscale images
+# Note that if the images were RGB, input_shape would be (28, 28, 3) for the 3
+,→
+color channels
+Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(28, 28,
+,→
+1)),
+# MaxPooling reduces the spatial dimensions by a factor of 2 (so 28x28 becomes
+,→
+14x14)
+MaxPooling2D(pool_size=(2, 2)),
+Conv2D(filters=64, kernel_size=(3, 3), activation='relu'),
+MaxPooling2D(pool_size=(2, 2)),
+# flatten the convolutional feature maps into a 1D vector (read a single list of
+,→
+numbers, instead of a 2D image)
+Flatten(),
+Dense(128, activation='relu'),
+Dense(10, activation='softmax') # For 10-class classification
+])
+cnn_model.summary()
+81
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+Note
+Some details here are omitted, such as padding (which controls the spatial dimensions of the
+output feature maps) and stride (which controls how much the filter moves at each step). These
+hyperparameters can be tuned based on the specific application and dataset but are outside the
+scope of this introductory overview.
+
+Figure 11.4: A simple Convolutional Neural Network (CNN) architecture with two convolutional layers,
+each followed by max pooling, and a fully connected layer at the end.
+
+11.6.2
+
+Recurrent Neural Networks (RNNs) for Sequential Data
+
+Biological data is often sequential. DNA, RNA, and protein sequences are prime examples, as are
+time-series measurements from experiments like patient monitoring. Recurrent Neural Networks
+(RNNs) are specifically designed to handle such data by introducing the concept of ”memory.”
+Core Mechanisms
+The defining feature of an RNN is its recurrent loop. When processing an element in a sequence, the
+neuron considers not only the current input but also a hidden state, which is a representation of the
+information from all previous elements in the sequence. This hidden state acts as the network’s memory,
+allowing it to learn patterns and dependencies over time.
+• Vanishing/Exploding Gradients: Standard RNNs struggle to learn long-range dependencies
+due to the vanishing gradient problem, where the signal used to update the weights becomes
+exponentially smaller as it propagates back through many time steps.
+• LSTM and GRU: To solve this, advanced architectures like Long Short-Term Memory
+(LSTM) and Gated Recurrent Units (GRU) were developed. These networks use sophisticated ”gating” mechanisms (input, output, and forget gates) that learn to control the flow of
+information, allowing them to selectively remember important information and forget irrelevant
+details over very long sequences.
+Bioinformatics Applications
+• Protein Analysis: Predicting protein secondary structure, solvent accessibility, or subcellular
+localization from the primary amino acid sequence.
+• Genomics: Identifying gene locations, predicting splice sites in pre-mRNA, or annotating genomic
+regions.
+82
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+• Time-Series Analysis: Modeling dynamic biological processes, such as gene expression over time
+after a stimulus.
+Example in Keras
+An LSTM layer can be easily added to a Keras model.
+from tensorflow.keras.layers import LSTM, Embedding
+# Example for protein secondary structure prediction
+# Input is a sequence of integers representing amino acids
+# Embedding layer learns a dense vector representation for each amino acid
+seq_model = Sequential([
+Embedding(input_dim=21, output_dim=128), # 20 AAs + 1 padding token
+LSTM(units=64, return_sequences=True), # return_sequences=True for stacking
+LSTM(units=32),
+Dense(units=3, activation='softmax') # e.g., for 3 classes: Helix, Sheet, Coil
+])
+
+11.6.3
+
+Autoencoders for Unsupervised Representation Learning
+
+An Autoencoder is an unsupervised neural network trained on a simple yet powerful task: to reconstruct
+its own input. It achieves this using an encoder-decoder architecture with a central bottleneck.
+• Encoder: Compresses the high-dimensional input data into a low-dimensional latent representation.
+• Decoder: Attempts to reconstruct the original input data from this compressed representation.
+By forcing data through this information bottleneck, the encoder must learn to capture the most salient
+features. After training, the encoder becomes a powerful tool for several bioinformatics tasks.
+
+Figure 11.5: An Autoencoder architecture with an encoder that compresses the input into a latent space
+and a decoder that reconstructs the input from this latent representation. In this example, a noisy input
+image is fed to the model and the model is expected to return the noiseless version.
+
+Bioinformatics Applications
+• Non-Linear Dimensionality Reduction: The latent space provides a low-dimensional embedding of the data, serving as a powerful, non-linear alternative to PCA, especially for visualizing
+single-cell transcriptomic data.
+83
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+• Denoising: A Denoising Autoencoder is trained by feeding it corrupted data (e.g., noisy microarray data) and tasking it with reconstructing the original, clean data. It learns to separate signal
+from noise.
+• Anomaly Detection: A model trained on healthy patient data will achieve low reconstruction
+error for new healthy samples but high error for anomalous samples (e.g., from a patient with a
+rare disease), effectively flagging them as outliers.
+
+Example in Keras
+The encoder and decoder are built as separate models.
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
+# Latent dimension (bottleneck size)
+latent_dim = 32
+input_dim = 784 # e.g., MNIST images
+# --- Encoder --encoder_input = Input(shape=(input_dim,))
+encoded = Dense(128, activation='relu')(encoder_input)
+encoded = Dense(64, activation='relu')(encoded)
+encoded = Dense(latent_dim, activation='relu')(encoded)
+encoder = Model(encoder_input, encoded, name='encoder')
+# --- Decoder --decoder_input = Input(shape=(latent_dim,))
+decoded = Dense(64, activation='relu')(decoder_input)
+decoded = Dense(128, activation='relu')(decoded)
+decoded = Dense(input_dim, activation='sigmoid')(decoded) # Sigmoid for pixel
+,→
+values [0,1]
+decoder = Model(decoder_input, decoded, name='decoder')
+# --- Autoencoder (Encoder + Decoder) --autoencoder_input = Input(shape=(input_dim,))
+latent_vector = encoder(autoencoder_input)
+reconstructed_output = decoder(latent_vector)
+autoencoder = Model(autoencoder_input, reconstructed_output, name='autoencoder')
+autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
+
+11.6.4
+
+Transformer Networks and the Attention Mechanism
+
+The Transformer architecture has revolutionized sequence modeling. Its core innovation is the selfattention mechanism, which allows the model to weigh the importance of all other elements in a
+sequence when interpreting a single element.
+Note
+The Transformer was first introduced in the seminal 2017 paper ”Attention is All You Need” by
+Vaswani et al. It is often called the most important paper of the 21st century. Transformers
+have since become the foundation for state-of-the-art models in natural language processing, such
+as BERT and GPT. Currently all big language models (LLMs) are based on this Transformer
+architecture.
+84
+
+CHAPTER 11. NEURAL NETWORKS AND DEEP LEARNING
+Core Mechanisms
+Unlike an RNN which processes a sequence token-by-token, the Transformer can process the entire sequence in parallel. For each token, self-attention calculates an ”attention score” with every other token
+in the sequence. These scores determine how much ”focus” to place on other tokens when creating a contextual representation of the current token. This allows it to capture complex, long-range dependencies
+far more effectively than RNNs.
+Bioinformatics Applications
+• Protein Structure Prediction: The groundbreaking AlphaFold2 (and 3) model uses an attentionbased architecture to model the spatial relationships between amino acid residues, leading to highly
+accurate 3D structure predictions.
+• Protein Language Models: Models like ESM and ProtBERT treat protein sequences as a
+language. Pre-trained on millions of known protein sequences, they learn the ”grammar” of protein
+biology and can be fine-tuned to predict protein function, the effects of mutations, and other
+important properties with remarkable accuracy.
+The Transformer architecture represents the current frontier of deep learning in bioinformatics, enabling
+models of unprecedented scale and capability.
+
+Figure 11.6: A simplified Transformer architecture showing the self-attention mechanism and feedforward
+layers. The model processes the entire sequence in parallel, allowing it to capture long-range dependencies
+effectively.
+
+11.7
+
+Conclusion
+
+Artificial Neural Networks and deep learning have transformed the landscape of bioinformatics. From
+the foundational feedforward networks to specialized architectures like CNNs, RNNs, Autoencoders,
+and Transformers, these models have demonstrated unparalleled ability to learn complex patterns from
+biological data. As we continue to generate vast amounts of biological data, the importance of deep
+learning will only grow.
+
+85
+
+

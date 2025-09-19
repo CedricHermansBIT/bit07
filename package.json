@@ -1,0 +1,25 @@
+{
+  "name": "bit07",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./src/assets/css/style.css -o ./_site/assets/css/style.css",
+    "build:eleventy": "eleventy",
+    "build": "npm run build:css && npm run build:eleventy",
+    "dev:css": "npx tailwindcss -i ./src/assets/css/style.css -o ./_site/assets/css/style.css --watch",
+    "dev:eleventy": "eleventy --serve",
+    "dev": "concurrently \"npm run dev:css\" \"npm run dev:eleventy\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "concurrently": "^9.2.1",
+    "tailwindcss": "^3.4.17"
+  }
+}
