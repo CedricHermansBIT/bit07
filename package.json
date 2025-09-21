@@ -11,7 +11,7 @@
     "dev:eleventy": "eleventy --serve",
     "dev": "concurrently \"npm run dev:css\" \"npm run dev:eleventy\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-ghpages": "npx tailwindcss -i ./src/assets/css/style.css -o ./_site/assets/css/style.css --pathprefix=/bit07/ && npx @11ty/eleventy --pathprefix=/bit07/"
+    "build-ghpages": "npx tailwindcss -i ./src/assets/css/style.css -o ./_site/assets/css/style.css && npx @11ty/eleventy --pathprefix=/bit07/"
   },
   "keywords": [],
   "author": "",
