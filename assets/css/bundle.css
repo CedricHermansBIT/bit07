@@ -1661,14 +1661,6 @@ pre code {
   z-index: 50;
 }
 
-.z-\[60\] {
-  z-index: 60;
-}
-
-.z-\[70\] {
-  z-index: 70;
-}
-
 .col-span-5 {
   grid-column: span 5 / span 5;
 }
@@ -3172,6 +3164,7 @@ pre code {
 .learning-path::before {
   content: '';
   left: 50%;
+  z-index: -1;
   position: absolute;
   top: 0px;
   height: 100%;
