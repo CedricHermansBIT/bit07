@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8: Ensemble Learning - The Power of Many | BIT07 Machine Learning Course</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-3.1.0.min.js" charset="utf-8"></script>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 text-white shadow-xl sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h1><a href="/" class="text-2xl font-bold hover:text-blue-100 transition-colors">BIT07 Machine Learning</a></h1>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <!-- Navigation menu -->
+                <div id="nav-menu" class="hidden md:flex flex-wrap items-center space-x-1">
+                    <a href="/" class="nav-link">Home</a>
+
+                    <!-- Dropdown for Foundations -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Foundations
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/introduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Introduction</a>
+                                <a href="/linear-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Linear Regression</a>
+                                <a href="/logistic-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Logistic Regression</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Core Methods -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Core Methods
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/hyperparameter-tuning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Hyperparameter Tuning</a>
+                                <a href="/imbalanced-data/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Imbalanced Data</a>
+                                <a href="/naive-bayes/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Naïve Bayes</a>
+                                <a href="/decision-trees/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Decision Trees</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Advanced Topics -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Advanced
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/ensemble-learning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Ensemble Learning</a>
+                                <a href="/clustering/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Clustering</a>
+                                <a href="/dimensionality-reduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Dimensionality Reduction</a>
+                                <a href="/ml-workflows/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ML Workflows</a>
+                                <a href="/neural-networks/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Neural Networks</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu (hidden by default) -->
+            <div id="mobile-nav" class="md:hidden mt-4 hidden">
+                <div class="flex flex-col space-y-2">
+                    <a href="/" class="nav-link-mobile">Home</a>
+                    <a href="/introduction/" class="nav-link-mobile">Introduction</a>
+                    <a href="/linear-regression/" class="nav-link-mobile">Linear Regression</a>
+                    <a href="/logistic-regression/" class="nav-link-mobile">Logistic Regression</a>
+                    <a href="/hyperparameter-tuning/" class="nav-link-mobile">Hyperparameters</a>
+                    <a href="/imbalanced-data/" class="nav-link-mobile">Imbalanced Data</a>
+                    <a href="/naive-bayes/" class="nav-link-mobile">Naïve Bayes</a>
+                    <a href="/decision-trees/" class="nav-link-mobile">Decision Trees</a>
+                    <a href="/ensemble-learning/" class="nav-link-mobile">Ensemble Learning</a>
+                    <a href="/unsupervised-learning/" class="nav-link-mobile">Unsupervised Learning</a>
+                    <a href="/ml-workflows/" class="nav-link-mobile">ML Workflows</a>
+                    <a href="/neural-networks/" class="nav-link-mobile">Neural Networks</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            
+            <div class="mb-8 animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Chapter 8: Ensemble Learning - The Power of Many</h1>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"></div>
+            </div>
+            
+
+            <div class="prose prose-lg max-w-none animate-slide-up">
+                <!-- Header -->
+<div class="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-6 mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 8: Ensemble Learning - The Power of Many</h2>
+    <p class="text-gray-700 leading-relaxed">Instead of relying on a single model, what if we combined the predictions of several? This is the core idea behind **Ensemble Learning**. The central principle is that a diverse group of models, when combined, can achieve better performance and robustness than any single model on its own.</p>
+</div>
+<!-- 1. The Wisdom of Crowds -->
+<div class="card mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">The Principle: The Wisdom of Crowds</h3>
+    <p class="text-gray-600 mb-4">If you have a group of "weak learners" (models that are only slightly better than random chance), you can combine them to create a single "strong learner." This interactive demo shows the probability that a majority vote of multiple models will be correct.</p>
+    <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div>
+            <label class="block text-sm font-medium">Accuracy of Each Base Model</label>
+            <input id="base-accuracy" type="range" min="0.51" max="0.99" step="0.01" value="0.7" class="parameter-slider">
+            <span id="base-accuracy-value" class="text-sm">70%</span>
+            <div class="mt-4">
+                <p class="text-sm text-gray-700">With <strong class="text-primary-600">25</strong> base models, each with <strong class="text-primary-600" id="base-accuracy-text">70%</strong> accuracy, the ensemble's accuracy through majority vote is:</p>
+                <div id="ensemble-accuracy" class="text-4xl font-bold font-mono text-green-600 my-2">97.6%</div>
+            </div>
+        </div>
+        <div>
+            <div id="ensemble-plot" style="width:100%;height:250px;"></div>
+        </div>
+    </div>
+</div>
+<!-- 2. Bagging -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">1. Bagging: Bootstrap Aggregating</h3>
+    <p class="text-gray-700 mb-4">Bagging focuses on **reducing variance** by training the same algorithm on different random subsets of the data and then averaging their predictions. It's a parallel process where models are trained independently.</p>
+    <div class="highlight"><strong>Key Algorithm: Random Forest.</strong> This is a specific implementation of bagging where the base model is a Decision Tree. It adds an extra layer of randomness by also selecting a random subset of features at each split.</div>
+<p><h4 class="text-lg font-semibold mt-6 mb-4">Interactive Demo: Bootstrap Sampling</h4>
+<p class="text-gray-600 mb-4">The core of bagging is <strong>bootstrap sampling</strong>—sampling with replacement. Click the button to create a new &quot;bag&quot; from the original dataset. Notice how some data points are selected multiple times (larger dots), while others are left out (grayed out).</p>
+<div class="interactive-demo">
+<div class="text-center mb-4">
+<button id="generate-bag-btn" class="btn-primary">Generate New Bootstrap Sample (&quot;Bag&quot;)</button>
+</div>
+<div id="bagging-plot" class="w-full h-48 border rounded-lg p-2 flex flex-wrap gap-2 items-center justify-center">
+<!-- JS will populate this -->
+</div>
+</div></p>
+</div>
+<!-- 3. Boosting -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">2. Boosting: Learning from Mistakes</h3>
+    <p class="text-gray-700 mb-4">Boosting trains models **sequentially**, where each new model is trained to correct the errors made by the previous ones. It focuses on turning a collection of weak learners into a single strong learner by focusing on difficult examples.</p>
+    <div class="highlight"><strong>Key Algorithms: AdaBoost & Gradient Boosting.</strong> AdaBoost adjusts the weights of misclassified samples. Gradient Boosting trains the next model on the residual errors of the previous one.</div>
+<p><h4 class="text-lg font-semibold mt-6 mb-4">Interactive Demo: How Boosting Works</h4>
+<p class="text-gray-600 mb-4">Step through the rounds of boosting. In each round, the algorithm increases the weight (size) of the points the previous model misclassified. The new model must then pay more attention to these difficult points.</p>
+<div class="interactive-demo">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div id="boosting-plot" style="width:100%;height:300px;"></div>
+<div class="text-center self-center">
+<h5 id="boosting-round-title" class="text-lg font-bold">Round 1</h5>
+<p id="boosting-description" class="text-sm text-gray-600 mb-4">A simple weak learner (a &quot;stump&quot;) splits the data. It misclassifies several points.</p>
+<button id="next-boost-round-btn" class="btn-primary">Next Round →</button>
+</div>
+</div>
+</div></p>
+</div>
+<!-- 4. Stacking -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">3. Stacking: The Meta-Learner</h3>
+    <p class="text-gray-700 mb-4">Stacking (or Stacked Generalization) takes a different approach. It uses the predictions of several different base models as input features for a final **meta-learner** model. The job of the meta-learner is to learn how to best combine the predictions from the base models.</p>
+    <div class="bg-gray-50 p-4 rounded-lg">
+        <h4 class="font-semibold text-center mb-2">Stacking Architecture</h4>
+        <img src="https://editor.analyticsvidhya.com/uploads/31182An-example-scheme-of-stacking-ensemble-learning%20resized.png" alt="Stacking Architecture Diagram" class="w-full max-w-lg mx-auto">
+        <p class="text-xs text-center mt-2"><strong>Level 0:</strong> Diverse base models (e.g., Logistic Regression, Naive Bayes, Decision Tree) make predictions. <br><strong>Level 1:</strong> A meta-learner (often a simple model) takes these predictions as its features to make the final prediction.</p>
+    </div>
+     <div class="highlight mt-4"><strong>Key Idea:</strong> Stacking works best when the base models are fundamentally different and make different kinds of errors. The meta-learner's job is to learn the strengths and weaknesses of each base model.</div>
+</div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. WISDOM OF CROWDS DEMO ---
+    const baseAccuracySlider = document.getElementById('base-accuracy');
+    const baseAccuracyValue = document.getElementById('base-accuracy-value');
+    const ensembleAccuracyDisplay = document.getElementById('ensemble-accuracy');
+    const ensemblePlotDiv = document.getElementById('ensemble-plot');
+
+    const factorial = n => (n <= 1) ? 1 : n * factorial(n - 1);
+    const combinations = (n, k) => factorial(n) / (factorial(k) * factorial(n - k));
+
+    function updateEnsembleAccuracy() {
+        const p = parseFloat(baseAccuracySlider.value);
+        baseAccuracyValue.textContent = `${(p * 100).toFixed(0)}%`;
+
+        let ensemble_accuracies = [];
+        const n_models_range = Array.from({length: 25}, (_, i) => i * 2 + 1);
+
+        n_models_range.forEach(n => {
+            let total_prob = 0;
+            const k_needed = Math.ceil(n / 2);
+            for (let k = k_needed; k <= n; k++) {
+                total_prob += combinations(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+            }
+            ensemble_accuracies.push(total_prob);
+        });
+        
+        ensembleAccuracyDisplay.textContent = `${(ensemble_accuracies[12] * 100).toFixed(1)}%`; // Display for n=25
+        // update base-accuracy-text value
+const baseAccuracyText = document.getElementById('base-accuracy-text');
+        baseAccuracyText.textContent = `${(p * 100).toFixed(0)}%`;
+        
+        const trace = {
+            x: n_models_range,
+            y: ensemble_accuracies,
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { color: '#10b981' }
+        };
+        const layout = {
+            title: 'Ensemble Accuracy vs. # of Models',
+            xaxis: { title: 'Number of Base Models (n)' },
+            yaxis: { title: 'Ensemble Accuracy', range: [0.5, 1.0] },
+            margin: { t: 30, r: 20, b: 40, l: 50 }
+        };
+        Plotly.newPlot(ensemblePlotDiv, [trace], layout);
+    }
+    baseAccuracySlider.addEventListener('input', updateEnsembleAccuracy);
+    updateEnsembleAccuracy();
+
+    // --- 2. BAGGING DEMO ---
+    const generateBagBtn = document.getElementById('generate-bag-btn');
+    const baggingPlotDiv = document.getElementById('bagging-plot');
+    const originalDataset = Array.from({length: 20}, (_, i) => i + 1);
+
+    function updateBaggingPlot() {
+        const bag = [];
+        const counts = {};
+        for (let i = 0; i < originalDataset.length; i++) {
+            const sample = originalDataset[Math.floor(Math.random() * originalDataset.length)];
+            bag.push(sample);
+            counts[sample] = (counts[sample] || 0) + 1;
+        }
+
+        baggingPlotDiv.innerHTML = '';
+        originalDataset.forEach(d => {
+            const dot = document.createElement('div');
+            dot.textContent = d;
+            dot.className = 'w-8 h-8 rounded-full flex items-center justify-center font-bold transition-all';
+            if (counts[d]) {
+                dot.classList.add('bg-primary-500', 'text-white');
+                dot.style.transform = `scale(${1 + counts[d] * 0.2})`;
+            } else {
+                dot.classList.add('bg-gray-200', 'text-gray-500', 'opacity-50');
+            }
+            baggingPlotDiv.appendChild(dot);
+        });
+    }
+    generateBagBtn.addEventListener('click', updateBaggingPlot);
+    updateBaggingPlot();
+
+    // --- 3. BOOSTING DEMO ---
+    const nextBoostBtn = document.getElementById('next-boost-round-btn');
+    const boostPlotDiv = document.getElementById('boosting-plot');
+    const boostRoundTitle = document.getElementById('boosting-round-title');
+    const boostDescription = document.getElementById('boosting-description');
+    let boostRound = 0;
+    let boostData;
+
+    const generateBoostData = () => ({
+        x: Array.from({length: 30}, () => Math.random() * 10),
+        y: Array.from({length: 30}, () => Math.random() * 10),
+        labels: Array.from({length: 30}, (_,i) => (i < 15 ? 0 : 1)),
+        weights: Array(30).fill(1)
+    });
+
+    function updateBoostingPlot() {
+    const round = boostRound % 3;
+    let split_val, split_dim, misclassified;
+
+    if (round === 0) {
+        boostRoundTitle.textContent = "Round 1";
+        boostDescription.textContent = "A simple weak learner splits the data. Misclassified points are highlighted with a border.";
+        split_dim = 'x';
+        split_val = 5;
+        misclassified = boostData.x.map((x, i) => (x > split_val && boostData.labels[i] === 0) || (x <= split_val && boostData.labels[i] === 1));
+    } else if (round === 1) {
+        boostRoundTitle.textContent = "Round 2";
+        boostDescription.textContent = "The misclassified points from Round 1 are given higher weights (larger size). A new weak learner tries to fix the errors.";
+        split_dim = 'y';
+        split_val = 6;
+        misclassified = boostData.y.map((y, i) => (y > split_val && boostData.labels[i] === 0) || (y <= split_val && boostData.labels[i] === 1));
+    } else {
+        boostRoundTitle.textContent = "Round 3";
+        boostDescription.textContent = "The process repeats. The final model is a weighted combination of all these weak learners.";
+        split_dim = 'x';
+        split_val = 7;
+        misclassified = boostData.x.map((x, i) => (x > split_val && boostData.labels[i] === 0) || (x <= split_val && boostData.labels[i] === 1));
+    }
+    
+    // Create traces for correctly classified and misclassified points separately
+    const trace0Correct = {
+        x: boostData.x.filter((_, i) => boostData.labels[i] === 0 && !misclassified[i]),
+        y: boostData.y.filter((_, i) => boostData.labels[i] === 0 && !misclassified[i]),
+        mode: 'markers',
+        name: 'Class 0 (Correct)',
+        marker: { 
+            color: '#60a5fa',
+            size: boostData.weights.filter((_, i) => boostData.labels[i] === 0 && !misclassified[i]).map(w => w * 5)
+        }
+    };
+    
+    const trace0Wrong = {
+        x: boostData.x.filter((_, i) => boostData.labels[i] === 0 && misclassified[i]),
+        y: boostData.y.filter((_, i) => boostData.labels[i] === 0 && misclassified[i]),
+        mode: 'markers',
+        name: 'Class 0 (Misclassified)',
+        marker: { 
+            color: '#60a5fa',
+            size: boostData.weights.filter((_, i) => boostData.labels[i] === 0 && misclassified[i]).map(w => w * 5),
+            line: { color: '#ef4444', width: 2 }
+        }
+    };
+    
+    const trace1Correct = {
+        x: boostData.x.filter((_, i) => boostData.labels[i] === 1 && !misclassified[i]),
+        y: boostData.y.filter((_, i) => boostData.labels[i] === 1 && !misclassified[i]),
+        mode: 'markers',
+        name: 'Class 1 (Correct)',
+        marker: { 
+            color: '#f97316',
+            size: boostData.weights.filter((_, i) => boostData.labels[i] === 1 && !misclassified[i]).map(w => w * 5)
+        }
+    };
+    
+    const trace1Wrong = {
+        x: boostData.x.filter((_, i) => boostData.labels[i] === 1 && misclassified[i]),
+        y: boostData.y.filter((_, i) => boostData.labels[i] === 1 && misclassified[i]),
+        mode: 'markers',
+        name: 'Class 1 (Misclassified)',
+        marker: { 
+            color: '#f97316',
+            size: boostData.weights.filter((_, i) => boostData.labels[i] === 1 && misclassified[i]).map(w => w * 5),
+            line: { color: '#ef4444', width: 2 }
+        }
+    };
+    
+    const splitLine = {
+        x: split_dim === 'x' ? [split_val, split_val] : [0, 10],
+        y: split_dim === 'y' ? [split_val, split_val] : [0, 10],
+        mode: 'lines', 
+        name: 'Decision Boundary',
+        line: { color: '#ef4444', dash: 'dash' }
+    };
+
+    // Update weights for the next round
+    misclassified.forEach((is_wrong, i) => {
+        if(is_wrong) boostData.weights[i] *= 2;
+    });
+
+    Plotly.newPlot(boostPlotDiv, [trace0Correct, trace0Wrong, trace1Correct, trace1Wrong, splitLine], {
+        title: `Weak Learner #${round + 1}`,
+        xaxis: {range: [0, 10]}, 
+        yaxis: {range: [0, 10]}, 
+        showlegend: false,
+        margin: {t:40, r:10, b:20, l:20}
+    });
+}
+
+
+    nextBoostBtn.addEventListener('click', () => {
+        boostRound++;
+        if (boostRound % 3 === 0) { // Reset weights after a full cycle
+            boostData.weights.fill(1);
+        }
+        updateBoostingPlot();
+    });
+
+    boostData = generateBoostData();
+    updateBoostingPlot();
+});
+</script>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Code Examples Toggle Button -->
+    <button id="code-examples-toggle" aria-label="Open code examples"
+            class="fixed bottom-6 right-6 z-[60] rounded-full shadow-lg bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path>
+        </svg>
+        <span class="hidden md:inline">Code Examples</span>
+    </button>
+
+    <!-- Off-canvas Code Examples Panel -->
+    <div id="code-examples-panel" class="fixed inset-0 z-[70] hidden">
+        <!-- Backdrop -->
+        <div id="code-examples-backdrop" class="absolute inset-0 bg-black/40"></div>
+        <!-- Panel -->
+        <aside class="absolute right-0 top-0 h-full w-full md:w-[36rem] bg-white shadow-2xl border-l border-gray-200 flex flex-col">
+            <div class="p-4 border-b flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-800">Chapter Code Examples</h2>
+                <button id="code-examples-close" class="p-2 rounded hover:bg-gray-100" aria-label="Close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="code-examples-content" class="flex-1 overflow-y-auto p-4 space-y-6">
+                <!-- Injected dynamically by interactive.js -->
+            </div>
+        </aside>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">BIT07 Machine Learning</h3>
+                    <p class="text-gray-400">Comprehensive machine learning course for bioinformatics applications by Cedric Hermans.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/introduction/" class="text-gray-400 hover:text-primary-400 transition-colors">Getting Started</a></li>
+                        <li><a href="/linear-regression/" class="text-gray-400 hover:text-primary-400 transition-colors">Linear Models</a></li>
+                        <li><a href="/neural-networks/" class="text-gray-400 hover:text-primary-400 transition-colors">Deep Learning</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Course Materials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Interactive Examples</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">GitHub Repository</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p>&copy; 2025 BIT07 Machine Learning Course by Cedric Hermans. Educational content for machine learning in bioinformatics.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .nav-link {
+            @apply px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors whitespace-nowrap;
+        }
+
+        .nav-link-mobile {
+            @apply block px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors;
+        }
+    </style>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.classList.toggle('hidden');
+        });
+
+        // Toggle code examples panel
+        document.getElementById('code-examples-toggle').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.toggle('hidden');
+        });
+
+        // Close code examples panel
+        document.getElementById('code-examples-close').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.add('hidden');
+        });
+
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Add copy button to code blocks (static content)
+        document.querySelectorAll('pre code').forEach((codeBlock) => {
+            const button = document.createElement('button');
+            button.className = 'absolute top-2 right-2 px-2 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded transition-colors';
+            button.textContent = 'Copy';
+
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeBlock.textContent);
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = 'Copy', 2000);
+            });
+
+            codeBlock.parentNode.style.position = 'relative';
+            codeBlock.parentNode.appendChild(button);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <!-- Shared interactive demos bundle -->
+    <script src="/assets/js/interactive.js"></script>
+</body>
+</html>

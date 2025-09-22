@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: Naïve Bayes Classifiers | BIT07 Machine Learning Course</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-3.1.0.min.js" charset="utf-8"></script>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 text-white shadow-xl sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h1><a href="/" class="text-2xl font-bold hover:text-blue-100 transition-colors">BIT07 Machine Learning</a></h1>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <!-- Navigation menu -->
+                <div id="nav-menu" class="hidden md:flex flex-wrap items-center space-x-1">
+                    <a href="/" class="nav-link">Home</a>
+
+                    <!-- Dropdown for Foundations -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Foundations
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/introduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Introduction</a>
+                                <a href="/linear-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Linear Regression</a>
+                                <a href="/logistic-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Logistic Regression</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Core Methods -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Core Methods
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/hyperparameter-tuning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Hyperparameter Tuning</a>
+                                <a href="/imbalanced-data/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Imbalanced Data</a>
+                                <a href="/naive-bayes/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Naïve Bayes</a>
+                                <a href="/decision-trees/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Decision Trees</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Advanced Topics -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Advanced
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/ensemble-learning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Ensemble Learning</a>
+                                <a href="/clustering/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Clustering</a>
+                                <a href="/dimensionality-reduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Dimensionality Reduction</a>
+                                <a href="/ml-workflows/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ML Workflows</a>
+                                <a href="/neural-networks/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Neural Networks</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu (hidden by default) -->
+            <div id="mobile-nav" class="md:hidden mt-4 hidden">
+                <div class="flex flex-col space-y-2">
+                    <a href="/" class="nav-link-mobile">Home</a>
+                    <a href="/introduction/" class="nav-link-mobile">Introduction</a>
+                    <a href="/linear-regression/" class="nav-link-mobile">Linear Regression</a>
+                    <a href="/logistic-regression/" class="nav-link-mobile">Logistic Regression</a>
+                    <a href="/hyperparameter-tuning/" class="nav-link-mobile">Hyperparameters</a>
+                    <a href="/imbalanced-data/" class="nav-link-mobile">Imbalanced Data</a>
+                    <a href="/naive-bayes/" class="nav-link-mobile">Naïve Bayes</a>
+                    <a href="/decision-trees/" class="nav-link-mobile">Decision Trees</a>
+                    <a href="/ensemble-learning/" class="nav-link-mobile">Ensemble Learning</a>
+                    <a href="/unsupervised-learning/" class="nav-link-mobile">Unsupervised Learning</a>
+                    <a href="/ml-workflows/" class="nav-link-mobile">ML Workflows</a>
+                    <a href="/neural-networks/" class="nav-link-mobile">Neural Networks</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            
+            <div class="mb-8 animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Chapter 6: Naïve Bayes Classifiers</h1>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"></div>
+            </div>
+            
+
+            <div class="prose prose-lg max-w-none animate-slide-up">
+                <!-- Header -->
+<div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6 mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 6: Naïve Bayes Classifiers</h2>
+    <p class="text-gray-700 leading-relaxed">The classifiers we've seen so far, like Logistic Regression, learn to find a decision boundary that separates classes. In this chapter, we introduce a different family of models: **generative classifiers**, exemplified by the Naïve Bayes algorithm.</p>
+</div>
+<!-- 1. Generative vs. Discriminative -->
+<div class="card mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">A Different Approach: Generative vs. Discriminative Models</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <h4 class="font-semibold text-blue-800">Discriminative Models (e.g., Logistic Regression)</h4>
+            <p class="text-sm text-blue-700">These models learn the conditional probability `P(y | X)`. Their primary focus is to find the **decision boundary** between classes.</p>
+            <p class="text-sm mt-2"><strong>Analogy:</strong> A customs officer who only learns the rules to distinguish "allowed" from "forbidden" items, without knowing what makes an item belong to either category.</p>
+        </div>
+        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+            <h4 class="font-semibold text-green-800">Generative Models (e.g., Naïve Bayes)</h4>
+            <p class="text-sm text-green-700">These models learn the joint probability distribution `P(X, y)`. They learn what the data for **each class looks like**.</p>
+            <p class="text-sm mt-2"><strong>Analogy:</strong> A biologist who studies lions and tigers so thoroughly that they can not only distinguish between them but could also, in theory, generate a new, plausible example of a lion or a tiger.</p>
+        </div>
+    </div>
+</div>
+<!-- 2. Bayes' Theorem -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">The Engine: Bayes' Theorem</h3>
+    <p class="text-gray-700 mb-4">Generative classifiers use Bayes' Theorem to update our beliefs in light of new evidence.</p>
+    <div class="code-block text-center text-lg mb-4">P(Hypothesis | Evidence) = [ P(Evidence | Hypothesis) * P(Hypothesis) ] / P(Evidence)</div>
+<p><h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Interactive Demo: Is this sequence a promoter?</h4>
+<p class="text-gray-700 mb-4">Let's see how finding a &quot;TATA box&quot; (evidence) in a DNA sequence updates our belief that the sequence is a promoter (hypothesis). Adjust the sliders to see the calculation change in real-time.</p>
+<div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium">Prior: P(Promoter)</label>
+<p class="text-xs text-gray-500 -mt-1 mb-1">The overall chance a random sequence is a promoter, before seeing any evidence.</p>
+<input id="prior-slider" type="range" min="0.01" max="0.5" step="0.01" value="0.01" class="parameter-slider">
+<span id="prior-value" class="text-sm">1%</span>
+</div>
+<div>
+<label class="block text-sm font-medium">Likelihood: P(TATA | Promoter)</label>
+<p class="text-xs text-gray-500 -mt-1 mb-1">If a sequence IS a promoter, the chance it contains a TATA box.</p>
+<input id="like-promo-slider" type="range" min="0.1" max="1" step="0.05" value="0.8" class="parameter-slider">
+<span id="like-promo-value" class="text-sm">80%</span>
+</div>
+<div>
+<label class="block text-sm font-medium">Likelihood: P(TATA | Not Promoter)</label>
+<p class="text-xs text-gray-500 -mt-1 mb-1">If a sequence IS NOT a promoter, the chance it has a TATA box by random chance.</p>
+<input id="like-not-promo-slider" type="range" min="0.01" max="0.5" step="0.01" value="0.1" class="parameter-slider">
+<span id="like-not-promo-value" class="text-sm">10%</span>
+</div>
+</div>
+<div class="bg-white p-4 rounded-lg">
+<div id="bayes-calculation-steps" class="text-sm font-mono text-left mb-4 p-3 bg-gray-50 rounded">
+<!-- JS will populate this -->
+</div>
+<div class="text-center">
+<div class="text-sm text-gray-600">Final Posterior Probability</div>
+<div class="text-lg font-bold">P(Promoter | TATA box found)</div>
+<div id="posterior-prob" class="text-4xl font-bold font-mono text-primary-600 my-2">7.5%</div>
+<p id="bayes-conclusion" class="text-sm text-gray-700"></p>
+</div>
+</div>
+</div></p>
+</div>
+<!-- 3. The Naive Assumption & The Zero-Frequency Problem -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">The "Naïve" Assumption and Its Consequences</h3>
+    <p class="text-gray-700 mb-4">Calculating `P(features | class)` directly is often impossible. Naïve Bayes simplifies this by making a strong—or "naïve"—assumption: all features are conditionally independent given the class. This allows us to multiply the individual likelihoods:</p>
+    <div class="code-block text-center">P(X | y) = P(x₁|y) * P(x₂|y) * ... * P(xₙ|y)</div>
+    <div class="highlight mt-4">This assumption is almost always false in bioinformatics (e.g., expression levels of genes in the same pathway are not independent), but the model often performs surprisingly well anyway.</div>
+<p><h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Interactive Demo: The Zero-Frequency Problem</h4>
+<p class="text-gray-700 mb-4">A major practical issue arises when a feature value never appears with a particular class in the training data. Because we are multiplying probabilities, a single zero will make the entire posterior probability for that class zero. Let's see this in action.</p>
+<div class="interactive-demo">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+<!-- Training Data -->
+<div class="text-sm">
+<h5 class="font-bold text-center mb-2">Training Data (10 sequences)</h5>
+<p><strong>Priors:</strong> P(Gene)=0.5, P(Not Gene)=0.5</p>
+<p class="font-bold mt-2">Likelihoods for &quot;Not Gene&quot;:</p>
+<ul class="list-disc list-inside">
+<li>P(Start Codon=True | Not Gene) = 0/5 = <span class="text-red-600 font-bold">0.0</span></li>
+<li>P(PolyA=True | Not Gene) = 2/5 = 0.4</li>
+</ul>
+</div>
+<!-- Calculation -->
+<div id="zero-freq-calc" class="lg:col-span-2 p-4 bg-white rounded-lg">
+<!-- JS will populate this -->
+</div>
+</div>
+<div class="text-center mt-4">
+<button id="toggle-smoothing-btn" class="btn-primary">✅ Enable Laplacian Smoothing (α=1)</button>
+</div>
+</div></p>
+</div>
+<!-- 4. Types of Naive Bayes & Implementation -->
+<div class="card mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">Types of Naïve Bayes & Scikit-Learn Implementation</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm">
+        <div class="bg-gray-100 p-3 rounded-lg">
+            <h4 class="font-semibold">GaussianNB</h4>
+            <p>For continuous features that are assumed to follow a normal (Gaussian) distribution.</p>
+        </div>
+        <div class="bg-gray-100 p-3 rounded-lg">
+            <h4 class="font-semibold">MultinomialNB</h4>
+            <p>For discrete features (e.g., word counts, k-mer counts). Excellent for text or sequence classification.</p>
+        </div>
+        <div class="bg-gray-100 p-3 rounded-lg">
+            <h4 class="font-semibold">BernoulliNB</h4>
+            <p>For binary features (e.g., presence/absence of a mutation).</p>
+        </div>
+    </div>
+    <p class="text-gray-700 mb-4">Here is how you would implement a classifier for DNA dinucleotide frequencies. Notice the `alpha=1.0` parameter, which enables Laplacian smoothing by default.</p>
+    <div class="code-block">
+<pre><code class="language-python">from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
+# X_counts: matrix of dinucleotide counts for each sequence
+# y_species: the species label for each sequence
+X_train, X_test, y_train, y_test = train_test_split(X_counts, y_species)
+# 1. Create the model with Laplacian smoothing (alpha=1.0)
+model = MultinomialNB(alpha=1.0)
+# 2. Train the model
+model.fit(X_train, y_train)
+# 3. Make predictions
+predictions = model.predict(X_test)
+probabilities = model.predict_proba(X_test)</code></pre>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- 2. BAYES THEOREM DEMO ---
+    const priorSlider = document.getElementById('prior-slider');
+    const likePromoSlider = document.getElementById('like-promo-slider');
+    const likeNotPromoSlider = document.getElementById('like-not-promo-slider');
+    const bayesCalcDiv = document.getElementById('bayes-calculation-steps');
+
+    function updateBayesCalc() {
+        // Get values
+        const pPromo = parseFloat(priorSlider.value);
+        const pNotPromo = 1 - pPromo;
+        const pTataGivenPromo = parseFloat(likePromoSlider.value);
+        const pTataGivenNotPromo = parseFloat(likeNotPromoSlider.value);
+
+        // Update slider value displays
+        document.getElementById('prior-value').textContent = `${(pPromo * 100).toFixed(0)}%`;
+        document.getElementById('like-promo-value').textContent = `${(pTataGivenPromo * 100).toFixed(0)}%`;
+        document.getElementById('like-not-promo-value').textContent = `${(pTataGivenNotPromo * 100).toFixed(0)}%`;
+
+        // --- Perform Calculations ---
+        // 1. Calculate P(TATA) - the evidence
+        const pTata = (pTataGivenPromo * pPromo) + (pTataGivenNotPromo * pNotPromo);
+        
+        // 2. Calculate P(Promo|TATA) - the posterior
+        const numerator = pTataGivenPromo * pPromo;
+        const pPromoGivenTata = numerator / pTata;
+
+        // --- Update Calculation Steps Display ---
+        bayesCalcDiv.innerHTML = `
+            <p class="font-bold border-b pb-1 mb-1">Calculation Breakdown:</p>
+            <p>1. Find P(TATA) (the evidence):</p>
+            <p class="pl-2 text-gray-600">P(TATA|P)*P(P) + P(TATA|~P)*P(~P)</p>
+            <p class="pl-2">= (${pTataGivenPromo.toFixed(2)} * ${pPromo.toFixed(2)}) + (${pTataGivenNotPromo.toFixed(2)} * ${pNotPromo.toFixed(2)})</p>
+            <p class="pl-2">= <span class="font-bold text-blue-600">${pTata.toFixed(4)}</span></p>
+            <p class="mt-2">2. Calculate Posterior:</p>
+            <p class="pl-2 text-gray-600">(P(TATA|P) * P(P)) / P(TATA)</p>
+            <p class="pl-2">= (${pTataGivenPromo.toFixed(2)} * ${pPromo.toFixed(2)}) / ${pTata.toFixed(4)}</p>
+            <p class="pl-2">= ${numerator.toFixed(4)} / ${pTata.toFixed(4)} = <span class="font-bold text-green-600">${pPromoGivenTata.toFixed(4)}</span></p>
+        `;
+
+        // --- Update Final Result ---
+        document.getElementById('posterior-prob').textContent = `${(pPromoGivenTata * 100).toFixed(1)}%`;
+        document.getElementById('bayes-conclusion').textContent = `Finding a TATA box updated our belief from a prior of ${(pPromo * 100).toFixed(1)}% to a posterior of ${(pPromoGivenTata * 100).toFixed(1)}%.`;
+    }
+    [priorSlider, likePromoSlider, likeNotPromoSlider].forEach(s => s.addEventListener('input', updateBayesCalc));
+    updateBayesCalc();
+
+
+    // --- 3. ZERO FREQUENCY DEMO ---
+    const toggleSmoothingBtn = document.getElementById('toggle-smoothing-btn');
+    const calcDiv = document.getElementById('zero-freq-calc');
+    let smoothingEnabled = false;
+
+    function updateZeroFreqCalc() {
+        if (smoothingEnabled) {
+            toggleSmoothingBtn.textContent = '❌ Disable Laplacian Smoothing';
+            toggleSmoothingBtn.classList.remove('btn-primary');
+            toggleSmoothingBtn.classList.add('btn-secondary');
+            calcDiv.innerHTML = `
+                <h5 class="font-bold text-center mb-2">Classify: (Start Codon=True, PolyA=True)</h5>
+                <p class="font-semibold text-green-700">With Smoothing (α=1)</p>
+                <div class="text-sm font-mono mt-2">
+                    <p>P(Not Gene | X) ∝ P(Not Gene) * P(Start=T|Not Gene) * P(PolyA=T|Not Gene)</p>
+                    <p class="ml-4">= 0.5 * <span class="bg-green-200 p-1 rounded">(0+1)/(5+1*2)</span> * (2+1)/(5+1*2)</p>
+                    <p class="ml-4">= 0.5 * 0.143 * 0.429 = <span class="font-bold">0.0307</span></p>
+                </div>
+                <div class="text-sm font-mono mt-2">
+                    <p>P(Gene | X) ∝ P(Gene) * P(Start=T|Gene) * P(PolyA=T|Gene)</p>
+                    <p class="ml-4">= 0.5 * (4/5) * (2/5) = <span class="font-bold">0.16</span></p>
+                </div>
+                <p class="text-center mt-3 font-bold text-lg text-green-700">Verdict: Classify as "Gene"</p>
+            `;
+        } else {
+            toggleSmoothingBtn.textContent = '✅ Enable Laplacian Smoothing (α=1)';
+            toggleSmoothingBtn.classList.remove('btn-secondary');
+            toggleSmoothingBtn.classList.add('btn-primary');
+            calcDiv.innerHTML = `
+                <h5 class="font-bold text-center mb-2">Classify: (Start Codon=True, PolyA=True)</h5>
+                <p class="font-semibold text-red-700">Without Smoothing</p>
+                <div class="text-sm font-mono mt-2">
+                    <p>P(Not Gene | X) ∝ P(Not Gene) * P(Start=T|Not Gene) * P(PolyA=T|Not Gene)</p>
+                    <p class="ml-4">= 0.5 * <span class="bg-red-200 p-1 rounded">0.0</span> * 0.4 = <span class="font-bold text-red-600">0.0</span></p>
+                </div>
+                <div class="text-sm font-mono mt-2">
+                    <p>P(Gene | X) ∝ P(Gene) * P(Start=T|Gene) * P(PolyA=T|Gene)</p>
+                    <p class="ml-4">= 0.5 * (4/5) * (2/5) = <span class="font-bold">0.16</span></p>
+                </div>
+                <p class="text-center mt-3 font-bold text-lg text-red-700">Verdict: Impossible to be "Not Gene"</p>
+            `;
+        }
+    }
+
+    toggleSmoothingBtn.addEventListener('click', () => {
+        smoothingEnabled = !smoothingEnabled;
+        updateZeroFreqCalc();
+    });
+    updateZeroFreqCalc();
+});
+</script>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Code Examples Toggle Button -->
+    <button id="code-examples-toggle" aria-label="Open code examples"
+            class="fixed bottom-6 right-6 z-[60] rounded-full shadow-lg bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path>
+        </svg>
+        <span class="hidden md:inline">Code Examples</span>
+    </button>
+
+    <!-- Off-canvas Code Examples Panel -->
+    <div id="code-examples-panel" class="fixed inset-0 z-[70] hidden">
+        <!-- Backdrop -->
+        <div id="code-examples-backdrop" class="absolute inset-0 bg-black/40"></div>
+        <!-- Panel -->
+        <aside class="absolute right-0 top-0 h-full w-full md:w-[36rem] bg-white shadow-2xl border-l border-gray-200 flex flex-col">
+            <div class="p-4 border-b flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-800">Chapter Code Examples</h2>
+                <button id="code-examples-close" class="p-2 rounded hover:bg-gray-100" aria-label="Close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="code-examples-content" class="flex-1 overflow-y-auto p-4 space-y-6">
+                <!-- Injected dynamically by interactive.js -->
+            </div>
+        </aside>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">BIT07 Machine Learning</h3>
+                    <p class="text-gray-400">Comprehensive machine learning course for bioinformatics applications by Cedric Hermans.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/introduction/" class="text-gray-400 hover:text-primary-400 transition-colors">Getting Started</a></li>
+                        <li><a href="/linear-regression/" class="text-gray-400 hover:text-primary-400 transition-colors">Linear Models</a></li>
+                        <li><a href="/neural-networks/" class="text-gray-400 hover:text-primary-400 transition-colors">Deep Learning</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Course Materials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Interactive Examples</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">GitHub Repository</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p>&copy; 2025 BIT07 Machine Learning Course by Cedric Hermans. Educational content for machine learning in bioinformatics.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .nav-link {
+            @apply px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors whitespace-nowrap;
+        }
+
+        .nav-link-mobile {
+            @apply block px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors;
+        }
+    </style>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.classList.toggle('hidden');
+        });
+
+        // Toggle code examples panel
+        document.getElementById('code-examples-toggle').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.toggle('hidden');
+        });
+
+        // Close code examples panel
+        document.getElementById('code-examples-close').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.add('hidden');
+        });
+
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Add copy button to code blocks (static content)
+        document.querySelectorAll('pre code').forEach((codeBlock) => {
+            const button = document.createElement('button');
+            button.className = 'absolute top-2 right-2 px-2 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded transition-colors';
+            button.textContent = 'Copy';
+
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeBlock.textContent);
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = 'Copy', 2000);
+            });
+
+            codeBlock.parentNode.style.position = 'relative';
+            codeBlock.parentNode.appendChild(button);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <!-- Shared interactive demos bundle -->
+    <script src="/assets/js/interactive.js"></script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9: Unsupervised Learning - Dimensionality Reduction | BIT07 Machine Learning Course</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-3.1.0.min.js" charset="utf-8"></script>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 text-white shadow-xl sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h1><a href="/" class="text-2xl font-bold hover:text-blue-100 transition-colors">BIT07 Machine Learning</a></h1>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <!-- Navigation menu -->
+                <div id="nav-menu" class="hidden md:flex flex-wrap items-center space-x-1">
+                    <a href="/" class="nav-link">Home</a>
+
+                    <!-- Dropdown for Foundations -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Foundations
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/introduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Introduction</a>
+                                <a href="/linear-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Linear Regression</a>
+                                <a href="/logistic-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Logistic Regression</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Core Methods -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Core Methods
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/hyperparameter-tuning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Hyperparameter Tuning</a>
+                                <a href="/imbalanced-data/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Imbalanced Data</a>
+                                <a href="/naive-bayes/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Naïve Bayes</a>
+                                <a href="/decision-trees/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Decision Trees</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Advanced Topics -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Advanced
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/ensemble-learning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Ensemble Learning</a>
+                                <a href="/clustering/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Clustering</a>
+                                <a href="/dimensionality-reduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Dimensionality Reduction</a>
+                                <a href="/ml-workflows/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ML Workflows</a>
+                                <a href="/neural-networks/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Neural Networks</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu (hidden by default) -->
+            <div id="mobile-nav" class="md:hidden mt-4 hidden">
+                <div class="flex flex-col space-y-2">
+                    <a href="/" class="nav-link-mobile">Home</a>
+                    <a href="/introduction/" class="nav-link-mobile">Introduction</a>
+                    <a href="/linear-regression/" class="nav-link-mobile">Linear Regression</a>
+                    <a href="/logistic-regression/" class="nav-link-mobile">Logistic Regression</a>
+                    <a href="/hyperparameter-tuning/" class="nav-link-mobile">Hyperparameters</a>
+                    <a href="/imbalanced-data/" class="nav-link-mobile">Imbalanced Data</a>
+                    <a href="/naive-bayes/" class="nav-link-mobile">Naïve Bayes</a>
+                    <a href="/decision-trees/" class="nav-link-mobile">Decision Trees</a>
+                    <a href="/ensemble-learning/" class="nav-link-mobile">Ensemble Learning</a>
+                    <a href="/unsupervised-learning/" class="nav-link-mobile">Unsupervised Learning</a>
+                    <a href="/ml-workflows/" class="nav-link-mobile">ML Workflows</a>
+                    <a href="/neural-networks/" class="nav-link-mobile">Neural Networks</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            
+            <div class="mb-8 animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Chapter 9: Unsupervised Learning - Dimensionality Reduction</h1>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"></div>
+            </div>
+            
+
+            <div class="prose prose-lg max-w-none animate-slide-up">
+                <!-- Header -->
+<div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 9: Unsupervised Learning - Dimensionality Reduction</h2>
+    <p class="text-gray-700 leading-relaxed">Modern bioinformatics datasets are often high-dimensional (e.g., an RNA-seq experiment can measure >20,000 genes). This presents several challenges, collectively known as the **"Curse of Dimensionality,"** making it hard to find patterns, visualize data, and train effective models. Dimensionality reduction is the process of transforming data into a lower-dimensional space while retaining as much meaningful information as possible.</p>
+</div>
+<!-- 1. Principal Component Analysis (PCA) -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Linear Reduction: Principal Component Analysis (PCA)</h3>
+    <p class="text-gray-700 mb-4">PCA is the most widely used linear dimensionality reduction technique. It transforms the original features into a new set of uncorrelated features called **principal components (PCs)**. The first PC (PC1) is the direction that captures the largest possible variance in the data, PC2 captures the second-largest while being orthogonal to PC1, and so on.</p>
+<p><h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Interactive Demo: How PCA Works</h4>
+<p class="text-gray-600 mb-4">Step through the PCA process to see how it finds the new axes that best represent this patient dataset.</p></p>
+<p><div class="interactive-demo grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Plot Area -->
+<div>
+<div id="pca-plot" style="width:100%; height:300px;"></div>
+</div>
+<!-- Controls and Explanation -->
+<div class="space-y-3 self-center">
+<div id="pca-status" class="text-center font-semibold p-3 bg-white rounded-lg">Original patient data with two correlated features.</div>
+<button id="pca-step-btn" class="btn-primary w-full">Step 1: Standardize Data</button>
+<button id="pca-reset-btn" class="btn-secondary w-full">Reset Demo</button>
+<div class="mt-4">
+<h5 class="font-bold text-center">Explained Variance Ratio</h5>
+<div id="variance-plot" style="width:100%; height:150px;"></div>
+</div>
+</div>
+</div></p>
+</div>
+<!-- 2. Non-Linear Methods -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Non-Linear Methods: t-SNE and UMAP</h3>
+    <p class="text-gray-700 mb-4">While PCA is excellent for capturing linear relationships, many biological datasets have complex, non-linear structures. For these cases, manifold learning algorithms like **t-SNE** and **UMAP** are indispensable, especially for visualizing single-cell RNA-sequencing data.</p>
+<p><h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Visual Comparison: PCA vs. t-SNE vs. UMAP</h4>
+<p class="text-gray-600 mb-4">This dataset contains several distinct cell types. Click the buttons to see how well each algorithm separates these clusters in a 2D visualization.</p></p>
+<p><div class="interactive-demo">
+<div class="flex justify-center gap-4 mb-4">
+<button data-method="pca" class="vis-btn btn-primary">PCA</button>
+<button data-method="tsne" class="vis-btn btn-secondary">t-SNE</button>
+<button data-method="umap" class="vis-btn btn-secondary">UMAP</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div id="vis-plot-container" class="md:col-span-2 flex justify-center items-center">
+<img id="vis-plot-img" src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*qT2mgOCuUZOKqtwwDKnuwA.png" alt="PCA Plot" class="max-w-full md:max-w-lg rounded-lg border">
+</div>
+<div id="vis-explanation" class="md:col-span-2 text-center p-3 bg-white rounded-lg">
+<!-- JS will populate this -->
+</div>
+</div>
+</div></p>
+</div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- PCA STEP-BY-STEP DEMO ---
+    const pcaPlotDiv = document.getElementById('pca-plot');
+    const pcaStepBtn = document.getElementById('pca-step-btn');
+    const pcaResetBtn = document.getElementById('pca-reset-btn');
+    const pcaStatus = document.getElementById('pca-status');
+    const variancePlotDiv = document.getElementById('variance-plot');
+
+    let pcaState = 0;
+    let pcaData, standardizedData, principalComponents;
+
+    const generatePCAData = () => {
+        const data = { x: [], y: [] };
+        const mean = [5, 5];
+        const cov = [[1, 0.8], [0.8, 1]]; // Correlated data
+        for (let i = 0; i < 100; i++) {
+            const z1 = Math.random() * 2 - 1;
+            const z2 = Math.random() * 2 - 1;
+            data.x.push(mean[0] + cov[0][0] * z1 + cov[0][1] * z2);
+            data.y.push(mean[1] + cov[1][0] * z1 + cov[1][1] * z2);
+        }
+        return data;
+    };
+
+    const standardize = (data) => {
+        const meanX = data.x.reduce((a, b) => a + b) / data.x.length;
+        const meanY = data.y.reduce((a, b) => a + b) / data.y.length;
+        const stdX = Math.sqrt(data.x.map(v => (v - meanX)**2).reduce((a, b) => a + b) / data.x.length);
+        const stdY = Math.sqrt(data.y.map(v => (v - meanY)**2).reduce((a, b) => a + b) / data.y.length);
+        return {
+            x: data.x.map(v => (v - meanX) / stdX),
+            y: data.y.map(v => (v - meanY) / stdY)
+        };
+    };
+
+    const findPCs = (data) => {
+        // Calculate covariance matrix entries
+        const covXX = data.x.map(v => v*v).reduce((a,b)=>a+b) / data.x.length;
+        const covYY = data.y.map(v => v*v).reduce((a,b)=>a+b) / data.x.length;
+        const covXY = data.x.map((v, i) => v * data.y[i]).reduce((a,b)=>a+b) / data.x.length;
+        
+        // Calculate eigenvalues
+        const trace = covXX + covYY;
+        const det = covXX * covYY - covXY * covXY;
+        const eig1 = trace / 2 + Math.sqrt(trace**2 / 4 - det);
+        const eig2 = trace / 2 - Math.sqrt(trace**2 / 4 - det);
+        
+        // Calculate first eigenvector (PC1)
+        let vec1;
+        if (Math.abs(covXY) > 1e-10) {
+            vec1 = {
+                x: 1,
+                y: (eig1 - covXX) / covXY
+            };
+        } else {
+            vec1 = {
+                x: covXX >= covYY ? 1 : 0,
+                y: covXX >= covYY ? 0 : 1
+            };
+        }
+        
+        // Calculate second eigenvector (PC2) as perpendicular to PC1
+        const vec2 = {
+            x: -vec1.y,
+            y: vec1.x
+        };
+        
+        // Normalize the vectors
+        const norm1 = Math.sqrt(vec1.x**2 + vec1.y**2);
+        const norm2 = Math.sqrt(vec2.x**2 + vec2.y**2);
+        
+        return {
+            pc1: { x: vec1.x / norm1, y: vec1.y / norm1, var: eig1 },
+            pc2: { x: vec2.x / norm2, y: vec2.y / norm2, var: eig2 }
+        };
+    };
+
+
+    const plotPCA = () => {
+        const dataToPlot = (pcaState > 0) ? standardizedData : pcaData;
+        const traces = [{
+            x: dataToPlot.x, y: dataToPlot.y, mode: 'markers', type: 'scatter',
+            marker: { color: '#60a5fa', size: 8 }
+        }];
+
+        if (pcaState >= 2) {
+            traces.push({ x: [0, principalComponents.pc1.x * 2], y: [0, principalComponents.pc1.y * 2], mode: 'lines', line: { color: 'red', width: 3 }, name: 'PC1' });
+            traces.push({ x: [0, principalComponents.pc2.x * 2], y: [0, principalComponents.pc2.y * 2], mode: 'lines', line: { color: 'green', width: 3 }, name: 'PC2' });
+        }
+        
+        if (pcaState === 3) {
+            const projectedX = standardizedData.x.map((v, i) => v * principalComponents.pc1.x + standardizedData.y[i] * principalComponents.pc1.y);
+            traces[0].marker.color = '#d1d5db';
+            traces.push({
+                x: projectedX.map(p => p * principalComponents.pc1.x),
+                y: projectedX.map(p => p * principalComponents.pc1.y),
+                mode: 'markers', type: 'scatter', marker: { color: 'red', size: 8 }
+            });
+        }
+        
+        Plotly.newPlot(pcaPlotDiv, traces, {
+            title: 'Patient Data',
+            xaxis: { title: 'Feature 1', range: pcaState > 0 ? [-3, 3] : [0, 10], constrain: 'domain' },
+            yaxis: { title: 'Feature 2', range: pcaState > 0 ? [-3, 3] : [0, 10], scaleanchor: 'x', scaleratio: 1 },
+            // Enforce equal aspect ratio so PC2 is visually perpendicular to PC1
+            showlegend: false, margin: {t:40, r:10, b:40, l:40}
+        });
+
+        const totalVar = (principalComponents?.pc1.var || 0) + (principalComponents?.pc2.var || 0);
+        const var1 = (principalComponents?.pc1.var || 0) / (totalVar || 1);
+        const var2 = (principalComponents?.pc2.var || 0) / (totalVar || 1);
+        Plotly.newPlot(variancePlotDiv, [{
+            x: ['PC1', 'PC2'], y: [var1, var2], type: 'bar', marker: {color: ['red', 'green']}
+        }], {margin: {t:10, r:10, b:20, l:40}, yaxis: {range:[0,1], title: 'Explained Var.'}});
+
+    };
+
+    const runPCAStep = () => {
+        pcaState++;
+        if (pcaState === 1) { // Standardize
+            standardizedData = standardize(pcaData);
+            pcaStatus.textContent = "Data is centered and scaled to have zero mean and unit variance.";
+            pcaStepBtn.textContent = "Step 2: Find Principal Components";
+        } else if (pcaState === 2) { // Find PCs
+            principalComponents = findPCs(standardizedData);
+            pcaStatus.textContent = "PC1 (red) is the axis of max variance. PC2 (green) is orthogonal to PC1.";
+            pcaStepBtn.textContent = "Step 3: Project Data onto PC1";
+        } else if (pcaState === 3) { // Project
+            pcaStatus.textContent = "Data is projected onto PC1. The dimension is now reduced from 2D to 1D.";
+            pcaStepBtn.disabled = true;
+        }
+        plotPCA();
+    };
+
+    const resetPCA = () => {
+        pcaState = 0;
+        pcaData = generatePCAData();
+        standardizedData = null;
+        principalComponents = null;
+        pcaStatus.textContent = "Original patient data with two correlated features.";
+        pcaStepBtn.textContent = "Step 1: Standardize Data";
+        pcaStepBtn.disabled = false;
+        plotPCA();
+    };
+
+    pcaStepBtn.addEventListener('click', runPCAStep);
+    pcaResetBtn.addEventListener('click', resetPCA);
+    resetPCA();
+
+    // --- VISUAL COMPARISON DEMO ---
+    const visBtns = document.querySelectorAll('.vis-btn');
+    const visImg = document.getElementById('vis-plot-img');
+    const visExplanation = document.getElementById('vis-explanation');
+    const visContent = {
+        pca: {
+            img: "https://miro.medium.com/v2/resize:fit:640/format:webp/1*qT2mgOCuUZOKqtwwDKnuwA.png",
+            text: "<strong>PCA</strong> captures the main global variance but struggles to separate the non-linear, intertwined clusters. It shows a 'cloud' with some separation but misses the fine-grained local structure."
+        },
+        tsne: {
+            img: "https://miro.medium.com/v2/resize:fit:640/format:webp/1*3cU0mnZWFmJjP6_rSznObA.png",
+            text: "<strong>t-SNE</strong> excels at revealing local neighborhood structures. It creates well-separated, dense clusters, making it excellent for visualization. However, the distances between clusters are not meaningful."
+        },
+        umap: {
+            img: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*O4W7gLYZGfkDsAla7-er2g.png",
+            text: "<strong>UMAP</strong> is often faster than t-SNE and is better at preserving the global data structure. Notice how it separates the clusters well, but also maintains some of their relative positioning, unlike t-SNE."
+        }
+    };
+    
+    visBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const method = e.target.dataset.method;
+            visBtns.forEach(b => {
+                b.classList.remove('btn-primary');
+                b.classList.add('btn-secondary');
+            });
+            e.target.classList.add('btn-primary');
+            e.target.classList.remove('btn-secondary');
+
+            visImg.src = visContent[method].img;
+            visExplanation.innerHTML = visContent[method].text;
+        });
+    });
+    // Set initial explanation
+    visExplanation.innerHTML = visContent.pca.text;
+});
+</script>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Code Examples Toggle Button -->
+    <button id="code-examples-toggle" aria-label="Open code examples"
+            class="fixed bottom-6 right-6 z-[60] rounded-full shadow-lg bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path>
+        </svg>
+        <span class="hidden md:inline">Code Examples</span>
+    </button>
+
+    <!-- Off-canvas Code Examples Panel -->
+    <div id="code-examples-panel" class="fixed inset-0 z-[70] hidden">
+        <!-- Backdrop -->
+        <div id="code-examples-backdrop" class="absolute inset-0 bg-black/40"></div>
+        <!-- Panel -->
+        <aside class="absolute right-0 top-0 h-full w-full md:w-[36rem] bg-white shadow-2xl border-l border-gray-200 flex flex-col">
+            <div class="p-4 border-b flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-800">Chapter Code Examples</h2>
+                <button id="code-examples-close" class="p-2 rounded hover:bg-gray-100" aria-label="Close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="code-examples-content" class="flex-1 overflow-y-auto p-4 space-y-6">
+                <!-- Injected dynamically by interactive.js -->
+            </div>
+        </aside>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">BIT07 Machine Learning</h3>
+                    <p class="text-gray-400">Comprehensive machine learning course for bioinformatics applications by Cedric Hermans.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/introduction/" class="text-gray-400 hover:text-primary-400 transition-colors">Getting Started</a></li>
+                        <li><a href="/linear-regression/" class="text-gray-400 hover:text-primary-400 transition-colors">Linear Models</a></li>
+                        <li><a href="/neural-networks/" class="text-gray-400 hover:text-primary-400 transition-colors">Deep Learning</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Course Materials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Interactive Examples</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">GitHub Repository</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p>&copy; 2025 BIT07 Machine Learning Course by Cedric Hermans. Educational content for machine learning in bioinformatics.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .nav-link {
+            @apply px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors whitespace-nowrap;
+        }
+
+        .nav-link-mobile {
+            @apply block px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors;
+        }
+    </style>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.classList.toggle('hidden');
+        });
+
+        // Toggle code examples panel
+        document.getElementById('code-examples-toggle').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.toggle('hidden');
+        });
+
+        // Close code examples panel
+        document.getElementById('code-examples-close').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.add('hidden');
+        });
+
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Add copy button to code blocks (static content)
+        document.querySelectorAll('pre code').forEach((codeBlock) => {
+            const button = document.createElement('button');
+            button.className = 'absolute top-2 right-2 px-2 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded transition-colors';
+            button.textContent = 'Copy';
+
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeBlock.textContent);
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = 'Copy', 2000);
+            });
+
+            codeBlock.parentNode.style.position = 'relative';
+            codeBlock.parentNode.appendChild(button);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <!-- Shared interactive demos bundle -->
+    <script src="/assets/js/interactive.js"></script>
+</body>
+</html>
