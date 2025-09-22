@@ -1,7 +1,7 @@
 module.exports = function(eleventyConfig) {
-  // Copy assets
-  eleventyConfig.addPassthroughCopy("src/assets");
-  
+  // Copy everything under src/assets to _site/assets
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+
   // Watch CSS files for changes
   eleventyConfig.addWatchTarget("./src/assets/css/");
   
@@ -14,16 +14,8 @@ module.exports = function(eleventyConfig) {
     },
     templateFormats: ["md", "njk", "html"],
     markdownTemplateEngine: "njk",
-    htmlTemplateEngine: "njk"
+    htmlTemplateEngine: "njk",
+    pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/bit07"
+
   };
-};
-
-module.exports = function (eleventyConfig) {
-    // Copy everything under src/assets to _site/assets
-    eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
-
-    return {
-        dir: { input: "src", output: "_site" },
-        pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/bit07"
-    };
 };

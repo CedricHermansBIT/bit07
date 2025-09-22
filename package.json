@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:css": "npx tailwindcss -i ./src/assets/css/style.css -o ./_site/assets/css/style.css",
+    "build:css": "npx tailwindcss -i ./src/assets/css/style.css -o ./src/assets/css/bundle.css",
     "build:eleventy": "eleventy",
     "build": "npm run build:css && npm run build:eleventy",
-    "dev:css": "npx tailwindcss -i ./src/assets/css/style.css -o ./_site/assets/css/style.css --watch",
+    "dev:css": "npx tailwindcss -i ./src/assets/css/style.css -o ./src/assets/css/bundle.css --watch",
     "dev:eleventy": "eleventy --serve",
     "dev": "concurrently \"npm run dev:css\" \"npm run dev:eleventy\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build-ghpages": "npm run build"
   },
   "keywords": [],
