@@ -48,7 +48,15 @@
   }
 
   function chapterKeyFromPath(pathname) {
-    const parts = (pathname || '/').split('/').filter(Boolean);
+    const prefix = (window.__PATH_PREFIX__ || '/');
+    // Ensure prefix ends with '/'
+    const normPrefix = prefix.endsWith('/') ? prefix : prefix + '/';
+    let path = pathname || '/';
+    // Strip the prefix if present
+    if (path.startsWith(normPrefix)) {
+      path = path.slice(normPrefix.length - 1); // keep leading '/'
+    }
+    const parts = (path || '/').split('/').filter(Boolean);
     // Expect structure /<chapter>/ or /
     if (parts.length === 0) return 'home';
     return parts[0];
@@ -234,4 +242,3 @@
     renderExamplesForChapter(key);
   });
 })();
-
