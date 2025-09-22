@@ -141,8 +141,8 @@ title: "Chapter 2: Linear Regression - Modeling Biological Relationships"
     <h3 class="text-2xl font-bold gradient-text mb-4">Next Steps</h3>
     <p class="text-gray-700 max-w-3xl mx-auto">You now understand how to build, optimize, and regularize a linear regression model. The next step is to adapt these ideas for classification problems.</p>
     <div class="flex flex-wrap justify-center gap-4 mt-6">
-        <a href="/logistic-regression/" class="btn-primary">Next: Logistic Regression →</a>
-        <a href="/introduction/" class="btn-secondary">← Previous: Introduction</a>
+        <a href="{{ '/logistic-regression/' | url }}" class="btn-primary">Next: Logistic Regression →</a>
+        <a href="{{ '/introduction/' | url }}" class="btn-secondary">← Previous: Introduction</a>
     </div>
 </div>
 

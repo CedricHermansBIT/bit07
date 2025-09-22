@@ -12,7 +12,7 @@ title: "BIT07 Machine Learning Course"
         </div>
         
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <a href="/introduction/" class="btn-primary text-lg px-8 py-4 inline-flex items-center animate-bounce-subtle">
+            <a href="{{ '/introduction/' | url }}" class="btn-primary text-lg px-8 py-4 inline-flex items-center animate-bounce-subtle">
                 🚀 Start Learning
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
@@ -44,7 +44,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">1</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/introduction/" class="block">Introduction to Machine Learning</a>
+                            <a href="{{ '/introduction/' | url }}" class="block">Introduction to Machine Learning</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Learn the fundamentals of machine learning paradigms and understand how ML differs from traditional programming.</p>
                         <div class="flex flex-wrap gap-2">
@@ -61,7 +61,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">2</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/linear-regression/" class="block">Linear Regression</a>
+                            <a href="{{ '/linear-regression/' | url }}" class="block">Linear Regression</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Model biological relationships using linear regression. Master gradient descent, preprocessing, and regularization.</p>
                         <div class="flex flex-wrap gap-2">
@@ -78,7 +78,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">3</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/logistic-regression/" class="block">Logistic Regression</a>
+                            <a href="{{ '/logistic-regression/' | url }}" class="block">Logistic Regression</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Move from prediction to classification. Understand the sigmoid function and evaluation metrics.</p>
                         <div class="flex flex-wrap gap-2">
@@ -95,7 +95,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">4</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/hyperparameter-tuning/" class="block">Hyperparameter Tuning</a>
+                            <a href="{{ '/hyperparameter-tuning/' | url }}" class="block">Hyperparameter Tuning</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Optimize model performance through systematic hyperparameter tuning and cross-validation.</p>
                         <div class="flex flex-wrap gap-2">
@@ -112,7 +112,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">5</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/imbalanced-data/" class="block">Imbalanced Data</a>
+                            <a href="{{ '/imbalanced-data/' | url }}" class="block">Imbalanced Data</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Handle datasets with unequal class representation using sampling techniques and appropriate metrics.</p>
                         <div class="flex flex-wrap gap-2">
@@ -129,7 +129,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">6</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/naive-bayes/" class="block">Naïve Bayes Classifiers</a>
+                            <a href="{{ '/naive-bayes/' | url }}" class="block">Naïve Bayes Classifiers</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Master probabilistic classifiers based on Bayes' theorem with practical applications.</p>
                         <div class="flex flex-wrap gap-2">
@@ -146,7 +146,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">7</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/decision-trees/" class="block">Decision Trees</a>
+                            <a href="{{ '/decision-trees/' | url }}" class="block">Decision Trees</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Build interpretable tree-based models with understanding of splitting criteria and pruning.</p>
                         <div class="flex flex-wrap gap-2">
@@ -163,7 +163,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">8</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/ensemble-learning/" class="block">Ensemble Learning</a>
+                            <a href="{{ '/ensemble-learning/' | url }}" class="block">Ensemble Learning</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Harness the power of combining multiple models through bagging, boosting, and stacking.</p>
                         <div class="flex flex-wrap gap-2">
@@ -180,7 +180,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">9</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/unsupervised-learning/" class="block">Unsupervised Learning</a>
+                            <a href="{{ '/unsupervised-learning/' | url }}" class="block">Unsupervised Learning</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Discover hidden patterns through clustering and dimensionality reduction techniques.</p>
                         <div class="flex flex-wrap gap-2">
@@ -197,7 +197,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">10</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/ml-workflows/" class="block">ML Workflows</a>
+                            <a href="{{ '/ml-workflows/' | url }}" class="block">ML Workflows</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Build robust machine learning pipelines handling missing data and mixed data types.</p>
                         <div class="flex flex-wrap gap-2">
@@ -214,7 +214,7 @@ title: "BIT07 Machine Learning Course"
                     <div class="chapter-indicator">11</div>
                     <div class="flex-1">
                         <h3 class="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors mb-2">
-                            <a href="/neural-networks/" class="block">Neural Networks & Deep Learning</a>
+                            <a href="{{ '/neural-networks/' | url }}" class="block">Neural Networks & Deep Learning</a>
                         </h3>
                         <p class="text-gray-600 mb-3">Introduction to deep learning with feedforward networks, backpropagation, and modern architectures.</p>
                         <div class="flex flex-wrap gap-2">

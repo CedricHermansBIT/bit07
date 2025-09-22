@@ -15,7 +15,7 @@ module.exports = function(eleventyConfig) {
     templateFormats: ["md", "njk", "html"],
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
-    pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/bit07"
+    pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/bit07/"
 
   };
 };

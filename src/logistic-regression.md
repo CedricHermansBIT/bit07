@@ -146,8 +146,8 @@ title: "Chapter 3: Logistic Regression - From Prediction to Classification"
     <h3 class="text-2xl font-bold gradient-text mb-4">Next Steps</h3>
     <p class="text-gray-700 max-w-3xl mx-auto">You've mastered the fundamentals of classification. The next step is to learn how to systematically optimize your model's performance.</p>
     <div class="flex flex-wrap justify-center gap-4 mt-6">
-        <a href="/hyperparameter-tuning/" class="btn-primary">Next: Hyperparameter Tuning →</a>
-        <a href="/linear-regression/" class="btn-secondary">← Previous: Linear Regression</a>
+        <a href="{{ '/hyperparameter-tuning/' | url }}" class="btn-primary">Next: Hyperparameter Tuning →</a>
+        <a href="{{ '/linear-regression/' | url }}" class="btn-secondary">← Previous: Linear Regression</a>
     </div>
 </div>
 
