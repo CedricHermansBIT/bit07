@@ -6,7 +6,7 @@ title: "Chapter 6: Naïve Bayes Classifiers"
 <!-- Header -->
 <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6 mb-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 6: Naïve Bayes Classifiers</h2>
-    <p class="text-gray-700 leading-relaxed">The classifiers we've seen so far, like Logistic Regression, learn to find a decision boundary that separates classes. In this chapter, we introduce a different family of models: **generative classifiers**, exemplified by the Naïve Bayes algorithm.</p>
+    <p class="text-gray-700 leading-relaxed">The classifiers we've seen so far, like Logistic Regression, learn to find a decision boundary that separates classes. In this chapter, we introduce a different family of models: <strong>generative classifiers</strong>, exemplified by the Naïve Bayes algorithm.</p>
 </div>
 
 <!-- 1. Generative vs. Discriminative -->
@@ -15,12 +15,12 @@ title: "Chapter 6: Naïve Bayes Classifiers"
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
             <h4 class="font-semibold text-blue-800">Discriminative Models (e.g., Logistic Regression)</h4>
-            <p class="text-sm text-blue-700">These models learn the conditional probability `P(y | X)`. Their primary focus is to find the **decision boundary** between classes.</p>
+            <p class="text-sm text-blue-700">These models learn the conditional probability `P(y | X)`. Their primary focus is to find the <strong>decision boundary</strong> between classes.</p>
             <p class="text-sm mt-2"><strong>Analogy:</strong> A customs officer who only learns the rules to distinguish "allowed" from "forbidden" items, without knowing what makes an item belong to either category.</p>
         </div>
         <div class="bg-green-50 p-4 rounded-lg border border-green-200">
             <h4 class="font-semibold text-green-800">Generative Models (e.g., Naïve Bayes)</h4>
-            <p class="text-sm text-green-700">These models learn the joint probability distribution `P(X, y)`. They learn what the data for **each class looks like**.</p>
+            <p class="text-sm text-green-700">These models learn the joint probability distribution `P(X, y)`. They learn what the data for <strong>each class looks like</strong>.</p>
             <p class="text-sm mt-2"><strong>Analogy:</strong> A biologist who studies lions and tigers so thoroughly that they can not only distinguish between them but could also, in theory, generate a new, plausible example of a lion or a tiger.</p>
         </div>
     </div>

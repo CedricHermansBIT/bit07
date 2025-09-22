@@ -6,13 +6,13 @@ title: "Chapter 11: Neural Networks and Deep Learning"
 <!-- Header -->
 <div class="bg-gradient-to-r from-gray-50 to-slate-100 rounded-2xl p-6 mb-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 11: Neural Networks & Deep Learning</h2>
-    <p class="text-gray-700 leading-relaxed">While models like Random Forests are powerful, they can be limited in their ability to capture the extraordinarily complex patterns in biological data (e.g., predicting protein structure from a sequence). To tackle these challenges, we turn to **Artificial Neural Networks (ANNs)**, the core of deep learning.</p>
+    <p class="text-gray-700 leading-relaxed">While models like Random Forests are powerful, they can be limited in their ability to capture the extraordinarily complex patterns in biological data (e.g., predicting protein structure from a sequence). To tackle these challenges, we turn to <strong>Artificial Neural Networks (ANNs)</strong>, the core of deep learning.</p>
 </div>
 
 <!-- 1. The Perceptron -->
 <div class="card mb-8">
     <h3 class="text-xl font-bold text-gray-800 mb-4">The Building Block: A Single Artificial Neuron</h3>
-    <p class="text-gray-700 mb-4">The simplest neural network is a **Perceptron**, which is just a single neuron. It takes multiple inputs, computes a weighted sum, and if that sum exceeds a threshold, it "fires." This simple unit is a linear classifier, much like logistic regression.</p>
+    <p class="text-gray-700 mb-4">The simplest neural network is a <strong>Perceptron</strong>, which is just a single neuron. It takes multiple inputs, computes a weighted sum, and if that sum exceeds a threshold, it "fires." This simple unit is a linear classifier, much like logistic regression.</p>
 
     <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
         <div>
@@ -41,7 +41,7 @@ title: "Chapter 11: Neural Networks and Deep Learning"
 <!-- 2. Feedforward Networks -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">From One Neuron to Many: Feedforward Networks</h3>
-    <p class="text-gray-700 mb-4">A single neuron can only learn linear boundaries. The real power comes from organizing neurons into layers: an **Input Layer**, one or more **Hidden Layers**, and an **Output Layer**. Information flows forward through the network. A network with two or more hidden layers is considered a **"deep" neural network**.</p>
+    <p class="text-gray-700 mb-4">A single neuron can only learn linear boundaries. The real power comes from organizing neurons into layers: an <strong>Input Layer</strong>, one or more <strong>Hidden Layers</strong>, and an <strong>Output Layer</strong>. Information flows forward through the network. A network with two or more hidden layers is considered a <strong>"deep" neural network</strong>.</p>
 
     <h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Interactive Demo: The Power of Hidden Layers</h4>
     <p class="text-gray-600 mb-4">This dataset cannot be separated by a single line. Add hidden layers and neurons to see how the network learns a more complex, non-linear decision boundary.</p>
@@ -74,7 +74,7 @@ title: "Chapter 11: Neural Networks and Deep Learning"
 <!-- 3. Backpropagation -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">How Networks Learn: Backpropagation</h3>
-    <p class="text-gray-700 mb-4">The network learns the correct weights through an algorithm called **backpropagation**, which is essentially a clever application of Gradient Descent. It's a cycle that repeats for many "epochs" (passes over the entire dataset).</p>
+    <p class="text-gray-700 mb-4">The network learns the correct weights through an algorithm called <strong>backpropagation</strong>, which is essentially a clever application of Gradient Descent. It's a cycle that repeats for many "epochs" (passes over the entire dataset).</p>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center text-sm">
         <div class="bg-blue-50 p-3 rounded-lg border border-blue-200">
             <div class="text-2xl">1️⃣</div> <strong class="text-blue-800">Forward Pass</strong>
@@ -98,7 +98,7 @@ title: "Chapter 11: Neural Networks and Deep Learning"
 <!-- 4. Activation Functions -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">Activation Functions: The Neuron's "Firing" Mechanism</h3>
-    <p class="text-gray-700 mb-4">Activation functions introduce essential **non-linearity** into the network. Without them, even a deep network would behave like a simple linear model.</p>
+    <p class="text-gray-700 mb-4">Activation functions introduce essential <strong>non-linearity</strong> into the network. Without them, even a deep network would behave like a simple linear model.</p>
     <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
         <div>
             <label class="block text-sm font-medium">Select Function:</label>
@@ -131,7 +131,7 @@ title: "Chapter 11: Neural Networks and Deep Learning"
         </div>
         <div class="bg-gray-50 p-3 rounded-lg">
             <h4 class="font-semibold">Transformers</h4>
-            <p class="text-sm">The current frontier. The groundbreaking **AlphaFold2** model uses a Transformer-based architecture to predict protein 3D structures with incredible accuracy.</p>
+            <p class="text-sm">The current frontier. The groundbreaking <strong>AlphaFold2</strong> model uses a Transformer-based architecture to predict protein 3D structures with incredible accuracy.</p>
         </div>
     </div>
 </div>

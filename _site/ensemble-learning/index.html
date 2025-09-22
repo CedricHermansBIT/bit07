@@ -123,7 +123,7 @@
                 <!-- Header -->
 <div class="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-6 mb-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 8: Ensemble Learning - The Power of Many</h2>
-    <p class="text-gray-700 leading-relaxed">Instead of relying on a single model, what if we combined the predictions of several? This is the core idea behind **Ensemble Learning**. The central principle is that a diverse group of models, when combined, can achieve better performance and robustness than any single model on its own.</p>
+    <p class="text-gray-700 leading-relaxed">Instead of relying on a single model, what if we combined the predictions of several? This is the core idea behind <strong>Ensemble Learning</strong>. The central principle is that a diverse group of models, when combined, can achieve better performance and robustness than any single model on its own.</p>
 </div>
 <!-- 1. The Wisdom of Crowds -->
 <div class="card mb-8">
@@ -147,7 +147,7 @@
 <!-- 2. Bagging -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">1. Bagging: Bootstrap Aggregating</h3>
-    <p class="text-gray-700 mb-4">Bagging focuses on **reducing variance** by training the same algorithm on different random subsets of the data and then averaging their predictions. It's a parallel process where models are trained independently.</p>
+    <p class="text-gray-700 mb-4">Bagging focuses on <strong>reducing variance</strong> by training the same algorithm on different random subsets of the data and then averaging their predictions. It's a parallel process where models are trained independently.</p>
     <div class="highlight"><strong>Key Algorithm: Random Forest.</strong> This is a specific implementation of bagging where the base model is a Decision Tree. It adds an extra layer of randomness by also selecting a random subset of features at each split.</div>
 <p><h4 class="text-lg font-semibold mt-6 mb-4">Interactive Demo: Bootstrap Sampling</h4>
 <p class="text-gray-600 mb-4">The core of bagging is <strong>bootstrap sampling</strong>—sampling with replacement. Click the button to create a new &quot;bag&quot; from the original dataset. Notice how some data points are selected multiple times (larger dots), while others are left out (grayed out).</p>
@@ -163,7 +163,7 @@
 <!-- 3. Boosting -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">2. Boosting: Learning from Mistakes</h3>
-    <p class="text-gray-700 mb-4">Boosting trains models **sequentially**, where each new model is trained to correct the errors made by the previous ones. It focuses on turning a collection of weak learners into a single strong learner by focusing on difficult examples.</p>
+    <p class="text-gray-700 mb-4">Boosting trains models <strong>sequentially</strong>, where each new model is trained to correct the errors made by the previous ones. It focuses on turning a collection of weak learners into a single strong learner by focusing on difficult examples.</p>
     <div class="highlight"><strong>Key Algorithms: AdaBoost & Gradient Boosting.</strong> AdaBoost adjusts the weights of misclassified samples. Gradient Boosting trains the next model on the residual errors of the previous one.</div>
 <p><h4 class="text-lg font-semibold mt-6 mb-4">Interactive Demo: How Boosting Works</h4>
 <p class="text-gray-600 mb-4">Step through the rounds of boosting. In each round, the algorithm increases the weight (size) of the points the previous model misclassified. The new model must then pay more attention to these difficult points.</p>
@@ -181,7 +181,7 @@
 <!-- 4. Stacking -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">3. Stacking: The Meta-Learner</h3>
-    <p class="text-gray-700 mb-4">Stacking (or Stacked Generalization) takes a different approach. It uses the predictions of several different base models as input features for a final **meta-learner** model. The job of the meta-learner is to learn how to best combine the predictions from the base models.</p>
+    <p class="text-gray-700 mb-4">Stacking (or Stacked Generalization) takes a different approach. It uses the predictions of several different base models as input features for a final <strong>meta-learner</strong> model. The job of the meta-learner is to learn how to best combine the predictions from the base models.</p>
     <div class="bg-gray-50 p-4 rounded-lg">
         <h4 class="font-semibold text-center mb-2">Stacking Architecture</h4>
         <img src="https://editor.analyticsvidhya.com/uploads/31182An-example-scheme-of-stacking-ensemble-learning%20resized.png" alt="Stacking Architecture Diagram" class="w-full max-w-lg mx-auto">

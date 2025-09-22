@@ -6,13 +6,13 @@ title: "Chapter 9: Unsupervised Learning - Dimensionality Reduction"
 <!-- Header -->
 <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 mb-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 9: Unsupervised Learning - Dimensionality Reduction</h2>
-    <p class="text-gray-700 leading-relaxed">Modern bioinformatics datasets are often high-dimensional (e.g., an RNA-seq experiment can measure >20,000 genes). This presents several challenges, collectively known as the **"Curse of Dimensionality,"** making it hard to find patterns, visualize data, and train effective models. Dimensionality reduction is the process of transforming data into a lower-dimensional space while retaining as much meaningful information as possible.</p>
+    <p class="text-gray-700 leading-relaxed">Modern bioinformatics datasets are often high-dimensional (e.g., an RNA-seq experiment can measure >20,000 genes). This presents several challenges, collectively known as the <strong>"Curse of Dimensionality,"</strong> making it hard to find patterns, visualize data, and train effective models. Dimensionality reduction is the process of transforming data into a lower-dimensional space while retaining as much meaningful information as possible.</p>
 </div>
 
 <!-- 1. Principal Component Analysis (PCA) -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">Linear Reduction: Principal Component Analysis (PCA)</h3>
-    <p class="text-gray-700 mb-4">PCA is the most widely used linear dimensionality reduction technique. It transforms the original features into a new set of uncorrelated features called **principal components (PCs)**. The first PC (PC1) is the direction that captures the largest possible variance in the data, PC2 captures the second-largest while being orthogonal to PC1, and so on.</p>
+    <p class="text-gray-700 mb-4">PCA is the most widely used linear dimensionality reduction technique. It transforms the original features into a new set of uncorrelated features called <strong>principal components (PCs)</strong>. The first PC (PC1) is the direction that captures the largest possible variance in the data, PC2 captures the second-largest while being orthogonal to PC1, and so on.</p>
 
     <h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Interactive Demo: How PCA Works</h4>
     <p class="text-gray-600 mb-4">Step through the PCA process to see how it finds the new axes that best represent this patient dataset.</p>
@@ -38,7 +38,7 @@ title: "Chapter 9: Unsupervised Learning - Dimensionality Reduction"
 <!-- 2. Non-Linear Methods -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">Non-Linear Methods: t-SNE and UMAP</h3>
-    <p class="text-gray-700 mb-4">While PCA is excellent for capturing linear relationships, many biological datasets have complex, non-linear structures. For these cases, manifold learning algorithms like **t-SNE** and **UMAP** are indispensable, especially for visualizing single-cell RNA-sequencing data.</p>
+    <p class="text-gray-700 mb-4">While PCA is excellent for capturing linear relationships, many biological datasets have complex, non-linear structures. For these cases, manifold learning algorithms like <strong>t-SNE</strong> and <strong>UMAP</strong> are indispensable, especially for visualizing single-cell RNA-sequencing data.</p>
 
     <h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Visual Comparison: PCA vs. t-SNE vs. UMAP</h4>
     <p class="text-gray-600 mb-4">This dataset contains several distinct cell types. Click the buttons to see how well each algorithm separates these clusters in a 2D visualization.</p>

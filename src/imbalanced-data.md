@@ -12,7 +12,7 @@ title: "Chapter 5: Working with Imbalanced Data"
 <!-- 1. The Core Problem: The Accuracy Paradox -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">The Core Problem: The Accuracy Paradox</h3>
-    <p class="text-gray-700 mb-4">When a dataset is imbalanced, the standard evaluation metric, **accuracy**, becomes deeply misleading. A naive model that simply predicts the majority class for every single sample can achieve a very high accuracy score, despite being completely useless for identifying the minority class (which is often the class of interest).</p>
+    <p class="text-gray-700 mb-4">When a dataset is imbalanced, the standard evaluation metric, <strong>accuracy</strong>, becomes deeply misleading. A naive model that simply predicts the majority class for every single sample can achieve a very high accuracy score, despite being completely useless for identifying the minority class (which is often the class of interest).</p>
 
     <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
         <div>
@@ -72,7 +72,7 @@ model = SVC(class_weight={0: 1, 1: 10})</code></pre>
 
     <!-- Evaluation-Level Solutions -->
     <h4 class="text-xl font-semibold text-gray-700 mt-8 mb-4">3. Evaluation-Level Solutions: Choosing the Right Scorer</h4>
-    <p class="text-gray-600 mb-4">As we've seen, accuracy is a poor metric. Instead, we should use metrics derived from the confusion matrix that provide a better picture of performance on the minority class, such as **Precision, Recall, and F1-Score**.</p>
+    <p class="text-gray-600 mb-4">As we've seen, accuracy is a poor metric. Instead, we should use metrics derived from the confusion matrix that provide a better picture of performance on the minority class, such as <strong>Precision, Recall, and F1-Score</strong>.</p>
     <div class="highlight">
         <strong>Making it Actionable: Hyperparameter Tuning</strong>
         <p>When performing hyperparameter tuning with <code>GridSearchCV</code> or <code>RandomizedSearchCV</code>, it is crucial to change the default scoring metric from 'accuracy' to one that is robust to imbalance.</p>

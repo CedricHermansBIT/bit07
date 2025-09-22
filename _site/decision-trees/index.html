@@ -140,7 +140,7 @@
 <!-- 2. How a Tree is Built -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">How a Decision Tree is Built: Finding the Best Split</h3>
-    <p class="text-gray-700 mb-4">The core of the algorithm is to find the best feature and the best split point to divide the data at each node. The "best" split is the one that makes the resulting child nodes as **"pure"** as possible—meaning they contain samples predominantly from a single class. This purity is measured using criteria like **Gini Impurity** or **Entropy**.</p>
+    <p class="text-gray-700 mb-4">The core of the algorithm is to find the best feature and the best split point to divide the data at each node. The "best" split is the one that makes the resulting child nodes as <strong>"pure"</strong> as possible—meaning they contain samples predominantly from a single class. This purity is measured using criteria like <strong>Gini Impurity</strong> or <strong>Entropy</strong>.</p>
 <p><h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Interactive Demo: Find the Best Split</h4>
 <p class="text-gray-600 mb-4">You are the algorithm! Your goal is to find the split that results in the lowest <strong>Weighted Gini Impurity</strong> or the highest <strong>Information Gain</strong>. Try splitting on different features and values.</p></p>
 <p><div class="interactive-demo grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -183,7 +183,7 @@
 <!-- 3. Overfitting and Solutions -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">The Biggest Weakness: Overfitting</h3>
-    <p class="text-gray-700 mb-4">If a tree is allowed to grow to its maximum depth, it can create a complex set of rules that perfectly memorizes the training data, including its noise. This model will fail to generalize to new, unseen data. This is **overfitting**.</p>
+    <p class="text-gray-700 mb-4">If a tree is allowed to grow to its maximum depth, it can create a complex set of rules that perfectly memorizes the training data, including its noise. This model will fail to generalize to new, unseen data. This is <strong>overfitting</strong>.</p>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
             <h4 class="text-lg font-semibold text-gray-700">Solution 1: Pruning (Pre-pruning)</h4>
@@ -196,8 +196,8 @@
         </div>
         <div>
             <h4 class="text-lg font-semibold text-gray-700">Solution 2: Ensembles (Random Forests)</h4>
-            <p class="text-sm text-gray-600 mb-2">A single decision tree can be unstable. A more powerful and robust approach is to use a **Random Forest**.</p>
-            <div class="alert-info text-sm">A Random Forest is an **ensemble** of many decision trees. It works by training each tree on a different random subset of the data and features. To make a prediction, it aggregates the "votes" from all the individual trees. This process reduces overfitting and leads to much better performance.</div>
+            <p class="text-sm text-gray-600 mb-2">A single decision tree can be unstable. A more powerful and robust approach is to use a <strong>Random Forest</strong>.</p>
+            <div class="alert-info text-sm">A Random Forest is an <strong>ensemble</strong> of many decision trees. It works by training each tree on a different random subset of the data and features. To make a prediction, it aggregates the "votes" from all the individual trees. This process reduces overfitting and leads to much better performance.</div>
         </div>
     </div>
 </div>

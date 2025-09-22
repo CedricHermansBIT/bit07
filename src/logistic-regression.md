@@ -6,7 +6,7 @@ title: "Chapter 3: Logistic Regression - From Prediction to Classification"
 <!-- Header -->
 <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 mb-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 3: Logistic Regression</h2>
-    <p class="text-gray-700 leading-relaxed">While linear regression predicts continuous values, many questions in bioinformatics require a categorical "yes" or "no" answer. This is the task of **classification**. This chapter introduces Logistic Regression, a foundational algorithm that forms the bridge from regression to classification.</p>
+    <p class="text-gray-700 leading-relaxed">While linear regression predicts continuous values, many questions in bioinformatics require a categorical "yes" or "no" answer. This is the task of <strong>classification</strong>. This chapter introduces Logistic Regression, a foundational algorithm that forms the bridge from regression to classification.</p>
 </div>
 
 <!-- 1. The Problem: Why not Linear Regression? -->
@@ -117,7 +117,7 @@ title: "Chapter 3: Logistic Regression - From Prediction to Classification"
 <!-- 5. Advanced Topics & Regularization -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">Handling Complexity and Overfitting</h3>
-    <p class="text-gray-700 mb-4">Like linear regression, logistic regression can be extended to handle non-linear data with polynomial features. However, this increases the risk of overfitting. We control this with **regularization**.</p>
+    <p class="text-gray-700 mb-4">Like linear regression, logistic regression can be extended to handle non-linear data with polynomial features. However, this increases the risk of overfitting. We control this with <strong>regularization</strong>.</p>
 
     <div class="highlight mb-6">
       <strong>Key Concept: The `C` Hyperparameter</strong>

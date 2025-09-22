@@ -6,7 +6,7 @@ title: "Chapter 10: Building Robust ML Workflows"
 <!-- Header -->
 <div class="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6 mb-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 10: Building Robust ML Workflows</h2>
-    <p class="text-gray-700 leading-relaxed">As models become more complex, the number of pre-processing steps (scaling, encoding, imputation) can become unwieldy. Performing these steps manually is not only tedious but is a major source of a critical error known as **data leakage**, which can completely invalidate your results.</p>
+    <p class="text-gray-700 leading-relaxed">As models become more complex, the number of pre-processing steps (scaling, encoding, imputation) can become unwieldy. Performing these steps manually is not only tedious but is a major source of a critical error known as <strong>data leakage</strong>, which can completely invalidate your results.</p>
 </div>
 
 <!-- 1. The #1 Pitfall: Data Leakage -->
@@ -35,7 +35,7 @@ title: "Chapter 10: Building Robust ML Workflows"
 <!-- 2. Handling Missing Data -->
 <div class="card mb-8">
     <h3 class="text-xl font-bold text-gray-800 mb-4">A Common Challenge: Missing Data</h3>
-    <p class="text-gray-700 mb-4">Biological datasets are notoriously messy. The simplest strategy is to remove rows or columns with missing data, but this can lead to a massive loss of valuable information. A better approach is **imputation**: filling in missing values based on the information available.</p>
+    <p class="text-gray-700 mb-4">Biological datasets are notoriously messy. The simplest strategy is to remove rows or columns with missing data, but this can lead to a massive loss of valuable information. A better approach is <strong>imputation</strong>: filling in missing values based on the information available.</p>
     <div class="interactive-demo">
         <div id="missing-data-grid" class="grid grid-cols-5 gap-1 mb-4 p-2 bg-gray-100 rounded"></div>
         <div class="flex flex-wrap gap-2 justify-center">
