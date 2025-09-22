@@ -18,3 +18,12 @@ module.exports = function(eleventyConfig) {
   };
 };
 
+module.exports = function (eleventyConfig) {
+    // Copy everything under src/assets to _site/assets
+    eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+
+    return {
+        dir: { input: "src", output: "_site" },
+        pathPrefix: process.env.ELEVENTY_PATH_PREFIX || "/bit07"
+    };
+};
