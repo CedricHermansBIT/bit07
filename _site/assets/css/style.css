@@ -114,6 +114,7 @@
 .learning-path::before {
   content: '';
     left: 50%;
+    z-index: -1;
   @apply absolute top-0 w-0.5 h-full bg-gradient-to-b from-primary-200 via-primary-400 to-primary-600;
 }
 

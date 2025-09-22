@@ -182,8 +182,8 @@ let hiddenLayers = 1;
 let isTraining = false;
 
 function updateNetworkBuilderUI() {
-    layersDisplay.textContent = `${hiddenLayers} Layer${hiddenLayers > 1 ? 's' : ''}`;
-    neuronsDisplay.textContent = `${neuronsSlider.value} Neurons`;
+    layersDisplay.textContent = hiddenLayers + ' Layer' + (hiddenLayers > 1 ? 's' : '');
+    neuronsDisplay.textContent = neuronsSlider.value + ' Neurons';
     remLayerBtn.disabled = hiddenLayers === 1;
     addLayerBtn.disabled = hiddenLayers === 4;
 }
@@ -255,6 +255,50 @@ function plotNetworkBoundary(predictionFunc = null) {
 // Initial plot without decision boundary
 plotNetworkBoundary();
 
+// Precompute grid and fast decision boundary rendering helpers
+const GRID_RES = 40;
+const x_grid = Array.from({ length: GRID_RES + 1 }, (_, i) => (i / GRID_RES) * 10 - 5);
+const y_grid = Array.from({ length: GRID_RES + 1 }, (_, i) => (i / GRID_RES) * 10 - 5);
+
+function computeDecisionZForModel(model) {
+    return tf.tidy(() => {
+        const points = [];
+        for (let yi = 0; yi < y_grid.length; yi++) {
+            for (let xi = 0; xi < x_grid.length; xi++) {
+                points.push([x_grid[xi], y_grid[yi]]);
+            }
+        }
+        const gridTensor = tf.tensor2d(points);
+        const preds = model.predict(gridTensor);
+        const flat = preds.dataSync(); // 1D typed array
+        const z = [];
+        for (let yi = 0; yi < y_grid.length; yi++) {
+            const row = [];
+            for (let xi = 0; xi < x_grid.length; xi++) {
+                row.push(flat[yi * x_grid.length + xi]);
+            }
+            z.push(row);
+        }
+        return z;
+    });
+}
+
+function renderDecisionBoundary(z) {
+    if (networkPlot && networkPlot.data && networkPlot.data.length > 1 && networkPlot.data[1].type === 'contour') {
+        Plotly.restyle(networkPlot, { z: [z] }, [1]);
+    } else {
+        Plotly.addTraces(networkPlot, [{
+            z,
+            x: x_grid,
+            y: y_grid,
+            type: 'contour',
+            showscale: false,
+            colorscale: [['0', 'rgba(249,115,22,0.8)'], ['1', 'rgba(96,165,250,0.8)']],
+            contours: { start: 0.5, end: 0.5, coloring: 'lines' }
+        }]);
+    }
+}
+
 trainBtn.addEventListener('click', async () => {
     if (isTraining) return;
     isTraining = true;
@@ -306,15 +350,10 @@ trainBtn.addEventListener('click', async () => {
         metrics: ['accuracy']
     });
 
-    // Function to update visualization
-    const updateVisualization = () => {
-        const predictionFunc = (x, y) => {
-            const prediction = model.predict(tf.tensor2d([[x, y]]));
-            const result = prediction.dataSync()[0];
-            prediction.dispose();
-            return result;
-        };
-        plotNetworkBoundary(predictionFunc);
+    // Fast visualization update (batched predictions + lightweight restyle)
+    const updateDecisionBoundary = () => {
+        const z = computeDecisionZForModel(model);
+        renderDecisionBoundary(z);
     };
 
     // Train the model with visual feedback
@@ -327,20 +366,20 @@ trainBtn.addEventListener('click', async () => {
             onEpochEnd: async (epoch, logs) => {
                 // Update UI
                 epochSpan.textContent = epoch + 1;
-                accuracySpan.textContent = logs.acc ? logs.acc.toFixed(4) : logs.accuracy.toFixed(4);
+                accuracySpan.textContent = (logs.acc !== undefined ? logs.acc : logs.accuracy).toFixed(4);
                 lossSpan.textContent = logs.loss.toFixed(4);
                 
                 // Update visualization every 5 epochs
                 if (epoch % 5 === 0 || epoch === 49) {
-                    await tf.nextFrame(); // Let UI update
-                    updateVisualization();
+                    await tf.nextFrame();
+                    updateDecisionBoundary();
                 }
             }
         }
     });
 
     // Final update
-    updateVisualization();
+    updateDecisionBoundary();
 
     trainBtn.textContent = "Train Network";
     trainBtn.disabled = false;
@@ -372,7 +411,7 @@ updateNetworkBuilderUI();
         const x = Array.from({length: 101}, (_, i) => (i - 50) / 10);
         const y = x.map(act_funcs[selected].func);
         activationInfo.innerHTML = act_funcs[selected].info;
-        Plotly.newPlot(activationPlot, [{ x, y, type:'scatter' }], { title: `${selected.replace('_',' ')} Function`, xaxis:{zeroline:true}, yaxis:{zeroline:true}, margin:{t:40,r:10,b:20,l:20} });
+        Plotly.newPlot(activationPlot, [{ x, y, type:'scatter' }], { title: selected.replace('_',' ') + ' Function', xaxis:{zeroline:true}, yaxis:{zeroline:true}, margin:{t:40,r:10,b:20,l:20} });
     }
     activationSelect.addEventListener('change', updateActivationPlot);
     updateActivationPlot();

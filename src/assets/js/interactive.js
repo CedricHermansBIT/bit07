@@ -59,7 +59,8 @@
     const parts = (path || '/').split('/').filter(Boolean);
     // Expect structure /<chapter>/ or /
     if (parts.length === 0) return 'home';
-    return parts[0];
+    if (parts.length === 1) return parts[0];
+    return parts[1];
   }
 
   // Curated examples per chapter (Python-focused), adapted from BIT07.txt

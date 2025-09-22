@@ -3172,6 +3172,7 @@ pre code {
 .learning-path::before {
   content: '';
   left: 50%;
+  z-index: -1;
   position: absolute;
   top: 0px;
   height: 100%;
