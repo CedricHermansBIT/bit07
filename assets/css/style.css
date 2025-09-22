@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-slate-50 to-blue-50 text-gray-800;
+  }
+
+  code {
+    @apply bg-gray-100 text-gray-800 px-1 py-0.5 rounded text-sm font-mono;
+  }
+
+  pre {
+    @apply bg-gray-900 text-gray-100 rounded-lg overflow-x-auto;
+  }
+
+  pre code {
+    @apply bg-transparent text-inherit p-0;
+  }
+}
+
+/* Custom components */
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-50 text-primary-600 font-semibold py-2 px-4 rounded-lg border border-primary-200 transition-colors duration-200 shadow-sm hover:shadow-md;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100;
+  }
+
+  .card-hover {
+    @apply hover:-translate-y-1 hover:shadow-2xl;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
+  }
+
+  .chapter-card {
+    @apply card card-hover cursor-pointer;
+  }
+
+  .interactive-demo {
+    @apply bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 my-4;
+  }
+
+  .code-block {
+    @apply bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto font-mono text-sm;
+  }
+
+  .alert-info {
+    @apply bg-blue-50 border-l-4 border-blue-400 p-4 my-4;
+  }
+
+  .alert-warning {
+    @apply bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4;
+  }
+
+  .highlight {
+    @apply bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4;
+  }
+}
+
+/* Syntax highlighting for code blocks */
+.hljs {
+  @apply bg-gray-900 text-gray-100;
+}
+
+.hljs-keyword {
+  @apply text-purple-400;
+}
+
+.hljs-string {
+  @apply text-green-400;
+}
+
+.hljs-comment {
+  @apply text-gray-500;
+}
+
+.hljs-number {
+  @apply text-blue-400;
+}
+
+.hljs-function {
+  @apply text-yellow-400;
+}
+
+/* Interactive elements */
+.ml-playground {
+  @apply bg-white border-2 border-dashed border-gray-300 rounded-lg p-6 my-6;
+}
+
+.parameter-slider {
+  @apply w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+}
+
+.parameter-slider::-webkit-slider-thumb {
+  @apply appearance-none w-5 h-5 bg-primary-600 rounded-full cursor-pointer;
+}
+
+/* Learning path indicators */
+.learning-path::before {
+  content: '';
+    left: 50%;
+  @apply absolute top-0 w-0.5 h-full bg-gradient-to-b from-primary-200 via-primary-400 to-primary-600;
+}
+
+.chapter-indicator {
+  @apply w-12 h-12 bg-primary-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg z-10 relative;
+}

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: Linear Regression - Modeling Biological Relationships | BIT07 Machine Learning Course</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 text-white shadow-xl sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h1><a href="/" class="text-2xl font-bold hover:text-blue-100 transition-colors">BIT07 Machine Learning</a></h1>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <!-- Navigation menu -->
+                <div id="nav-menu" class="hidden md:flex flex-wrap items-center space-x-1">
+                    <a href="/" class="nav-link">Home</a>
+
+                    <!-- Dropdown for Foundations -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Foundations
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/introduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Introduction</a>
+                                <a href="/linear-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Linear Regression</a>
+                                <a href="/logistic-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Logistic Regression</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Core Methods -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Core Methods
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/hyperparameter-tuning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Hyperparameter Tuning</a>
+                                <a href="/imbalanced-data/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Imbalanced Data</a>
+                                <a href="/naive-bayes/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Naïve Bayes</a>
+                                <a href="/decision-trees/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Decision Trees</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Advanced Topics -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Advanced
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/ensemble-learning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Ensemble Learning</a>
+                                <a href="/clustering/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Clustering</a>
+                                <a href="/dimensionality-reduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Dimensionality Reduction</a>
+                                <a href="/ml-workflows/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ML Workflows</a>
+                                <a href="/neural-networks/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Neural Networks</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu (hidden by default) -->
+            <div id="mobile-nav" class="md:hidden mt-4 hidden">
+                <div class="flex flex-col space-y-2">
+                    <a href="/" class="nav-link-mobile">Home</a>
+                    <a href="/introduction/" class="nav-link-mobile">Introduction</a>
+                    <a href="/linear-regression/" class="nav-link-mobile">Linear Regression</a>
+                    <a href="/logistic-regression/" class="nav-link-mobile">Logistic Regression</a>
+                    <a href="/hyperparameter-tuning/" class="nav-link-mobile">Hyperparameters</a>
+                    <a href="/imbalanced-data/" class="nav-link-mobile">Imbalanced Data</a>
+                    <a href="/naive-bayes/" class="nav-link-mobile">Naïve Bayes</a>
+                    <a href="/decision-trees/" class="nav-link-mobile">Decision Trees</a>
+                    <a href="/ensemble-learning/" class="nav-link-mobile">Ensemble Learning</a>
+                    <a href="/unsupervised-learning/" class="nav-link-mobile">Unsupervised Learning</a>
+                    <a href="/ml-workflows/" class="nav-link-mobile">ML Workflows</a>
+                    <a href="/neural-networks/" class="nav-link-mobile">Neural Networks</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            
+            <div class="mb-8 animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Chapter 2: Linear Regression - Modeling Biological Relationships</h1>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"></div>
+            </div>
+            
+
+            <div class="prose prose-lg max-w-none animate-slide-up">
+                <!-- Header -->
+<div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 2: Linear Regression</h2>
+    <p class="text-gray-700 leading-relaxed">Linear regression is a fundamental supervised learning algorithm used for regression tasks. It aims to model the linear relationship between one or more independent variables (features) and a continuous dependent variable (the target). Despite its simplicity, it is a powerful and interpretable tool for understanding relationships in biological data.</p>
+</div>
+<!-- Core Concepts Section -->
+<div class="bg-white rounded-xl shadow-md p-6 mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">The Linear Regression Model</h3>
+<p><div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div>
+<h4 class="text-xl font-semibold text-gray-700 mb-3">The Hypothesis Function</h4>
+<p class="text-gray-600 mb-4">For a single feature, the model assumes the relationship can be described by a straight line. This is the model's hypothesis:</p>
+<div class="bg-gray-100 rounded-lg p-4 font-mono text-center">
+<code class="text-lg">hθ(x) = θ₀ + θ₁x</code>
+</div>
+<div class="space-y-2 text-sm mt-4">
+<p><code class="font-semibold">hθ(x)</code> is the predicted value.</p>
+<p><code class="font-semibold">x</code> is the input feature (e.g., concentration of a chemical).</p>
+<p><code class="font-semibold">θ₀</code> is the y-intercept (the baseline value when x=0).</p>
+<p><code class="font-semibold">θ₁</code> is the slope, representing the change in the target for a one-unit change in x.</p>
+</div>
+</div>
+<div>
+<h4 class="text-xl font-semibold text-gray-700 mb-3">The Cost Function</h4>
+<p class="text-gray-600 mb-4">To find the &quot;best fit&quot; line, we need to quantify how wrong our model is. This is done with a cost function, typically the Mean Squared Error (MSE).</p>
+<div class="bg-gray-100 rounded-lg p-4 font-mono text-center">
+<code class="text-lg">J(θ) = (1/2m) Σ(hθ(x⁽ⁱ⁾) - y⁽ⁱ⁾)²</code>
+</div>
+<div class="alert-info mt-4">
+<strong>Analogy: A &quot;Disappointment Score&quot;</strong>
+<p>Think of the cost function as a &quot;disappointment score&quot;. A high score means the model's predictions are far from the actual data (high disappointment). Our goal is to find the parameters (θ values) that give us the lowest possible disappointment.</p>
+</div>
+</div>
+</div></p>
+</div>
+<!-- Gradient Descent Section -->
+<div class="bg-white rounded-xl shadow-md p-6 mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">⚙️ Gradient Descent: Finding the Bottom of the Hill</h3>
+    <p class="text-gray-700 mb-6">We use a powerful optimization algorithm called Gradient Descent to find the values for θ₀ and θ₁ that minimize the cost function J(θ).</p>
+    <div class="highlight">
+        <strong>Analogy: The Hiker in the Fog</strong>
+        <p>Imagine you are a hiker on a hilly landscape in thick fog. To find the lowest point, you would feel the slope at your feet and take a step in the steepest downhill direction. Repeating this process will eventually lead you to the bottom of the valley. This is exactly how Gradient Descent works.</p>
+    </div>
+    <div class="mt-4">
+        <p class="text-gray-600">It works by repeatedly updating the parameters using the following rule: "The new parameter value is the old value minus a small step (the <code class="text-sm">learning rate α</code>) in the direction of the negative gradient."</p>
+    </div>
+</div>
+<!-- Data Pre-processing Section -->
+<div class="bg-white rounded-xl shadow-md p-6 mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">🧹 Data Pre-processing: Preparing Data for Modeling</h3>
+    <p class="text-gray-700 mb-6">Real-world biological data is rarely "plug-and-play". Proper pre-processing is often more critical for model performance than the choice of algorithm itself.</p>
+    <div class="space-y-6">
+        <div class="border-l-4 border-blue-400 pl-4">
+            <h4 class="font-bold text-gray-800">Feature Scaling</h4>
+            <p class="text-gray-600">Transforms features to be on a similar scale, which helps Gradient Descent converge much faster. Common methods include <strong>Standard Scaling</strong> (Z-score) and <strong>Min-Max Scaling</strong>.</p>
+        </div>
+        <div class="border-l-4 border-green-400 pl-4">
+            <h4 class="font-bold text-gray-800">Handling Categorical Features</h4>
+            <p class="text-gray-600">Models require numerical input. Categorical features (e.g., 'pathway': 'Metabolism', 'Signaling') must be converted. <strong>One-Hot Encoding</strong> is the standard method, creating a new binary column for each category to avoid implying a false ordinal relationship.</p>
+        </div>
+        <div class="border-l-4 border-purple-400 pl-4">
+            <h4 class="font-bold text-gray-800">Handling Non-Linearity</h4>
+            <p class="text-gray-600">If the relationship isn't a straight line, we can create <strong>polynomial features</strong> (e.g., adding x² as a new feature) to allow the linear model to fit a curve.</p>
+        </div>
+        <div class="alert-warning mt-6">
+            <strong>Critical Concept: Preventing Data Leakage</strong>
+            <p>All pre-processing steps (like calculating the mean for scaling) must be learned from the <strong>training set only</strong>. This learned transformation is then applied to both the training and test sets. Fitting on the entire dataset before splitting "leaks" information from the test set into the training process, leading to an overly optimistic performance evaluation.</p>
+        </div>
+    </div>
+</div>
+<!-- Bias-Variance and Regularization Section -->
+<div class="bg-white rounded-xl shadow-md p-6 mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">🎯 The Bias-Variance Trade-off & Regularization</h3>
+    <p class="text-gray-700 mb-4">A central challenge in machine learning is navigating the trade-off between a model that is too simple (<strong>high bias, underfitting</strong>) and one that is too complex and learns the noise in the data (<strong>high variance, overfitting</strong>). This is especially true in bioinformatics, where we often have many features (e.g., genes) and few samples (e.g., patients).</p>
+    <p class="text-gray-700 mb-6"><strong>Regularization</strong> is the primary technique to combat overfitting. It works by adding a penalty to the cost function that discourages the model's parameters (θ) from becoming too large.</p>
+<p><div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+<h4 class="text-lg font-bold text-blue-800 mb-2">Ridge Regression (L2 Penalty)</h4>
+<p class="text-blue-700">Adds a penalty proportional to the <strong>square</strong> of the coefficients' magnitude. This shrinks large coefficients towards zero but rarely makes them exactly zero. Use this when you believe most features are useful.</p>
+</div>
+<div class="bg-green-50 border border-green-200 rounded-lg p-4">
+<h4 class="text-lg font-bold text-green-800 mb-2">Lasso Regression (L1 Penalty)</h4>
+<p class="text-green-700">Adds a penalty proportional to the <strong>absolute value</strong> of the coefficients' magnitude. This can shrink coefficients to be exactly zero, effectively performing automatic <strong>feature selection</strong>. Use this when you suspect many features are irrelevant.</p>
+</div>
+</div></p>
+</div>
+<!-- Interactive Demo -->
+<div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-gray-100">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">🔬 Interactive Demo: Adjust the Model Parameters</h3>
+    <p class="text-gray-600 mb-4">Adjust the parameters (<code class="text-sm">θ₀</code> and <code class="text-sm">θ₁</code>) to see how the regression line fits the data points.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Slope (θ₁)</label>
+                    <input type="range" id="slope-slider" min="-2" max="2" step="0.01" value="0.8" class="parameter-slider">
+                    <span id="slope-value" class="text-sm text-gray-600">0.8</span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Intercept (θ₀)</label>
+                    <input type="range" id="intercept-slider" min="-5" max="5" step="0.01" value="1.2" class="parameter-slider">
+                    <span id="intercept-value" class="text-sm text-gray-600">1.2</span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Loss</label>
+                    <span id="loss-value" class="text-sm text-gray-600">0.0</span>
+                </div>
+                <button id="regenerate-btn" class="btn-secondary w-full">🔄 Generate New Data</button>
+            </div>
+        </div>
+        <div>
+            <div id="regression-plot" style="width:100%;height:250px;"></div>
+        </div>
+    </div>
+</div>
+<!-- Multivariate Linear Regression -->
+<div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-gray-100">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">📈 Multivariate Linear Regression</h3>
+    <p class="text-gray-700 mb-4">In many biological applications, we have multiple features that influence the target variable. Multivariate linear regression extends the simple linear model to accommodate multiple input features.</p>
+    <div class="bg-gray-100 rounded-lg p-4 font-mono text-center mb-4">
+        <code class="text-lg">hθ(x) = θ₀ + θ₁x₁ + θ₂x₂ + ... + θₙxₙ</code>
+    </div>
+    <p class="text-gray-700 mb-4">Here, each <code class="text-sm">xᵢ</code> represents a different feature (e.g., expression levels of different genes), and each <code class="text-sm">θᵢ</code> is the corresponding coefficient that quantifies its contribution to the prediction.</p>
+    <p class="text-gray-700">The principles of cost minimization, gradient descent, and regularization apply similarly in the multivariate case, allowing us to build robust models even with many features.</p>
+</div>
+<div class="bg-gradient-to-r from-primary-100 to-secondary-100 rounded-2xl p-8 text-center">
+    <h3 class="text-2xl font-bold gradient-text mb-4">Next Steps</h3>
+    <p class="text-gray-700 max-w-3xl mx-auto">You now understand how to build, optimize, and regularize a linear regression model. The next step is to adapt these ideas for classification problems.</p>
+    <div class="flex flex-wrap justify-center gap-4 mt-6">
+        <a href="/logistic-regression/" class="btn-primary">Next: Logistic Regression →</a>
+        <a href="/introduction/" class="btn-secondary">← Previous: Introduction</a>
+    </div>
+</div>
+<script>
+    let data = generateData();
+    function generateData() {
+        const n = 50;
+        const x_vals = Array.from({length: n}, () => Math.random() * 10);
+        const noise_level = 3;
+        const y_vals = x_vals.map(x => 1.5 + 0.5 * x + (Math.random() - 0.5) * noise_level);
+        return {x: x_vals, y: y_vals};
+    }
+    // Interactive Linear Regression Demo
+    function updatePlot() {
+        const slope = parseFloat(document.getElementById('slope-slider').value);
+        const intercept = parseFloat(document.getElementById('intercept-slider').value);
+        
+        document.getElementById('slope-value').textContent = slope.toFixed(2);
+        document.getElementById('intercept-value').textContent = intercept.toFixed(2);
+
+        const x_vals = data.x;
+        const y_vals = data.y;
+        const n = x_vals.length;
+        
+        const user_line_x = [0, 10];
+        const user_line_y = [intercept, intercept + slope * 10];
+
+        let loss = 0;
+        for (let i = 0; i < n; i++) {
+            const y_hat = slope * x_vals[i] + intercept;
+            const error = y_vals[i] - y_hat;
+            loss += error * error;
+        }
+
+        // Update loss
+        document.getElementById('loss-value').textContent = loss.toFixed(2);
+        
+        const data_points = {
+            x: x_vals,
+            y: y_vals,
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Biological Data',
+            marker: { color: '#3B82F6', size: 8 }
+        };
+        
+        const user_line = {
+            x: user_line_x,
+            y: user_line_y,
+            mode: 'lines',
+            type: 'scatter',
+            name: 'Your Model',
+            line: { color: '#EF4444', width: 3 }
+        };
+        
+        const layout = {
+            title: 'Gene Expression vs. Drug Dose',
+            xaxis: { title: 'Drug Dose (μM)' },
+            yaxis: { title: 'Gene Expression' },
+            margin: { t: 40, r: 20, b: 40, l: 50 },
+            showlegend: false,
+            font: {size: 10}
+        };
+        
+        Plotly.newPlot('regression-plot', [data_points, user_line], layout);
+    }
+    
+    document.getElementById('slope-slider').addEventListener('input', updatePlot);
+    document.getElementById('intercept-slider').addEventListener('input', updatePlot);
+    document.getElementById('regenerate-btn').addEventListener('click', () => {
+        data = generateData();
+        updatePlot();
+    });
+    
+    document.addEventListener('DOMContentLoaded', updatePlot);
+</script>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Code Examples Toggle Button -->
+    <button id="code-examples-toggle" aria-label="Open code examples"
+            class="fixed bottom-6 right-6 z-[60] rounded-full shadow-lg bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path>
+        </svg>
+        <span class="hidden md:inline">Code Examples</span>
+    </button>
+
+    <!-- Off-canvas Code Examples Panel -->
+    <div id="code-examples-panel" class="fixed inset-0 z-[70] hidden">
+        <!-- Backdrop -->
+        <div id="code-examples-backdrop" class="absolute inset-0 bg-black/40"></div>
+        <!-- Panel -->
+        <aside class="absolute right-0 top-0 h-full w-full md:w-[36rem] bg-white shadow-2xl border-l border-gray-200 flex flex-col">
+            <div class="p-4 border-b flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-800">Chapter Code Examples</h2>
+                <button id="code-examples-close" class="p-2 rounded hover:bg-gray-100" aria-label="Close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="code-examples-content" class="flex-1 overflow-y-auto p-4 space-y-6">
+                <!-- Injected dynamically by interactive.js -->
+            </div>
+        </aside>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">BIT07 Machine Learning</h3>
+                    <p class="text-gray-400">Comprehensive machine learning course for bioinformatics applications by Cedric Hermans.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/introduction/" class="text-gray-400 hover:text-primary-400 transition-colors">Getting Started</a></li>
+                        <li><a href="/linear-regression/" class="text-gray-400 hover:text-primary-400 transition-colors">Linear Models</a></li>
+                        <li><a href="/neural-networks/" class="text-gray-400 hover:text-primary-400 transition-colors">Deep Learning</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Course Materials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Interactive Examples</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">GitHub Repository</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p>&copy; 2025 BIT07 Machine Learning Course by Cedric Hermans. Educational content for machine learning in bioinformatics.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .nav-link {
+            @apply px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors whitespace-nowrap;
+        }
+
+        .nav-link-mobile {
+            @apply block px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors;
+        }
+    </style>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.classList.toggle('hidden');
+        });
+
+        // Toggle code examples panel
+        document.getElementById('code-examples-toggle').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.toggle('hidden');
+        });
+
+        // Close code examples panel
+        document.getElementById('code-examples-close').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.add('hidden');
+        });
+
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Add copy button to code blocks (static content)
+        document.querySelectorAll('pre code').forEach((codeBlock) => {
+            const button = document.createElement('button');
+            button.className = 'absolute top-2 right-2 px-2 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded transition-colors';
+            button.textContent = 'Copy';
+
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeBlock.textContent);
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = 'Copy', 2000);
+            });
+
+            codeBlock.parentNode.style.position = 'relative';
+            codeBlock.parentNode.appendChild(button);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <!-- Shared interactive demos bundle -->
+    <script src="/assets/js/interactive.js"></script>
+</body>
+</html>

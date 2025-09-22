@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 10: Building Robust ML Workflows | BIT07 Machine Learning Course</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 text-white shadow-xl sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h1><a href="/" class="text-2xl font-bold hover:text-blue-100 transition-colors">BIT07 Machine Learning</a></h1>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <!-- Navigation menu -->
+                <div id="nav-menu" class="hidden md:flex flex-wrap items-center space-x-1">
+                    <a href="/" class="nav-link">Home</a>
+
+                    <!-- Dropdown for Foundations -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Foundations
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/introduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Introduction</a>
+                                <a href="/linear-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Linear Regression</a>
+                                <a href="/logistic-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Logistic Regression</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Core Methods -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Core Methods
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/hyperparameter-tuning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Hyperparameter Tuning</a>
+                                <a href="/imbalanced-data/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Imbalanced Data</a>
+                                <a href="/naive-bayes/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Naïve Bayes</a>
+                                <a href="/decision-trees/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Decision Trees</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Advanced Topics -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Advanced
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/ensemble-learning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Ensemble Learning</a>
+                                <a href="/clustering/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Clustering</a>
+                                <a href="/dimensionality-reduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Dimensionality Reduction</a>
+                                <a href="/ml-workflows/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ML Workflows</a>
+                                <a href="/neural-networks/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Neural Networks</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu (hidden by default) -->
+            <div id="mobile-nav" class="md:hidden mt-4 hidden">
+                <div class="flex flex-col space-y-2">
+                    <a href="/" class="nav-link-mobile">Home</a>
+                    <a href="/introduction/" class="nav-link-mobile">Introduction</a>
+                    <a href="/linear-regression/" class="nav-link-mobile">Linear Regression</a>
+                    <a href="/logistic-regression/" class="nav-link-mobile">Logistic Regression</a>
+                    <a href="/hyperparameter-tuning/" class="nav-link-mobile">Hyperparameters</a>
+                    <a href="/imbalanced-data/" class="nav-link-mobile">Imbalanced Data</a>
+                    <a href="/naive-bayes/" class="nav-link-mobile">Naïve Bayes</a>
+                    <a href="/decision-trees/" class="nav-link-mobile">Decision Trees</a>
+                    <a href="/ensemble-learning/" class="nav-link-mobile">Ensemble Learning</a>
+                    <a href="/unsupervised-learning/" class="nav-link-mobile">Unsupervised Learning</a>
+                    <a href="/ml-workflows/" class="nav-link-mobile">ML Workflows</a>
+                    <a href="/neural-networks/" class="nav-link-mobile">Neural Networks</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            
+            <div class="mb-8 animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Chapter 10: Building Robust ML Workflows</h1>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"></div>
+            </div>
+            
+
+            <div class="prose prose-lg max-w-none animate-slide-up">
+                <!-- Header -->
+<div class="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6 mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 10: Building Robust ML Workflows</h2>
+    <p class="text-gray-700 leading-relaxed">As models become more complex, the number of pre-processing steps (scaling, encoding, imputation) can become unwieldy. Performing these steps manually is not only tedious but is a major source of a critical error known as **data leakage**, which can completely invalidate your results.</p>
+</div>
+<!-- 1. The #1 Pitfall: Data Leakage -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">The Critical Pitfall: Data Leakage</h3>
+    <p class="text-gray-700 mb-4">Data leakage occurs when information from outside the training data is used to create the model. The most common mistake is performing a pre-processing step (like scaling) on the *entire dataset* before splitting for cross-validation. This "leaks" information from the validation folds into the training process, leading to overly optimistic performance estimates.</p>
+<p><h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Interactive Demo: The Effect of Data Leakage</h4>
+<p class="text-gray-600 mb-4">Compare the cross-validation score of a workflow with data leakage to a correct workflow using a Pipeline. Notice how the leaky score is artificially inflated.</p>
+<div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+<div>
+<h5 class="font-bold text-center mb-2">Run Simulated 5-Fold Cross-Validation</h5>
+<div class="flex gap-4">
+<button id="run-leaky-btn" class="btn-secondary w-1/2">Run Leaky Workflow</button>
+<button id="run-correct-btn" class="btn-primary w-1/2">Run Correct Workflow</button>
+</div>
+</div>
+<div class="text-center">
+<div class="text-sm text-gray-600">Reported CV Accuracy</div>
+<div id="leakage-score-display" class="text-4xl font-mono font-bold my-2">—</div>
+<div id="leakage-verdict" class="text-sm font-semibold"></div>
+</div>
+</div></p>
+</div>
+<!-- 2. Handling Missing Data -->
+<div class="card mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">A Common Challenge: Missing Data</h3>
+    <p class="text-gray-700 mb-4">Biological datasets are notoriously messy. The simplest strategy is to remove rows or columns with missing data, but this can lead to a massive loss of valuable information. A better approach is **imputation**: filling in missing values based on the information available.</p>
+    <div class="interactive-demo">
+        <div id="missing-data-grid" class="grid grid-cols-5 gap-1 mb-4 p-2 bg-gray-100 rounded"></div>
+        <div class="flex flex-wrap gap-2 justify-center">
+            <button data-action="drop-row" class="missing-btn btn-secondary">Drop Rows w/ Missing</button>
+            <button data-action="impute-mean" class="missing-btn btn-secondary">Impute with Mean</button>
+            <button data-action="reset" class="missing-btn btn-primary">Reset Data</button>
+        </div>
+        <p id="missing-data-info" class="text-center text-sm mt-3"></p>
+    </div>
+</div>
+<!-- 3. The Solution: Pipelines and ColumnTransformers -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">The Gold Standard: Pipelines and ColumnTransformers</h3>
+    <p class="text-gray-700 mb-4">Scikit-learn provides a powerful toolkit for creating robust, reproducible, and leak-proof workflows. The two essential components are `Pipeline` and `ColumnTransformer`.</p>
+<p><div class="bg-gray-50 p-4 rounded-lg border">
+<h4 class="font-semibold text-center mb-4">Visualizing a Full Workflow</h4>
+<div class="border-4 border-dashed border-gray-300 p-2 rounded-xl">
+<p class="text-center font-bold">Pipeline</p>
+<div class="bg-blue-100 p-4 rounded-lg border border-blue-300">
+<p class="text-center font-bold">ColumnTransformer ('preprocessor')</p>
+<div class="flex gap-4 mt-2">
+<!-- Numerical Pipeline -->
+<div class="flex-1 bg-green-100 p-2 rounded border border-green-300">
+<p class="text-center text-sm font-semibold">Numerical Pipeline</p>
+<div class="text-center text-xs mt-1">Input: 'age', 'expression_level'</div>
+<div class="bg-white p-1 my-1 rounded text-center text-sm shadow">Impute Median</div>
+<div class="bg-white p-1 my-1 rounded text-center text-sm shadow">Standard Scaler</div>
+</div>
+<!-- Categorical Pipeline -->
+<div class="flex-1 bg-orange-100 p-2 rounded border border-orange-300">
+<p class="text-center text-sm font-semibold">Categorical Pipeline</p>
+<div class="text-center text-xs mt-1">Input: 'tumor_stage'</div>
+<div class="bg-white p-1 my-1 rounded text-center text-sm shadow">Impute Constant</div>
+<div class="bg-white p-1 my-1 rounded text-center text-sm shadow">OneHot Encoder</div>
+</div>
+</div>
+</div>
+<div class="text-5xl text-center my-2 text-gray-400">↓</div>
+<div class="bg-purple-100 p-4 rounded-lg border border-purple-300 text-center">
+<p class="font-bold">RandomForestClassifier ('classifier')</p>
+</div>
+</div>
+</div>
+<div class="highlight mt-6">
+<strong>How it Prevents Leakage:</strong> When you call <code>.fit()</code> on this entire pipeline, scikit-learn is smart. During cross-validation, it will only fit the imputer and scaler on the <em>training portion</em> of each fold, and then use that learned transformation on the validation portion. This automates the correct, leak-proof procedure.
+</div></p>
+</div>
+<!-- 4. FeatureUnion -->
+<div class="card mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">Advanced Technique: `FeatureUnion`</h3>
+    <p class="text-gray-700 mb-4">While `ColumnTransformer` applies different steps to different columns, `FeatureUnion` applies different transformers to the *same* columns in parallel and then concatenates their outputs. This is a powerful technique for feature engineering.</p>
+    <div class="bg-gray-50 p-4 rounded-lg border">
+        <h4 class="font-semibold text-center mb-4">ColumnTransformer vs. FeatureUnion</h4>
+        <div class="grid grid-cols-2 gap-4 text-center text-sm">
+            <div>
+                <strong class="text-blue-600">ColumnTransformer</strong>
+                <div class="mt-2 p-2 border-2 border-blue-400 rounded-lg bg-white">
+                    <p>All Gene Data</p>
+                    <div class="text-2xl">↓</div>
+                    <div class="flex gap-2">
+                        <div class="flex-1 p-1 bg-green-100 rounded">Numerical Columns</div>
+                        <div class="flex-1 p-1 bg-orange-100 rounded">Categorical Columns</div>
+                    </div>
+                </div>
+                <p class="text-xs mt-1"><strong>Use Case:</strong> Pre-processing a dataset with mixed data types.</p>
+            </div>
+            <div>
+                <strong class="text-purple-600">FeatureUnion</strong>
+                 <div class="mt-2 p-2 border-2 border-purple-400 rounded-lg bg-white">
+                    <p>All Gene Data</p>
+                    <div class="text-2xl">↘ ↙</div>
+                    <div class="flex gap-2">
+                        <div class="flex-1 p-1 bg-purple-200 rounded">PCA Features</div>
+                        <div class="flex-1 p-1 bg-purple-200 rounded">Biomarker Features</div>
+                    </div>
+                </div>
+                <p class="text-xs mt-1"><strong>Use Case:</strong> Combining global patterns (PCA) with specific, known features (biomarkers).</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- DATA LEAKAGE DEMO ---
+    const runLeakyBtn = document.getElementById('run-leaky-btn');
+    const runCorrectBtn = document.getElementById('run-correct-btn');
+    const scoreDisplay = document.getElementById('leakage-score-display');
+    const verdictDisplay = document.getElementById('leakage-verdict');
+
+    const runSimulation = (isLeaky) => {
+        const baseScore = 0.85; // True score
+        const leakBonus = 0.08; // Artificial boost from leakage
+        const score = isLeaky ? baseScore + leakBonus : baseScore;
+        
+        scoreDisplay.textContent = `${(score + (Math.random() - 0.5) * 0.02).toFixed(3)}`;
+        if (isLeaky) {
+            verdictDisplay.textContent = 'Deceptively High! (Unreliable)';
+            verdictDisplay.className = 'text-sm font-semibold text-red-600';
+        } else {
+            verdictDisplay.textContent = 'Correct and Reliable Score';
+            verdictDisplay.className = 'text-sm font-semibold text-green-600';
+        }
+    };
+    runLeakyBtn.addEventListener('click', () => runSimulation(true));
+    runCorrectBtn.addEventListener('click', () => runSimulation(false));
+
+
+    // --- MISSING DATA DEMO ---
+    const missingGrid = document.getElementById('missing-data-grid');
+    const missingInfo = document.getElementById('missing-data-info');
+    const missingBtns = document.querySelectorAll('.missing-btn');
+    let originalMissingData;
+
+    const createGrid = () => {
+        originalMissingData = Array.from({length: 5}, () => 
+            Array.from({length: 5}, () => (Math.random() > 0.15 ? (Math.random()*10).toFixed(1) : null))
+        );
+        renderGrid(originalMissingData);
+    };
+
+    const renderGrid = (data) => {
+        missingGrid.innerHTML = '';
+        data.forEach(row => {
+            row.forEach(cell => {
+                const div = document.createElement('div');
+                div.className = 'h-10 flex items-center justify-center rounded text-xs font-mono';
+                if (cell === null) {
+                    div.classList.add('bg-red-200');
+                    div.textContent = 'NaN';
+                } else {
+                    div.classList.add('bg-blue-200');
+                    div.textContent = cell;
+                }
+                missingGrid.appendChild(div);
+            });
+        });
+        missingInfo.textContent = `Current dataset size: ${data.length} rows x ${data[0]?.length || 0} columns.`;
+    };
+
+    const handleMissingAction = (action) => {
+        let newData;
+        switch(action) {
+            case 'drop-row':
+                newData = originalMissingData.filter(row => !row.includes(null));
+                break;
+            case 'impute-mean':
+                newData = JSON.parse(JSON.stringify(originalMissingData));
+                for(let c=0; c<newData[0].length; c++) {
+                    let sum = 0, count = 0;
+                    for(let r=0; r<newData.length; r++) {
+                        if (newData[r][c] !== null) {
+                           sum += parseFloat(newData[r][c]);
+                           count++;
+                        }
+                    }
+                    const mean = (sum/count).toFixed(1);
+                    for(let r=0; r<newData.length; r++) {
+                        if (newData[r][c] === null) {
+                           newData[r][c] = mean;
+                        }
+                    }
+                }
+                break;
+            default: // reset
+                createGrid();
+                return;
+        }
+        renderGrid(newData);
+    };
+
+    missingBtns.forEach(btn => btn.addEventListener('click', () => handleMissingAction(btn.dataset.action)));
+    createGrid();
+});
+</script>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Code Examples Toggle Button -->
+    <button id="code-examples-toggle" aria-label="Open code examples"
+            class="fixed bottom-6 right-6 z-[60] rounded-full shadow-lg bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path>
+        </svg>
+        <span class="hidden md:inline">Code Examples</span>
+    </button>
+
+    <!-- Off-canvas Code Examples Panel -->
+    <div id="code-examples-panel" class="fixed inset-0 z-[70] hidden">
+        <!-- Backdrop -->
+        <div id="code-examples-backdrop" class="absolute inset-0 bg-black/40"></div>
+        <!-- Panel -->
+        <aside class="absolute right-0 top-0 h-full w-full md:w-[36rem] bg-white shadow-2xl border-l border-gray-200 flex flex-col">
+            <div class="p-4 border-b flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-800">Chapter Code Examples</h2>
+                <button id="code-examples-close" class="p-2 rounded hover:bg-gray-100" aria-label="Close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="code-examples-content" class="flex-1 overflow-y-auto p-4 space-y-6">
+                <!-- Injected dynamically by interactive.js -->
+            </div>
+        </aside>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">BIT07 Machine Learning</h3>
+                    <p class="text-gray-400">Comprehensive machine learning course for bioinformatics applications by Cedric Hermans.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/introduction/" class="text-gray-400 hover:text-primary-400 transition-colors">Getting Started</a></li>
+                        <li><a href="/linear-regression/" class="text-gray-400 hover:text-primary-400 transition-colors">Linear Models</a></li>
+                        <li><a href="/neural-networks/" class="text-gray-400 hover:text-primary-400 transition-colors">Deep Learning</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Course Materials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Interactive Examples</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">GitHub Repository</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p>&copy; 2025 BIT07 Machine Learning Course by Cedric Hermans. Educational content for machine learning in bioinformatics.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .nav-link {
+            @apply px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors whitespace-nowrap;
+        }
+
+        .nav-link-mobile {
+            @apply block px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors;
+        }
+    </style>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.classList.toggle('hidden');
+        });
+
+        // Toggle code examples panel
+        document.getElementById('code-examples-toggle').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.toggle('hidden');
+        });
+
+        // Close code examples panel
+        document.getElementById('code-examples-close').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.add('hidden');
+        });
+
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Add copy button to code blocks (static content)
+        document.querySelectorAll('pre code').forEach((codeBlock) => {
+            const button = document.createElement('button');
+            button.className = 'absolute top-2 right-2 px-2 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded transition-colors';
+            button.textContent = 'Copy';
+
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeBlock.textContent);
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = 'Copy', 2000);
+            });
+
+            codeBlock.parentNode.style.position = 'relative';
+            codeBlock.parentNode.appendChild(button);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <!-- Shared interactive demos bundle -->
+    <script src="/assets/js/interactive.js"></script>
+</body>
+</html>

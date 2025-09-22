@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7: Decision Trees | BIT07 Machine Learning Course</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 text-white shadow-xl sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h1><a href="/" class="text-2xl font-bold hover:text-blue-100 transition-colors">BIT07 Machine Learning</a></h1>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <!-- Navigation menu -->
+                <div id="nav-menu" class="hidden md:flex flex-wrap items-center space-x-1">
+                    <a href="/" class="nav-link">Home</a>
+
+                    <!-- Dropdown for Foundations -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Foundations
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/introduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Introduction</a>
+                                <a href="/linear-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Linear Regression</a>
+                                <a href="/logistic-regression/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Logistic Regression</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Core Methods -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Core Methods
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/hyperparameter-tuning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Hyperparameter Tuning</a>
+                                <a href="/imbalanced-data/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Imbalanced Data</a>
+                                <a href="/naive-bayes/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Naïve Bayes</a>
+                                <a href="/decision-trees/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Decision Trees</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown for Advanced Topics -->
+                    <div class="relative group">
+                        <button class="nav-link flex items-center">
+                            Advanced
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-2">
+                                <a href="/ensemble-learning/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Ensemble Learning</a>
+                                <a href="/clustering/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Clustering</a>
+                                <a href="/dimensionality-reduction/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Dimensionality Reduction</a>
+                                <a href="/ml-workflows/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">ML Workflows</a>
+                                <a href="/neural-networks/" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600">Neural Networks</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu (hidden by default) -->
+            <div id="mobile-nav" class="md:hidden mt-4 hidden">
+                <div class="flex flex-col space-y-2">
+                    <a href="/" class="nav-link-mobile">Home</a>
+                    <a href="/introduction/" class="nav-link-mobile">Introduction</a>
+                    <a href="/linear-regression/" class="nav-link-mobile">Linear Regression</a>
+                    <a href="/logistic-regression/" class="nav-link-mobile">Logistic Regression</a>
+                    <a href="/hyperparameter-tuning/" class="nav-link-mobile">Hyperparameters</a>
+                    <a href="/imbalanced-data/" class="nav-link-mobile">Imbalanced Data</a>
+                    <a href="/naive-bayes/" class="nav-link-mobile">Naïve Bayes</a>
+                    <a href="/decision-trees/" class="nav-link-mobile">Decision Trees</a>
+                    <a href="/ensemble-learning/" class="nav-link-mobile">Ensemble Learning</a>
+                    <a href="/unsupervised-learning/" class="nav-link-mobile">Unsupervised Learning</a>
+                    <a href="/ml-workflows/" class="nav-link-mobile">ML Workflows</a>
+                    <a href="/neural-networks/" class="nav-link-mobile">Neural Networks</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-1">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            
+            <div class="mb-8 animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Chapter 7: Decision Trees</h1>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"></div>
+            </div>
+            
+
+            <div class="prose prose-lg max-w-none animate-slide-up">
+                <!-- Header -->
+<div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 7: Decision Trees</h2>
+    <p class="text-gray-700 leading-relaxed">Decision Trees are among the most intuitive and interpretable models in machine learning. They make predictions by learning a hierarchy of simple "if/then/else" questions based on the features in the data, creating a model that is easy to visualize and understand.</p>
+</div>
+<!-- 1. Tree Structure -->
+<div class="card mb-8">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">The Structure of a Decision Tree</h3>
+    <p class="text-gray-700 mb-4">A decision tree is structured like an upside-down tree and has several key components:</p>
+    <img src="https://techeasyblog.com/wp-content/uploads/2024/06/decision-tree.png" alt="Diagram of a decision tree structure" class="w-full max-w-2xl mx-auto rounded-lg border my-4">
+    <ul class="list-disc list-inside space-y-2 text-gray-700">
+        <li><strong>Root Node:</strong> The top-most node, which represents the entire dataset before any splits are made.</li>
+        <li><strong>Internal Nodes:</strong> Nodes that represent a question or a test on a specific feature (e.g., "Is Gene A Expression > 5.5?").</li>
+        <li><strong>Branches:</strong> The links connecting nodes, representing the outcome of a test (e.g., "True" or "False").</li>
+        <li><strong>Leaf Nodes (Terminal Nodes):</strong> The final nodes that do not split further. They represent the final class prediction.</li>
+    </ul>
+</div>
+<!-- 2. How a Tree is Built -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">How a Decision Tree is Built: Finding the Best Split</h3>
+    <p class="text-gray-700 mb-4">The core of the algorithm is to find the best feature and the best split point to divide the data at each node. The "best" split is the one that makes the resulting child nodes as **"pure"** as possible—meaning they contain samples predominantly from a single class. This purity is measured using criteria like **Gini Impurity** or **Entropy**.</p>
+<p><h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Interactive Demo: Find the Best Split</h4>
+<p class="text-gray-600 mb-4">You are the algorithm! Your goal is to find the split that results in the lowest <strong>Weighted Gini Impurity</strong> or the highest <strong>Information Gain</strong>. Try splitting on different features and values.</p></p>
+<p><div class="interactive-demo grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Controls -->
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium">1. Choose Split Feature:</label>
+<select id="split-feature-select" class="w-full p-2 border rounded mt-1">
+<option value="gene_a">Gene A Expression (Horizontal Split)</option>
+<option value="gene_b">Gene B Methylation (Vertical Split)</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium">2. Choose Split Value:</label>
+<input id="split-value-slider" type="range" min="0" max="10" step="0.1" value="5" class="parameter-slider">
+<span id="split-value-display" class="text-sm">Value: 5.0</span>
+</div>
+<div>
+<label class="block text-sm font-medium">3. Choose Criterion:</label>
+<div class="flex gap-4 mt-1">
+<label class="flex items-center gap-1"><input type="radio" name="criterion" value="gini" checked> Gini</label>
+<label class="flex items-center gap-1"><input type="radio" name="criterion" value="entropy"> Entropy</label>
+</div>
+</div>
+<div class="text-center">
+<button id="find-best-split-btn" class="btn-secondary w-full">🔍 Show Me the Best Split</button>
+</div>
+</div>
+<!-- Plot -->
+<div>
+<div id="split-plot" style="width:100%; height:300px;"></div>
+</div>
+<!-- Calculation -->
+<div class="lg:col-span-2 bg-gray-50 p-4 rounded-lg font-mono text-xs">
+<h5 class="text-sm font-sans font-bold mb-2 text-center">Split Calculation</h5>
+<div id="calculation-breakdown"></div>
+</div>
+</div></p>
+</div>
+<!-- 3. Overfitting and Solutions -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">The Biggest Weakness: Overfitting</h3>
+    <p class="text-gray-700 mb-4">If a tree is allowed to grow to its maximum depth, it can create a complex set of rules that perfectly memorizes the training data, including its noise. This model will fail to generalize to new, unseen data. This is **overfitting**.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <h4 class="text-lg font-semibold text-gray-700">Solution 1: Pruning (Pre-pruning)</h4>
+            <p class="text-sm text-gray-600 mb-2">We can stop the tree from growing too deep by setting stopping conditions. This is controlled by key hyperparameters:</p>
+            <ul class="list-disc list-inside text-sm space-y-1">
+                <li><code>max_depth</code>: Limits the maximum number of levels in the tree.</li>
+                <li><code>min_samples_split</code>: The minimum number of samples a node must have to be considered for splitting.</li>
+                <li><code>min_samples_leaf</code>: The minimum number of samples that must be in a final leaf node.</li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-lg font-semibold text-gray-700">Solution 2: Ensembles (Random Forests)</h4>
+            <p class="text-sm text-gray-600 mb-2">A single decision tree can be unstable. A more powerful and robust approach is to use a **Random Forest**.</p>
+            <div class="alert-info text-sm">A Random Forest is an **ensemble** of many decision trees. It works by training each tree on a different random subset of the data and features. To make a prediction, it aggregates the "votes" from all the individual trees. This process reduces overfitting and leads to much better performance.</div>
+        </div>
+    </div>
+</div>
+<!-- Advantages & Disadvantages -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-green-800 mb-4">✅ Advantages</h2>
+        <ul class="space-y-2 text-green-900">
+            <li class="flex items-start gap-2"><strong class="text-green-600">✓</strong> <strong>High Interpretability:</strong> The tree structure is easy to visualize and translate into human-readable rules.</li>
+            <li class="flex items-start gap-2"><strong class="text-green-600">✓</strong> <strong>Handles Mixed Data:</strong> Works with both numerical and categorical features with little pre-processing.</li>
+            <li class="flex items-start gap-2"><strong class="text-green-600">✓</strong> <strong>Non-linear Relationships:</strong> Can capture complex relationships that linear models miss.</li>
+        </ul>
+    </div>
+    <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-red-800 mb-4">⚠️ Disadvantages</h2>
+        <ul class="space-y-2 text-red-900">
+            <li class="flex items-start gap-2"><strong class="text-red-600">✗</strong> <strong>Prone to Overfitting:</strong> A single deep tree will likely memorize noise in the training data.</li>
+            <li class="flex items-start gap-2"><strong class="text-red-600">✗</strong> <strong>Instability:</strong> Small changes in the data can lead to a completely different tree structure.</li>
+        </ul>
+    </div>
+</div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- INTERACTIVE SPLIT FINDER DEMO ---
+    const featureSelect = document.getElementById('split-feature-select');
+    const valueSlider = document.getElementById('split-value-slider');
+    const valueDisplay = document.getElementById('split-value-display');
+    const criterionRadios = document.querySelectorAll('input[name="criterion"]');
+    const plotDiv = document.getElementById('split-plot');
+    const calcDiv = document.getElementById('calculation-breakdown');
+    const findBestBtn = document.getElementById('find-best-split-btn');
+    
+    let data;
+
+    const generateDemoData = () => {
+        data = { gene_a: [], gene_b: [], labels: [] };
+        // Class 0
+        for (let i = 0; i < 50; i++) {
+            data.gene_a.push(Math.random() * 4 + 1); // 1-5
+            data.gene_b.push(Math.random() * 5 + 4); // 4-9
+            data.labels.push(0);
+        }
+        // Class 1
+        for (let i = 0; i < 50; i++) {
+            data.gene_a.push(Math.random() * 5 + 4); // 4-9
+            data.gene_b.push(Math.random() * 4 + 1); // 1-5
+            data.labels.push(1);
+        }
+    };
+
+    const calculateImpurity = (labels, criterion) => {
+        const n = labels.length;
+        if (n === 0) return 0;
+        const counts = labels.reduce((acc, label) => {
+            acc[label] = (acc[label] || 0) + 1;
+            return acc;
+        }, {});
+        
+        let impurity = 0;
+        if (criterion === 'gini') {
+            impurity = 1;
+            for (let k in counts) {
+                impurity -= (counts[k] / n) ** 2;
+            }
+        } else { // entropy
+            for (let k in counts) {
+                const p = counts[k] / n;
+                if (p > 0) {
+                    impurity -= p * Math.log2(p);
+                }
+            }
+        }
+        return impurity;
+    };
+
+    const updateDemo = () => {
+        const splitFeature = featureSelect.value;
+        const splitValue = parseFloat(valueSlider.value);
+        const criterion = document.querySelector('input[name="criterion"]:checked').value;
+        
+        valueDisplay.textContent = `Value: ${splitValue.toFixed(1)}`;
+        
+        // Split the data
+        const leftIndices = [], rightIndices = [];
+        data[splitFeature].forEach((val, i) => {
+            if (val <= splitValue) {
+                leftIndices.push(i);
+            } else {
+                rightIndices.push(i);
+            }
+        });
+        
+        const parentLabels = data.labels;
+        const leftLabels = leftIndices.map(i => data.labels[i]);
+        const rightLabels = rightIndices.map(i => data.labels[i]);
+
+        // Calculate impurities
+        const parentImpurity = calculateImpurity(parentLabels, criterion);
+        const leftImpurity = calculateImpurity(leftLabels, criterion);
+        const rightImpurity = calculateImpurity(rightLabels, criterion);
+        
+        // Calculate final score
+        let score, scoreName, resultText;
+        if (criterion === 'gini') {
+            scoreName = "Weighted Gini Impurity";
+            const weightedGini = (leftLabels.length / parentLabels.length) * leftImpurity + 
+                                 (rightLabels.length / parentLabels.length) * rightImpurity;
+            score = weightedGini;
+            resultText = `<strong class="text-blue-600">Goal: Minimize this value.</strong> Lower is better.`;
+        } else { // entropy
+            scoreName = "Information Gain";
+            const weightedEntropy = (leftLabels.length / parentLabels.length) * leftImpurity + 
+                                    (rightLabels.length / parentLabels.length) * rightImpurity;
+            const infoGain = parentImpurity - weightedEntropy;
+            score = infoGain;
+            resultText = `<strong class="text-blue-600">Goal: Maximize this value.</strong> Higher is better.`;
+        }
+
+        // Update calculation breakdown
+        calcDiv.innerHTML = `
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div><strong>Parent Node</strong></div>
+                <div><strong>Left Child (&lt;= ${splitValue.toFixed(1)})</strong></div>
+                <div><strong>Right Child (&gt; ${splitValue.toFixed(1)})</strong></div>
+                <div>Samples: ${parentLabels.length}</div>
+                <div>Samples: ${leftLabels.length}</div>
+                <div>Samples: ${rightLabels.length}</div>
+                <div>${criterion === 'gini' ? 'Gini' : 'Entropy'}: ${parentImpurity.toFixed(3)}</div>
+                <div>${criterion === 'gini' ? 'Gini' : 'Entropy'}: ${leftImpurity.toFixed(3)}</div>
+                <div>${criterion === 'gini' ? 'Gini' : 'Entropy'}: ${rightImpurity.toFixed(3)}</div>
+            </div>
+            <div class="text-center mt-2 pt-2 border-t">
+                <strong class="text-base">${scoreName}: <span class="text-lg text-purple-600">${score.toFixed(4)}</span></strong><br>
+                <span class="text-xs">${resultText}</span>
+            </div>
+        `;
+
+        // Update plot
+        const traces = [{
+            x: data.gene_b, y: data.gene_a, mode: 'markers', type: 'scatter',
+            marker: { color: data.labels.map(l => l === 1 ? '#8b5cf6' : '#f59e0b'), size: 8, opacity: 0.8 }
+        }];
+        
+        const splitLine = {
+            mode: 'lines', line: { color: '#ef4444', width: 3, dash: 'dash' }
+        };
+        if (splitFeature === 'gene_a') { // horizontal
+            splitLine.x = [0, 10];
+            splitLine.y = [splitValue, splitValue];
+        } else { // vertical
+            splitLine.x = [splitValue, splitValue];
+            splitLine.y = [0, 10];
+        }
+        traces.push(splitLine);
+        
+        const layout = {
+            title: 'Splitting Patient Data',
+            xaxis: { title: 'Gene B Methylation', range: [0, 10] },
+            yaxis: { title: 'Gene A Expression', range: [0, 10] },
+            showlegend: false,
+            margin: { t: 30, r: 10, b: 40, l: 50 }
+        };
+        Plotly.newPlot(plotDiv, traces, layout);
+    };
+
+    const findBestSplit = () => {
+        let bestScore = (document.querySelector('input[name="criterion"]:checked').value === 'gini') ? Infinity : -Infinity;
+        let bestFeature, bestValue;
+
+        ['gene_a', 'gene_b'].forEach(feature => {
+            for (let value = 1; value < 9; value += 0.1) {
+                const leftLabels = data.labels.filter((_, i) => data[feature][i] <= value);
+                const rightLabels = data.labels.filter((_, i) => data[feature][i] > value);
+                
+                if (leftLabels.length === 0 || rightLabels.length === 0) continue;
+
+                const parentImpurity = calculateImpurity(data.labels, document.querySelector('input[name="criterion"]:checked').value);
+                const leftImpurity = calculateImpurity(leftLabels, document.querySelector('input[name="criterion"]:checked').value);
+                const rightImpurity = calculateImpurity(rightLabels, document.querySelector('input[name="criterion"]:checked').value);
+                
+                let currentScore;
+                if (document.querySelector('input[name="criterion"]:checked').value === 'gini') {
+                    currentScore = (leftLabels.length / data.labels.length) * leftImpurity + (rightLabels.length / data.labels.length) * rightImpurity;
+                    if (currentScore < bestScore) {
+                        bestScore = currentScore;
+                        bestFeature = feature;
+                        bestValue = value;
+                    }
+                } else {
+                    const weightedEntropy = (leftLabels.length / data.labels.length) * leftImpurity + (rightLabels.length / data.labels.length) * rightImpurity;
+                    currentScore = parentImpurity - weightedEntropy;
+                     if (currentScore > bestScore) {
+                        bestScore = currentScore;
+                        bestFeature = feature;
+                        bestValue = value;
+                    }
+                }
+            }
+        });
+        
+        featureSelect.value = bestFeature;
+        valueSlider.value = bestValue;
+        updateDemo();
+    };
+
+    // Event listeners
+    [featureSelect, valueSlider, ...criterionRadios].forEach(el => el.addEventListener('input', updateDemo));
+    findBestBtn.addEventListener('click', findBestSplit);
+    
+    // Initial setup
+    generateDemoData();
+    updateDemo();
+});
+</script>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Code Examples Toggle Button -->
+    <button id="code-examples-toggle" aria-label="Open code examples"
+            class="fixed bottom-6 right-6 z-[60] rounded-full shadow-lg bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path>
+        </svg>
+        <span class="hidden md:inline">Code Examples</span>
+    </button>
+
+    <!-- Off-canvas Code Examples Panel -->
+    <div id="code-examples-panel" class="fixed inset-0 z-[70] hidden">
+        <!-- Backdrop -->
+        <div id="code-examples-backdrop" class="absolute inset-0 bg-black/40"></div>
+        <!-- Panel -->
+        <aside class="absolute right-0 top-0 h-full w-full md:w-[36rem] bg-white shadow-2xl border-l border-gray-200 flex flex-col">
+            <div class="p-4 border-b flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-800">Chapter Code Examples</h2>
+                <button id="code-examples-close" class="p-2 rounded hover:bg-gray-100" aria-label="Close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="code-examples-content" class="flex-1 overflow-y-auto p-4 space-y-6">
+                <!-- Injected dynamically by interactive.js -->
+            </div>
+        </aside>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">BIT07 Machine Learning</h3>
+                    <p class="text-gray-400">Comprehensive machine learning course for bioinformatics applications by Cedric Hermans.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/introduction/" class="text-gray-400 hover:text-primary-400 transition-colors">Getting Started</a></li>
+                        <li><a href="/linear-regression/" class="text-gray-400 hover:text-primary-400 transition-colors">Linear Models</a></li>
+                        <li><a href="/neural-networks/" class="text-gray-400 hover:text-primary-400 transition-colors">Deep Learning</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Course Materials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">Interactive Examples</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">GitHub Repository</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p>&copy; 2025 BIT07 Machine Learning Course by Cedric Hermans. Educational content for machine learning in bioinformatics.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .nav-link {
+            @apply px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors whitespace-nowrap;
+        }
+
+        .nav-link-mobile {
+            @apply block px-3 py-2 rounded-lg text-sm font-medium hover:bg-white hover:bg-opacity-10 transition-colors;
+        }
+    </style>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.classList.toggle('hidden');
+        });
+
+        // Toggle code examples panel
+        document.getElementById('code-examples-toggle').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.toggle('hidden');
+        });
+
+        // Close code examples panel
+        document.getElementById('code-examples-close').addEventListener('click', function() {
+            const panel = document.getElementById('code-examples-panel');
+            panel.classList.add('hidden');
+        });
+
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Add copy button to code blocks (static content)
+        document.querySelectorAll('pre code').forEach((codeBlock) => {
+            const button = document.createElement('button');
+            button.className = 'absolute top-2 right-2 px-2 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs rounded transition-colors';
+            button.textContent = 'Copy';
+
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeBlock.textContent);
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = 'Copy', 2000);
+            });
+
+            codeBlock.parentNode.style.position = 'relative';
+            codeBlock.parentNode.appendChild(button);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <!-- Shared interactive demos bundle -->
+    <script src="/assets/js/interactive.js"></script>
+</body>
+</html>
