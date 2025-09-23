@@ -243,3 +243,13 @@
     renderExamplesForChapter(key);
   });
 })();
+
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('lp') === '1') {
+    const navbar = document.getElementById('navbar');
+    const footer = document.getElementById('footer');
+    if (navbar) navbar.style.display = 'none';
+    if (footer) footer.style.display = 'none';
+  }
+})();

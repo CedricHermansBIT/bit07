@@ -31,7 +31,19 @@ title: "Chapter 6: Naïve Bayes Classifiers"
     <h3 class="text-2xl font-bold text-gray-800 mb-4">The Engine: Bayes' Theorem</h3>
     <p class="text-gray-700 mb-4">Generative classifiers use Bayes' Theorem to update our beliefs in light of new evidence.</p>
     <div class="code-block text-center text-lg mb-4">P(Hypothesis | Evidence) = [ P(Evidence | Hypothesis) * P(Hypothesis) ] / P(Evidence)</div>
-
+    <p class="text-gray-700 mb-4>
+        Every part of this equation has a specific meaning in the context of classification:
+        <ul class="list-disc list-inside mt-2 space-y-1">
+            <li><strong>Posterior:</strong> `P(Hypothesis | Evidence)`
+    - The updated probability of the hypothesis (class) given the evidence (features).</li>
+            <li><strong>Likelihood:</strong> `P(Evidence | Hypothesis)`
+    - The probability of observing the evidence if the hypothesis is true.</li>
+            <li><strong>Prior:</strong> `P(Hypothesis)`
+    - The initial probability of the hypothesis before seeing the evidence.</li>
+            <li><strong>Evidence (or Marginal):</strong> `P(Evidence)`
+    - The total probability of observing the evidence under all hypotheses.</li>
+        </ul>
+    </p>    
     <h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Interactive Demo: Is this sequence a promoter?</h4>
     <p class="text-gray-700 mb-4">Let's see how finding a "TATA box" (evidence) in a DNA sequence updates our belief that the sequence is a promoter (hypothesis). Adjust the sliders to see the calculation change in real-time.</p>
     <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
