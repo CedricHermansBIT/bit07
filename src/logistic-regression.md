@@ -284,7 +284,7 @@ title: "Chapter 3: Logistic Regression - From Prediction to Classification"
 </div>
 
 <!-- Navigation -->
-<div class="bg-gradient-to-r from-primary-100 to-secondary-100 rounded-2xl p-8 text-center">
+<div id="next-steps" class="bg-gradient-to-r from-primary-100 to-secondary-100 rounded-2xl p-8 text-center">
     <h3 class="text-2xl font-bold gradient-text mb-4">Next Steps</h3>
     <p class="text-gray-700 max-w-3xl mx-auto">You've mastered the fundamentals of classification. The next step is to learn how to systematically optimize your model's performance.</p>
     <div class="flex flex-wrap justify-center gap-4 mt-6">
