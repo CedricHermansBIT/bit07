@@ -251,5 +251,8 @@
     const footer = document.getElementById('footer');
     if (navbar) navbar.style.display = 'none';
     if (footer) footer.style.display = 'none';
+    // set bg-color to white
+    const body = document.body;
+    body.style.backgroundColor = '#fff';
   }
 })();
