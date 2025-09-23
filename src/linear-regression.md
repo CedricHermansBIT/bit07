@@ -144,8 +144,8 @@ title: "Chapter 2: Linear Regression - Modeling Biological Relationships"
   The white cross indicates the most optimal model without regularization, the red dot is the most optimal model with regulariztaion.
 </p>
 
-  <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
-    <div class="md:col-span-2">
+  <div class="grid grid-cols-2 md:grid-cols-2 gap-4 mb-4">
+    <div class="">
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Regularization Type</label>
@@ -188,8 +188,7 @@ title: "Chapter 2: Linear Regression - Modeling Biological Relationships"
         </div>
       </div>
     </div>
-
-    <div class="md:col-span-3">
+    <div class="">
       <div id="surface-plot" style="width:100%;height:260px;"></div>
     </div>
   </div>
