@@ -125,6 +125,84 @@
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 3: Logistic Regression</h2>
     <p class="text-gray-700 leading-relaxed">While linear regression predicts continuous values, many questions in bioinformatics require a categorical "yes" or "no" answer. This is the task of <strong>classification</strong>. This chapter introduces Logistic Regression, a foundational algorithm that forms the bridge from regression to classification.</p>
 </div>
+<div class="content-section">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+        <span class="mr-2">🎯</span> Types of Classification Problems
+    </h3>
+    <p class="mb-6">Not all classification tasks are the same. They can be categorized based on the number and nature of the labels we are trying to predict. Understanding these distinctions is key to choosing the right model and evaluation metrics.</p>
+<p><!-- Classification Types Cards Container -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<!-- Binary Classification Card -->
+<div id="binary-classification" class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-md p-6 border border-blue-200">
+<div class="flex items-center mb-3">
+<div class="bg-blue-500 text-white rounded-full p-2 mr-3">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+<path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-12.728 12.728m12.728 0L5.636 5.636" />
+</svg>
+</div>
+<h4 class="text-xl font-bold text-blue-800">Binary Classification</h4>
+</div>
+<p class="mb-3">The task of classifying elements into one of two mutually exclusive categories. It's a &quot;yes&quot; or &quot;no&quot; question.</p></p>
+<p><div class="bg-white rounded-lg p-3 my-4 border border-blue-200 relative">
+<div class="absolute -top-3 left-3 bg-yellow-400 text-xs font-bold px-2 py-1 rounded-full">ANALOGY</div>
+<p class="mt-1">Like a light switch: it can only be either <strong>on</strong> or <strong>off</strong>.</p>
+</div></p>
+<p><div class="bg-blue-50 rounded-lg p-3 border-l-4 border-blue-500">
+<h5 class="font-semibold text-blue-700">Bioinformatics Examples</h5>
+<ul class="list-disc list-inside text-sm space-y-1">
+<li>Predicting if a patient has a specific disease (Yes/No).</li>
+<li>Determining if a DNA sequence contains a gene (True/False).</li>
+</ul>
+</div>
+</div>
+<!-- Multi-class Classification Card -->
+<div id="multiclass-classification" class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl shadow-md p-6 border border-purple-200">
+<div class="flex items-center mb-3">
+<div class="bg-purple-500 text-white rounded-full p-2 mr-3">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+</svg>
+</div>
+<h4 class="text-xl font-bold text-purple-800">Multi-class Classification</h4>
+</div>
+<p class="mb-3">The task of classifying elements into one of three or more categories, where each sample belongs to only one class.</p></p>
+<p><div class="bg-white rounded-lg p-3 my-4 border border-purple-200 relative">
+<div class="absolute -top-3 left-3 bg-yellow-400 text-xs font-bold px-2 py-1 rounded-full">ANALOGY</div>
+<p class="mt-1">Like sorting mail into different city-specific bins. Each letter can only go into <strong>one</strong> bin.</p>
+</div></p>
+<p><div class="bg-purple-50 rounded-lg p-3 border-l-4 border-purple-500">
+<h5 class="font-semibold text-purple-700">Bioinformatics Examples</h5>
+<ul class="list-disc list-inside text-sm space-y-1">
+<li>Classifying a tumor into one of several known subtypes.</li>
+<li>Predicting the subcellular localization of a protein (e.g., nucleus, cytoplasm, or mitochondria).</li>
+</ul>
+</div>
+</div>
+<!-- Multi-label Classification Card -->
+<div id="multilabel-classification" class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-md p-6 border border-green-200">
+<div class="flex items-center mb-3">
+<div class="bg-green-500 text-white rounded-full p-2 mr-3">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+</div>
+<h4 class="text-xl font-bold text-green-800">Multi-label Classification</h4>
+</div>
+<p class="mb-3">The task of assigning a set of one or more labels to an element. The labels are not mutually exclusive.</p></p>
+<p><div class="bg-white rounded-lg p-3 my-4 border border-green-200 relative">
+<div class="absolute -top-3 left-3 bg-yellow-400 text-xs font-bold px-2 py-1 rounded-full">ANALOGY</div>
+<p class="mt-1">Like applying genre tags to a movie. A film can be both a <strong>comedy</strong> and a <strong>romance</strong>.</p>
+</div></p>
+<p><div class="bg-green-50 rounded-lg p-3 border-l-4 border-green-500">
+<h5 class="font-semibold text-green-700">Bioinformatics Examples</h5>
+<ul class="list-disc list-inside text-sm space-y-1">
+<li>Annotating a gene with multiple Gene Ontology (GO) terms (e.g., 'metabolism', 'signaling').</li>
+<li>Predicting which biological pathways a drug will affect.</li>
+</ul>
+</div>
+</div>
+</div></p>
+</div>
 <!-- 1. The Problem: Why not Linear Regression? -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">The Problem: Why Linear Regression Fails for Classification</h3>
@@ -201,28 +279,59 @@
 <!-- 4. Evaluation -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">Evaluating Model Performance</h3>
-    <p class="text-gray-700 mb-4">Accuracy alone can be misleading. A full picture requires looking at the <strong>Confusion Matrix</strong> and the <strong>ROC Curve</strong>. This interactive demo connects them.</p>
-    <div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-            <div class="space-y-4">
-                 <div>
-                    <label class="block text-sm font-medium">Classification Threshold</label>
-                    <input type="range" id="roc-threshold" min="0.05" max="0.95" step="0.01" value="0.5" class="parameter-slider">
-                    <span id="roc-threshold-value" class="text-sm">0.50</span>
-                </div>
-<div id="confusion-matrix" class="grid grid-cols-3 gap-1 text-center text-sm"></div>                <div class="grid grid-cols-2 gap-2 text-sm text-center">
-                    <div class="bg-gray-200 p-2 rounded"><strong>Precision:</strong> <span id="precision-val"></span></div>
-                    <div class="bg-gray-200 p-2 rounded"><strong>Recall:</strong> <span id="recall-val"></span></div>
-                    <div class="bg-gray-200 p-2 rounded"><strong>F1-Score:</strong> <span id="f1-val"></span></div>
-                    <div class="bg-gray-200 p-2 rounded"><strong>Accuracy:</strong> <span id="acc-val"></span></div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div id="roc-plot" style="width:100%;height:300px;"></div>
-            <div class="text-center mt-2 font-bold">AUC: <span id="auc-val"></span></div>
-        </div>
-    </div>
+    <p class="text-gray-700 mb-4">In classification, accuracy alone can be misleading, especially with imbalanced datasets (e.g., rare diseases). We need a more nuanced set of metrics to understand a model's true performance.</p>
+<p><!-- Key Metrics Definitions -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+<div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+<h5 class="font-bold text-gray-700">Accuracy</h5>
+<p class="text-sm text-gray-600">The proportion of correct predictions. Good for balanced datasets.</p>
+<p class="text-xs font-mono mt-1 text-gray-500">(TP + TN) / Total</p>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+<h5 class="font-bold text-gray-700">Precision</h5>
+<p class="text-sm text-gray-600">Of all positive predictions, how many were correct? High precision is vital when false positives are costly (e.g., predicting a disease when it's not present).</p>
+<p class="text-xs font-mono mt-1 text-gray-500">TP / (TP + FP)</p>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+<h5 class="font-bold text-gray-700">Recall (Sensitivity)</h5>
+<p class="text-sm text-gray-600">Of all actual positives, how many did we find? High recall is crucial when false negatives are costly (e.g., missing a disease).</p>
+<p class="text-xs font-mono mt-1 text-gray-500">TP / (TP + FN)</p>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+<h5 class="font-bold text-gray-700">F1-Score</h5>
+<p class="text-sm text-gray-600">The harmonic mean of Precision and Recall. A useful single metric for balancing the two.</p>
+<p class="text-xs font-mono mt-1 text-gray-500">2 * (Prec * Rec) / (Prec + Rec)</p>
+</div>
+<div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+<h5 class="font-bold text-gray-700">AUC-ROC</h5>
+<p class="text-sm text-gray-600">Area Under the ROC Curve. Measures the model's ability to distinguish between classes across all thresholds.</p>
+<p class="text-sm text-gray-600">By default we set the treshold at 0.5, so predicting lower means class 0 and higher means class 1. However, we can adjust this to see how it affects the model's performance. This is exactly what the ROC curve shows.</p>
+<p class="text-xs font-mono mt-1 text-gray-500">Value from 0.5 (random) to 1.0 (perfect)</p>
+</div>
+</div></p>
+<p><p class="text-gray-700 mb-4">A full picture requires looking at the <strong>Confusion Matrix</strong> and the <strong>ROC Curve</strong>. This interactive demo connects them.</p>
+<div class="interactive-demo grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium">Classification Threshold</label>
+<input type="range" id="roc-threshold" min="0.05" max="0.95" step="0.01" value="0.5" class="parameter-slider">
+<span id="roc-threshold-value" class="text-sm">0.50</span>
+</div>
+<div id="confusion-matrix" class="grid grid-cols-3 gap-1 text-center text-sm"></div>
+<div class="grid grid-cols-2 gap-2 text-sm text-center">
+<div class="bg-gray-200 p-2 rounded"><strong>Precision:</strong> <span id="precision-val"></span></div>
+<div class="bg-gray-200 p-2 rounded"><strong>Recall:</strong> <span id="recall-val"></span></div>
+<div class="bg-gray-200 p-2 rounded"><strong>F1-Score:</strong> <span id="f1-val"></span></div>
+<div class="bg-gray-200 p-2 rounded"><strong>Accuracy:</strong> <span id="acc-val"></span></div>
+</div>
+</div>
+</div>
+<div>
+<div id="roc-plot" style="width:100%;height:300px;"></div>
+<div class="text-center mt-2 font-bold">AUC: <span id="auc-val"></span></div>
+</div>
+</div></p>
 </div>
 <!-- 5. Advanced Topics & Regularization -->
 <div class="card mb-8">
@@ -247,6 +356,28 @@
 <div id="regularization-plot" style="width:100%;height:300px;"></div>
 </div>
 </div></p>
+</div>
+<!-- Multiclass classification -->
+<div class="card mb-8">
+    <h3 class="text-2xl font-bold text-gray-800 mb-4">Multiclass Classification</h3>
+    <p class="text-gray-700 mb-4">In classification, we can also classify into multiple classes. This is called <strong>multiclass classification</strong>.</p>
+    <!-- OvR and OvO -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h4 class="text-xl font-bold text-gray-800 mb-2">One-vs-Rest (OvR)</h4>
+            <p class="text-gray-700 mb-4">In OvR, we train one classifier per class, with the samples of that class as positive samples and all other samples as negatives. For example, with three classes (A, B, C), we train three classifiers: A vs (B,C), B vs (A,C), and C vs (A,B).</p>
+            <!-- n-classes -->
+            <div class="text-sm text-gray-600">For <strong>n</strong> classes, we train <strong>n</strong> classifiers.</div>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <h4 class="text-xl font-bold text-gray-800 mb-2">One-vs-One (OvO)</h4>
+            <p class="text-gray-700 mb-4">In OvO, we train one classifier per pair of classes, with the samples of that pair as positive samples and all other samples as negatives. For example, with three classes (A, B, C), we train three classifiers: A vs B, A vs C, B vs C.</p>
+            <div class="text-sm text-gray-600">For <strong>n</strong> classes, we train <strong>n(n-1)/2</strong> classifiers.</div>
+            <!-- example of higher N -->
+            <div class="text-sm text-gray-600">For example, with 10 classes, we train 45 classifiers.</div>
+        </div>
+    </div>
+    <img src="https://www.researchgate.net/publication/332370066/figure/fig22/AS:746765703720962@1555054226099/Sample-example-of-a-multiclass-support-vector-machine-The-SVM-algorithms-applied-to-a.ppm" alt="OvR vs OvO" class="w-half mx-auto mt-4">
 </div>
 <!-- Navigation -->
 <div class="bg-gradient-to-r from-primary-100 to-secondary-100 rounded-2xl p-8 text-center">

@@ -249,7 +249,12 @@
   if (params.get('lp') === '1') {
     const navbar = document.getElementById('navbar');
     const footer = document.getElementById('footer');
+    const next_steps = document.getElementById('next-steps');
     if (navbar) navbar.style.display = 'none';
     if (footer) footer.style.display = 'none';
+    if (next_steps) next_steps.style.display = 'none';
+    // set bg-color to white
+    const body = document.body;
+    body.style.backgroundColor = '#fff';
   }
 })();
