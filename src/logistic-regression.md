@@ -16,7 +16,7 @@ title: "Chapter 3: Logistic Regression - From Prediction to Classification"
     <p class="mb-6">Not all classification tasks are the same. They can be categorized based on the number and nature of the labels we are trying to predict. Understanding these distinctions is key to choosing the right model and evaluation metrics.</p>
 
     <!-- Classification Types Cards Container -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <!-- Binary Classification Card -->
         <div id="binary-classification" class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-md p-6 border border-blue-200">
             <div class="flex items-center mb-3">

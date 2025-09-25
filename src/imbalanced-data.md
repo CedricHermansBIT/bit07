@@ -76,34 +76,16 @@ model = SVC(class_weight={0: 1, 1: 10})</code></pre>
     <div class="highlight">
         <strong>Making it Actionable: Hyperparameter Tuning</strong>
         <p>When performing hyperparameter tuning with <code>GridSearchCV</code> or <code>RandomizedSearchCV</code>, it is crucial to change the default scoring metric from 'accuracy' to one that is robust to imbalance.</p>
-<pre><code>grid_search = GridSearchCV(
+<pre><code class="language-python">grid_search = GridSearchCV(
     estimator=model,
     param_grid=param_grid,
     cv=5,
     # Optimize for F1-score instead of accuracy!
-    scoring='f1_weighted' // Other options: 'roc_auc', 'balanced_accuracy'
+    scoring='f1_weighted' # Other options: 'roc_auc', 'balanced_accuracy'
 )</code></pre>
     </div>
 </div>
 
-<!-- Practical Implementation -->
-<div class="card mb-8">
-    <h3 class="text-xl font-bold text-gray-800 mb-4">Practical Implementation with `imbalanced-learn`</h3>
-    <p class="text-gray-700 mb-4">The <code>imbalanced-learn</code> library for Python provides easy-to-use implementations of these techniques, designed to work seamlessly with scikit-learn.</p>
-    <div class="code-block">
-<pre><code class="language-python"># First, install the library:
-# pip install imbalanced-learn
-from imblearn.over_sampling import SMOTE
-# Create a SMOTE object and fit it to the training data
-smote = SMOTE(random_state=42)
-X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
-# Now you can fit the classifier as usual
-model.fit(X_train_resampled, y_train_resampled)
-# Test the model on the test set
-predictions = model.predict(X_test)
-# ... Perform evaluation metrics</code></pre>
-    </div>
-</div>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>

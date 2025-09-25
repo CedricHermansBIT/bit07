@@ -116,24 +116,263 @@ title: "Chapter 11: Neural Networks and Deep Learning"
     </div>
 </div>
 
-<!-- 5. Advanced Architectures -->
+<!-- 5. Key Components -->
 <div class="card mb-8">
-    <h3 class="text-xl font-bold text-gray-800 mb-4">Beyond Feedforward: A Glimpse into Advanced Architectures</h3>
-    <p class="text-gray-700 mb-4">While feedforward networks are powerful, specialized architectures have revolutionized bioinformatics:</p>
-    <div class="space-y-4">
-        <div class="bg-gray-50 p-3 rounded-lg">
-            <h4 class="font-semibold">Convolutional Neural Networks (CNNs)</h4>
-            <p class="text-sm">The state-of-the-art for grid-like data. In bioinformatics, they are used to scan DNA/RNA sequences for motifs or classify cell types in microscopy images.</p>
+    <h3 class="text-2xl font-bold text-gray-800 mb-2">Key Components Explained</h3>
+    <p class="text-gray-700 mb-6">When training a neural network, these API pieces work together. Think of it as: <em>assemble layers ➜ choose how they transform data ➜ configure learning ➜ run training</em>.</p>
+
+    <!-- High-Level Flow Diagram -->
+    <div class="relative overflow-x-auto mb-8" aria-label="Neural network training flow">
+        <div class="flex items-stretch gap-3 min-w-[780px] text-sm font-medium">
+            <div class="flex-1 bg-gradient-to-br from-sky-50 to-sky-100 border border-sky-200 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="text-sky-700 font-semibold mb-1">1. Data</span>
+                <span class="text-sky-600 text-xs text-center">Prepared & batched input features</span>
+            </div>
+            <div class="flex items-center text-gray-400 px-1">➡</div>
+            <div class="flex-1 bg-gradient-to-br from-indigo-50 to-indigo-100 border border-indigo-200 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="text-indigo-700 font-semibold mb-1">2. Layers</span>
+                <span class="text-indigo-600 text-xs text-center">Dense + activations (forward pass)</span>
+            </div>
+            <div class="flex items-center text-gray-400 px-1">➡</div>
+            <div class="flex-1 bg-gradient-to-br from-rose-50 to-rose-100 border border-rose-200 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="text-rose-700 font-semibold mb-1">3. Loss</span>
+                <span class="text-rose-600 text-xs text-center">Compare predictions vs labels</span>
+            </div>
+            <div class="flex items-center text-gray-400 px-1">➡</div>
+            <div class="flex-1 bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="text-amber-700 font-semibold mb-1">4. Optimizer</span>
+                <span class="text-amber-600 text-xs text-center">Uses gradients to update weights</span>
+            </div>
+            <div class="flex items-center text-gray-400 px-1">➡</div>
+            <div class="flex-1 bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200 rounded-lg p-4 flex flex-col items-center justify-center">
+                <span class="text-emerald-700 font-semibold mb-1">5. Improved Model</span>
+                <span class="text-emerald-600 text-xs text-center">Repeat for many epochs</span>
+            </div>
         </div>
-        <div class="bg-gray-50 p-3 rounded-lg">
-            <h4 class="font-semibold">Recurrent Neural Networks (RNNs)</h4>
-            <p class="text-sm">Designed for sequential data. Used to predict protein secondary structure from the primary amino acid sequence.</p>
+        <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded-full shadow border text-[11px] text-gray-600">Forward Pass ➜ Loss ➜ Backpropagation ➜ Weight Update</div>
+    </div>
+
+    <dl class="divide-y divide-gray-200">
+        <div class="grid md:grid-cols-[190px_1fr] gap-4 py-3">
+            <dt class="font-semibold text-gray-800 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded bg-indigo-100 text-indigo-600 text-xs font-bold">1</span>Sequential API</dt>
+            <dd class="text-sm text-gray-700">Simplest way to build a model: add layers in order (a straight stack). Great for most feedforward networks.</dd>
         </div>
-        <div class="bg-gray-50 p-3 rounded-lg">
-            <h4 class="font-semibold">Transformers</h4>
-            <p class="text-sm">The current frontier. The groundbreaking <strong>AlphaFold2</strong> model uses a Transformer-based architecture to predict protein 3D structures with incredible accuracy.</p>
+        <div class="grid md:grid-cols-[190px_1fr] gap-4 py-3">
+            <dt class="font-semibold text-gray-800 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded bg-indigo-100 text-indigo-600 text-xs font-bold">2</span>Dense Layer</dt>
+            <dd class="text-sm text-gray-700">Fully connected layer; every neuron sees all outputs from the previous layer. <code>units</code> = number of neurons.</dd>
+        </div>
+        <div class="grid md:grid-cols-[190px_1fr] gap-4 py-3">
+            <dt class="font-semibold text-gray-800 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded bg-indigo-100 text-indigo-600 text-xs font-bold">3</span>Activation Functions</dt>
+            <dd class="text-sm text-gray-700">Inject non‑linearity so the network can model complex patterns. Hidden layers: <strong>ReLU</strong>; output (binary): <strong>Sigmoid</strong>.</dd>
+        </div>
+        <div class="grid md:grid-cols-[190px_1fr] gap-4 py-3">
+            <dt class="font-semibold text-gray-800 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded bg-indigo-100 text-indigo-600 text-xs font-bold">4</span>Compile Method</dt>
+            <dd class="text-sm text-gray-700">Locks in the <em>optimizer</em>, <em>loss</em>, and desired <em>metrics</em> so training knows what to minimize & report.</dd>
+        </div>
+        <div class="grid md:grid-cols-[190px_1fr] gap-4 py-3">
+            <dt class="font-semibold text-gray-800 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded bg-indigo-100 text-indigo-600 text-xs font-bold">5</span>Optimizer</dt>
+            <dd class="text-sm text-gray-700"><code>Adam</code> adaptively tunes learning using estimates of first & second moments of gradients. Strong default.</dd>
+        </div>
+        <div class="grid md:grid-cols-[190px_1fr] gap-4 py-3">
+            <dt class="font-semibold text-gray-800 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded bg-indigo-100 text-indigo-600 text-xs font-bold">6</span>Loss Function</dt>
+            <dd class="text-sm text-gray-700"><code>binaryCrossentropy</code> compares predicted probabilities vs. true labels (binary). Others: <code>mse</code> (regression), <code>categoricalCrossentropy</code> (multi‑class).</dd>
+        </div>
+        <div class="grid md:grid-cols-[190px_1fr] gap-4 py-3">
+            <dt class="font-semibold text-gray-800 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded bg-indigo-100 text-indigo-600 text-xs font-bold">7</span>Metrics</dt>
+            <dd class="text-sm text-gray-700">Quick feedback (e.g. <strong>accuracy</strong>). For imbalance add precision, recall, F1 (can compute from confusion matrix).</dd>
+        </div>
+        <div class="grid md:grid-cols-[190px_1fr] gap-4 py-3">
+            <dt class="font-semibold text-gray-800 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded bg-indigo-100 text-indigo-600 text-xs font-bold">8</span>Fit Method</dt>
+            <dd class="text-sm text-gray-700">Runs training for N <em>epochs</em>; optional <code>validationSplit</code> or callbacks (early stopping, logging, etc.).</dd>
+        </div>
+        <div class="grid md:grid-cols-[190px_1fr] gap-4 py-3">
+            <dt class="font-semibold text-gray-800 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded bg-indigo-100 text-indigo-600 text-xs font-bold">9</span>Epochs & Batch Size</dt>
+            <dd class="text-sm text-gray-700"><strong>Epoch</strong>: one pass over all data. <strong>Batch size</strong>: samples per gradient update; smaller = noisier but can generalize better.</dd>
+        </div>
+    </dl>
+
+    <div class="mt-6 p-4 rounded-lg bg-gray-50 border border-gray-200">
+        <h4 class="font-semibold text-gray-800 mb-2 text-sm tracking-wide uppercase">Sequential vs Functional (Advanced)</h4>
+        <pre class="text-xs leading-relaxed overflow-x-auto"><code>// Sequential API (single-input, single-path models)
+const modelSeq = tf.sequential();
+modelSeq.add(tf.layers.dense({units:16, activation:'relu', inputShape:[10]}));
+modelSeq.add(tf.layers.dense({units:1, activation:'sigmoid'}));
+modelSeq.compile({optimizer:'adam', loss:'binaryCrossentropy'});
+
+// Functional API (flexible graphs / multi-input / shared layers)
+const inputs = tf.input({shape:[10]});
+const hidden = tf.layers.dense({units:16, activation:'relu'}).apply(inputs);
+const outputs = tf.layers.dense({units:1, activation:'sigmoid'}).apply(hidden);
+const modelFunc = tf.model({inputs, outputs});</code></pre>
+        <p class="mt-3 text-xs text-gray-600">Use the Functional API when you need branching, skip connections, shared layers, or multiple inputs/outputs.</p>
+    </div>
+</div>
+
+<!-- 6. Advanced Architectures -->
+<div class="card mb-8" id="advanced-architectures">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
+        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Beyond Feedforward: Advanced Architectures</h3>
+        <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-3 py-1 rounded-full">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ARCHITECTURE LANDSCAPE
+        </span>
+    </div>
+    <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">Different architectures exploit different structural biases: locality (CNN), temporal order (RNN), global relational context (Transformers), low‑dimensional manifolds (Autoencoders), and explicit relational graphs (GNNs). These inductive biases often matter more than raw depth.</p>
+
+    <!-- Architecture Cards Grid -->
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+        <!-- CNN Card -->
+        <div class="group bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md transition" aria-labelledby="cnn-title">
+            <div class="flex items-start justify-between mb-3">
+                <h4 id="cnn-title" class="font-semibold text-gray-800 dark:text-gray-100">Convolutional Neural Networks (CNNs)</h4>
+                <span class="text-[10px] font-bold bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 px-2 py-1 rounded">LOCAL</span>
+            </div>
+            <div class="h-32 flex items-center justify-center">
+                <!-- Improved CNN schematic -->
+                <img src="https://www.researchgate.net/publication/336805909/figure/fig1/AS:11431281342674890@1743562251174/Schematic-diagram-of-a-basic-convolutional-neural-network-CNN-architecture-26.tif" class="w-full max-w-[260px]" aria-label="CNN visualisation">
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Learns translation‑robust local motifs using shared filters; depth builds hierarchical features.</p>
+            <ul class="text-xs text-gray-700 dark:text-gray-300 space-y-1 mb-2 list-disc ml-4">
+                <li>Motif discovery (promoters, enhancers)</li>
+                <li>Microscopy phenotyping</li>
+                <li>Signal denoising</li>
+            </ul>
+            <div class="text-[11px] text-sky-700 dark:text-sky-300 font-medium">Bias: locality + weight sharing.</div>
+        </div>
+        <!-- RNN Card -->
+        <div class="group bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md transition" aria-labelledby="rnn-title">
+            <div class="flex items-start justify-between mb-3">
+                <h4 id="rnn-title" class="font-semibold text-gray-800 dark:text-gray-100">Recurrent Neural Networks (RNNs)</h4>
+                <span class="text-[10px] font-bold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 px-2 py-1 rounded">SEQUENCE</span>
+            </div>
+            <div class="h-32 flex items-center justify-center">
+                <!-- Improved RNN schematic -->
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20250523171309383561/recurrent_neural_network.webp" class="w-full max-w-[260px]" aria-label="RNN visualisation">
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Hidden state carries temporal context; gated variants (LSTM/GRU) mitigate vanishing gradients.</p>
+            <ul class="text-xs text-gray-700 dark:text-gray-300 space-y-1 mb-2 list-disc ml-4">
+                <li>Protein secondary structure</li>
+                <li>Time‑course expression profiles</li>
+                <li>Signal segmentation</li>
+            </ul>
+            <div class="text-[11px] text-amber-700 dark:text-amber-300 font-medium">Bias: ordered temporal dependence.</div>
+        </div>
+        <!-- Transformer Card -->
+        <div class="group bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md transition" aria-labelledby="trf-title">
+            <div class="flex items-start justify-between mb-3">
+                <h4 id="trf-title" class="font-semibold text-gray-800 dark:text-gray-100">Transformers</h4>
+                <span class="text-[10px] font-bold bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 px-2 py-1 rounded">ATTENTION</span>
+            </div>
+            <div class="h-32 flex items-center justify-center">
+                <!-- Improved Transformer schematic -->
+                <img src="https://deeprevision.github.io/posts/001-transformer/transformer.png" class="w-full max-w-[260px]" aria-label="Transformer visualisation">
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Self‑attention builds pairwise relationships; residual + layer norm stabilize deep stacking.</p>
+            <ul class="text-xs text-gray-700 dark:text-gray-300 space-y-1 mb-2 list-disc ml-4">
+                <li>Protein folding (AlphaFold2)</li>
+                <li>Long sequence embeddings</li>
+                <li>Variant effect modeling</li>
+            </ul>
+            <div class="text-[11px] text-purple-700 dark:text-purple-300 font-medium">Bias: global token interactions.</div>
+        </div>
+        <!-- Autoencoder Card -->
+        <div class="group bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md transition" aria-labelledby="ae-title">
+            <div class="flex items-start justify-between mb-3">
+                <h4 id="ae-title" class="font-semibold text-gray-800 dark:text-gray-100">Autoencoders</h4>
+                <span class="text-[10px] font-bold bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300 px-2 py-1 rounded">LATENT</span>
+            </div>
+            <div class="h-32 flex items-center justify-center">
+                <img src="https://www.researchgate.net/publication/317559243/figure/fig2/AS:531269123805186@1503675837486/Deep-Autoencoder-DAE.png" class="max-w-[260px] max-h-32" aria-label="Autoencoder visualisation">
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Learns compressed latent representation; variants (VAE, denoising) add probabilistic or robustness constraints.</p>
+            <ul class="text-xs text-gray-700 dark:text-gray-300 space-y-1 mb-2 list-disc ml-4">
+                <li>Single‑cell embedding</li>
+                <li>Denoising expression matrices</li>
+                <li>Anomaly detection</li>
+            </ul>
+            <div class="text-[11px] text-teal-700 dark:text-teal-300 font-medium">Bias: information bottleneck.</div>
+        </div>
+        <!-- GNN Card -->
+        <div class="group bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md transition" aria-labelledby="gnn-title">
+            <div class="flex items-start justify-between mb-3">
+                <h4 id="gnn-title" class="font-semibold text-gray-800 dark:text-gray-100">Graph Neural Networks (GNNs)</h4>
+                <span class="text-[10px] font-bold bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 px-2 py-1 rounded">RELATIONAL</span>
+            </div>
+            <div class="h-32 flex items-center justify-center">
+                <img src="https://www.techtarget.com/rms/onlineimages/the_structure_of_a_graph_neural_network-f_mobile.png" class="max-w-[260px] max-h-32" aria-label="GNN visualisation">
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Message passing updates node embeddings using neighbor information; stacking expands receptive field.</p>
+            <ul class="text-xs text-gray-700 dark:text-gray-300 space-y-1 mb-2 list-disc ml-4">
+                <li>Protein interaction networks</li>
+                <li>Pathway / metabolic graphs</li>
+                <li>Drug–target link prediction</li>
+            </ul>
+            <div class="text-[11px] text-rose-700 dark:text-rose-300 font-medium">Bias: relational locality.</div>
         </div>
     </div>
+
+    <!-- Comparison Table -->
+    <div class="overflow-x-auto mb-8">
+        <table class="w-full text-sm text-left border border-gray-200 dark:border-slate-700 rounded-lg overflow-hidden">
+            <thead class="bg-gray-50 dark:bg-slate-800/70 text-gray-700 dark:text-gray-300 font-semibold">
+                <tr>
+                    <th class="px-4 py-2">Architecture</th>
+                    <th class="px-4 py-2">Core Strength</th>
+                    <th class="px-4 py-2">Bioinformatics Use Case</th>
+                    <th class="px-4 py-2">Primary Limitation</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 dark:divide-slate-700">
+                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/60">
+                    <td class="px-4 py-2 font-medium">CNN</td>
+                    <td class="px-4 py-2">Local motif extraction</td>
+                    <td class="px-4 py-2">Motif scanning; phenotyping</td>
+                    <td class="px-4 py-2 text-xs">Limited long‑range context</td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/60">
+                    <td class="px-4 py-2 font-medium">RNN (LSTM/GRU)</td>
+                    <td class="px-4 py-2">Sequential memory</td>
+                    <td class="px-4 py-2">Temporal expression; sequence labeling</td>
+                    <td class="px-4 py-2 text-xs">Hard to parallelize; long sequences degrade</td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/60">
+                    <td class="px-4 py-2 font-medium">Transformer</td>
+                    <td class="px-4 py-2">Global attention</td>
+                    <td class="px-4 py-2">Protein folding; embeddings</td>
+                    <td class="px-4 py-2 text-xs">Quadratic memory (length²)</td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/60">
+                    <td class="px-4 py-2 font-medium">Autoencoder</td>
+                    <td class="px-4 py-2">Latent compression</td>
+                    <td class="px-4 py-2">Single‑cell reduction; denoising</td>
+                    <td class="px-4 py-2 text-xs">Latent interpretability</td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/60">
+                    <td class="px-4 py-2 font-medium">GNN</td>
+                    <td class="px-4 py-2">Relational reasoning</td>
+                    <td class="px-4 py-2">Interaction networks; pathways</td>
+                    <td class="px-4 py-2 text-xs">Oversmoothing / scaling</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Guidance -->
+    <details class="group mb-4 border border-gray-200 dark:border-slate-700 rounded-lg p-4 bg-white dark:bg-slate-800">
+        <summary class="cursor-pointer font-semibold text-gray-800 dark:text-gray-100 flex items-center gap-2">
+            <span class="w-5 h-5 inline-flex items-center justify-center rounded bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 text-xs font-bold group-open:rotate-90 transition-transform">+</span>
+            Choosing the right architecture
+        </summary>
+        <div class="mt-3 text-sm text-gray-700 dark:text-gray-300 space-y-2">
+            <p><strong>CNN</strong>: Structured local patterns (motifs, localized morphology).</p>
+            <p><strong>RNN</strong>: Moderate length ordered signals where stepwise dependencies matter.</p>
+            <p><strong>Transformer</strong>: Long sequences or tasks needing global pairwise context; scale with data.</p>
+            <p><strong>Autoencoder</strong>: Representation learning, noise reduction, anomaly detection.</p>
+            <p><strong>GNN</strong>: Interacting entities (proteins, metabolites, drugs) with graph edges encoding biology.</p>
+        </div>
+    </details>
+
+    <p class="text-xs text-gray-500 dark:text-gray-400">Modern systems are often hybrids (e.g., CNN front‑ends feeding Transformers, graph‑aware attention blocks, or variational autoencoder cores in generative pipelines).</p>
 </div>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>

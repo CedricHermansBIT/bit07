@@ -41,7 +41,7 @@ title: "Chapter 9: Unsupervised Learning - Dimensionality Reduction"
     <p class="text-gray-700 mb-4">While PCA is excellent for capturing linear relationships, many biological datasets have complex, non-linear structures. For these cases, manifold learning algorithms like <strong>t-SNE</strong> and <strong>UMAP</strong> are indispensable, especially for visualizing single-cell RNA-sequencing data.</p>
 
     <h4 class="text-xl font-bold text-gray-800 mt-6 mb-4">Visual Comparison: PCA vs. t-SNE vs. UMAP</h4>
-    <p class="text-gray-600 mb-4">This dataset contains several distinct cell types. Click the buttons to see how well each algorithm separates these clusters in a 2D visualization.</p>
+    <p class="text-gray-600 mb-4">This dataset contains several distinct cell types. Click the buttons to see how well each algorithm separates these clusters in a 2D visualization. Note that dimensionality reduction techniques do not perform clustering, the clusters you see are either labels from the data, or produced by a clustering algorithm.</p>
     
     <div class="interactive-demo">
         <div class="flex justify-center gap-4 mb-4">
