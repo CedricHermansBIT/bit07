@@ -123,7 +123,7 @@
                 <!-- Header -->
 <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-6 mb-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-2">Chapter 4: Hyperparameter Tuning</h2>
-    <p class="text-gray-700 leading-relaxed">While model parameters (like the <code>θ</code> coefficients) are learned from the data during training, there is another class of parameters that are not. These are called <strong>hyperparameters</strong>—the "dials" and "knobs" that you, the practitioner, set <em>before</em> the training process begins to control the model's behavior.</p>
+    <p class="text-gray-700 leading-relaxed">While model parameters (like the <code>θ</code> coefficients) are learned from the data during training, there is another class of parameters that are not. These are called <strong>hyperparameters</strong>, the "dials" and "knobs" that you, the practitioner, set <em>before</em> the training process begins to control the model's behavior.</p>
 </div>
 <!-- What are Hyperparameters? -->
 <div class="card mb-8">
@@ -142,20 +142,22 @@
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-6">Strategies for Hyperparameter Tuning</h3>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div>
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h4 class="text-lg font-semibold text-gray-700">Grid Search</h4>
             <p class="text-sm text-gray-600 mb-2">An exhaustive search that systematically tries every possible combination of hyperparameter values you define in a "grid".</p>
             <p class="text-sm text-gray-600"><strong>Pro:</strong> Guarantees finding the best combination within the grid. <br><strong>Con:</strong> Suffers from the "curse of dimensionality"; becomes incredibly slow as you add more hyperparameters to tune.</p>
         </div>
-        <div>
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h4 class="text-lg font-semibold text-gray-700">Random Search</h4>
             <p class="text-sm text-gray-600 mb-2">Instead of trying all combinations, it samples a fixed number of combinations randomly from the specified hyperparameter space.</p>
             <p class="text-sm text-gray-600"><strong>Pro:</strong> Often finds a better model in less time than grid search because it doesn't waste time on unimportant parameters. <br><strong>Con:</strong> No guarantee of finding the absolute best combination.</p>
         </div>
     </div>
      <div class="mt-4 border-t pt-4">
-        <h4 class="text-lg font-semibold text-gray-700">Bayesian Optimization</h4>
-        <p class="text-sm text-gray-600">A "smarter" approach. It builds a probabilistic model of the relationship between hyperparameter values and model performance. It then uses this model to intelligently select the next set of hyperparameters to try, focusing on regions most likely to yield improvements.</p>
+        <div  class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="text-lg font-semibold text-gray-700">Bayesian Optimization</h4>
+                <p class="text-sm text-gray-600">A "smarter" approach. It builds a probabilistic model of the relationship between hyperparameter values and model performance. It then uses this model to intelligently select the next set of hyperparameters to try, focusing on regions most likely to yield improvements.</p>
+        </div>
     </div>
 </div>
 <!-- Interactive Search Strategy Demo -->
@@ -186,9 +188,9 @@
 <!-- Cross-Validation -->
 <div class="card mb-8">
     <h3 class="text-2xl font-bold text-gray-800 mb-4">The Critical Role of Cross-Validation</h3>
-    <p class="text-gray-700 mb-4">A critical problem arises during tuning: if we use our test set to evaluate each hyperparameter combination, we will inadvertently "leak" information from the test set into our model selection process. The hyperparameters we choose will be optimized for that *specific* test set, and our final performance estimate will be overly optimistic.</p>
+    <p class="text-gray-700 mb-4">A critical problem arises during tuning: if we use our test set to evaluate each hyperparameter combination, we will inadvertently "leak" information from the test set into our model selection process. The hyperparameters we choose will be optimized for that <strong>specific</strong> test set, and our final performance estimate will be overly optimistic.</p>
     <div class="alert-warning"><strong>The Golden Rule:</strong> The test set must remain untouched until the very end, used only once for the final evaluation of the chosen model.</div>
-    <p class="text-gray-700 my-4">The solution is <strong>K-Fold Cross-Validation</strong>. It provides a robust procedure for model evaluation and tuning by splitting the *training set* into smaller subsets.</p>
+    <p class="text-gray-700 my-4">The solution is <strong>K-Fold Cross-Validation</strong>. It provides a robust procedure for model evaluation and tuning by splitting the <strong>training set</strong> into smaller subsets.</p>
 <p><!-- K-Fold CV Diagram -->
 <div class="bg-gray-50 p-4 rounded-lg">
 <h4 class="font-semibold text-center mb-4">5-Fold Cross-Validation Process</h4>
@@ -227,64 +229,6 @@
 </div>
 <p class="text-center text-sm mt-3">The final cross-validation score is the average performance across all 5 validation folds.</p>
 </div></p>
-</div>
-<!-- Scikit-Learn Implementation -->
-<div class="card mb-8">
-    <h3 class="text-2xl font-bold text-gray-800 mb-4">Implementation in Scikit-Learn</h3>
-    <p class="text-gray-700 mb-4">Scikit-learn provides powerful tools that automate the process of combining a search strategy with cross-validation.</p>
-<p><h4 class="text-lg font-semibold text-gray-700 mb-2">GridSearchCV</h4>
-<p class="text-sm text-gray-600 mb-2">Performs an exhaustive grid search with cross-validation.</p>
-<div class="code-block"></p>
-<pre><code>from sklearn.model_selection import GridSearchCV
-from sklearn.linear_model import LogisticRegression
-
-# 1. Define the model
-model = LogisticRegression(solver='liblinear')
-
-# 2. Define the hyperparameter grid
-param_grid = {
-    'penalty': ['l1', 'l2'],
-    'C': [0.01, 0.1, 1, 10, 100]
-}
-
-# 3. Set up GridSearchCV
-grid_search = GridSearchCV(
-    estimator=model,
-    param_grid=param_grid,
-    cv=5,  // 5-fold cross-validation
-    scoring='accuracy',
-    n_jobs=-1  // Use all available CPU cores
-)
-
-# 4. Fit to the training data
-grid_search.fit(X_train, y_train)
-
-# 5. Inspect results
-print(f"Best parameters found: {grid_search.best_params_}")
-print(f"Best cross-validation accuracy: {grid_search.best_score_:.3f}")</code></pre>
-<p></div></p>
-<p><h4 class="text-lg font-semibold text-gray-700 mt-6 mb-2">RandomizedSearchCV</h4>
-<p class="text-sm text-gray-600 mb-2">Performs a random search, which is more efficient for larger hyperparameter spaces.</p>
-<div class="code-block"></p>
-<pre><code>from sklearn.model_selection import RandomizedSearchCV
-from scipy.stats import uniform
-
-# Define hyperparameter distributions
-param_dist = {
-    'penalty': ['l1', 'l2'],
-    'C': uniform(loc=0, scale=100) // Sample from a continuous range
-}
-
-random_search = RandomizedSearchCV(
-    estimator=model,
-    param_distributions=param_dist,
-    n_iter=50, // Try 50 random combinations
-    cv=5,
-    scoring='accuracy',
-    n_jobs=-1
-)
-random_search.fit(X_train, y_train)</code></pre>
-<p></div></p>
 </div>
 <!-- Summary -->
 <div class="highlight">
